@@ -3,6 +3,7 @@ import GlassHero from '@/components/GlassHero';
 import GlassProjects from '@/components/GlassProjects';
 import GlassSkills from '@/components/GlassSkills';
 import GlassContact from '@/components/GlassContact';
+import ChatWidget from '@/components/ChatWidget';
 
 export default function Home() {
   return (
@@ -27,6 +28,8 @@ export default function Home() {
           <p>© 2026 Marcus Forsberg</p>
         </footer>
       </main>
+
+      <ChatWidget />
     </>
   );
 }
