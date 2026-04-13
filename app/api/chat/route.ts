@@ -114,7 +114,6 @@ Here is everything you know about Marcus:
 
 ${marcusContext}`,
       messages,
-      maxTokens: 300,
     });
 
     return result.toTextStreamResponse();
