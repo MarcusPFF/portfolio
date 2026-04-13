@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: 'Marcus | Developer',
-  description: 'Clean glassmorphism developer portfolio',
+  description: 'Portfolio',
 };
 
 export default function RootLayout({

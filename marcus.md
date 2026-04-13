@@ -1,11 +1,16 @@
 # About Marcus Forsberg
+- 22 years old
+- 189 cm tall
+- Danish & Greek
+
+# Free time
+- Gym
+- Adventures
+- Motorcycle
 
 ## Personal
 - Name: Marcus Forsberg
-- Age: 22 years old
-- Height: 189 cm
-- Heritage: Greek & Danish
-- Role: Software Developer & Computer Science Student
+- Role: Software Developer & Computer Scientist
 - Location: Copenhagen, Denmark
 - Portfolio: marcuspff.com
 - GitHub: github.com/MarcusPFF
@@ -14,7 +19,6 @@
 
 ## Education
 - Studying Computer Science (Datamatiker) at CPH Business, Copenhagen
-- Currently in Semester 4
 
 ## Technical Skills
 
@@ -104,25 +108,7 @@
 - Educational demo website project
 - Tech: HTML, CSS, JavaScript
 
-## Hobbies & Free Time
-- Gym — trains regularly, loves staying active
-- Skiing — enjoys hitting the slopes
-- Motorcycle — rides motorcycles
-- Camping — likes getting outdoors and away from screens
-
-## Favorite Tech
-- Favorite framework: Next.js — loves building modern full-stack apps with it
-- This portfolio was built with Next.js, Tailwind CSS, and TypeScript
-- Enjoys the full-stack workflow: designing the frontend, building the API, wiring it all together
-
-## Food & Culture
-- Half Danish, half Greek — born and raised in Denmark with Greek roots
-- Favorite food: Giouvetsi (a traditional Greek oven-baked pasta dish with meat and tomato sauce)
-- Speaks Danish fluently, has Greek heritage
-
-## Personality
-- Adaptable — can fit into any team or situation
-- Driven and hands-on — prefers building things over just talking about them
-- Values clean, well-structured code
-- Enjoys both the creative side of frontend design and the logical side of backend architecture
-- Coffee fueled developer ☕
+## Personality & Interests
+- Passionate about clean code and modern web design
+- Enjoys both frontend aesthetics and backend architecture
+- Interested in machine learning and data science
