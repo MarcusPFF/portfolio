@@ -7,7 +7,7 @@ export default function GlassHero() {
         <div className="glass-card p-10 md:p-20">
           <div className="hero-enter">
             <p className="text-slate-400 font-medium tracking-[0.2em] uppercase mb-6 text-sm">
-              Developer  ·  Designer  ·  Creator
+              Developer  ·  QA  ·  Guide
             </p>
           </div>
 
