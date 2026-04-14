@@ -19,11 +19,10 @@ export default function GlassNav() {
 
   return (
     <nav
-      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 rounded-full px-8 py-3 flex items-center gap-8 transition-all duration-500 ${
-        scrolled
-          ? 'glass-nav shadow-lg'
-          : 'bg-transparent'
-      }`}
+      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 rounded-full px-8 py-3 flex items-center gap-8 transition-all duration-500 ${scrolled
+        ? 'glass-nav shadow-lg'
+        : 'bg-transparent'
+        }`}
     >
       <a href="#" className="font-bold text-slate-800 text-lg tracking-tight hover:opacity-70 transition-opacity">
         M.
