@@ -2,8 +2,6 @@ import { createGroq } from '@ai-sdk/groq';
 import { streamText, embed } from 'ai';
 import { createClient } from '@supabase/supabase-js';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { readFileSync } from 'fs';
-import { join } from 'path';
 
 // --- Rate Limiter (in-memory, per IP) ---
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
@@ -58,10 +56,7 @@ const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || '';
 const google = googleKey ? createGoogleGenerativeAI({ apiKey: googleKey }) : null;
 
 // --- Knowledge base (Fallback) ---
-const marcusContextFallback = readFileSync(
-  join(process.cwd(), 'marcus.md'),
-  'utf-8'
-);
+const marcusContextFallback = "Marcus is a 22-year-old developer from Copenhagen, Denmark. His database is currently unavailable.";
 
 export async function POST(req: Request) {
   // Get client IP
