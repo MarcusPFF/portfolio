@@ -74,7 +74,7 @@ export default function GlassProjects() {
         <ScrollReveal>
           <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-sm mb-3">Portfolio</p>
           <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-16 tracking-tight">
-            Selected Projects
+            Selected Projects (More coming soon)
           </h2>
         </ScrollReveal>
 

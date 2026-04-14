@@ -13,7 +13,7 @@ export default function GlassHero() {
 
           <div className="hero-enter-delay-1">
             <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-slate-800 tracking-tight leading-[0.9] mb-8">
-              Marcus
+              Marcus Forsberg
               <span className="gradient-text">.</span>
             </h1>
           </div>
@@ -56,7 +56,7 @@ export default function GlassHero() {
             <div className="w-px h-10 bg-slate-200/60"></div>
             <div>
               <p className="text-2xl font-bold text-slate-800">∞</p>
-              <p className="text-sm text-slate-400">Cups of Coffee</p>
+              <p className="text-sm text-slate-400">White monsters</p>
             </div>
           </div>
         </div>
