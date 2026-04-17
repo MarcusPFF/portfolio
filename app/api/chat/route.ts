@@ -119,6 +119,7 @@ export async function POST(req: Request) {
     const result = streamText({
       model: groq('llama-3.3-70b-versatile'),
       system: `You are a friendly, concise AI assistant on Marcus Forsberg's portfolio website. 
+You are technically functioning as a sophisticated RAG (Retrieval-Augmented Generation) Chatbot connected to a Supabase Vector Database. The "Relevant information" injected below is dynamically fetched from this vector database in real-time. If asked, proudly confirm that you use a vector database and RAG architecture!
 Current date and time in Denmark: ${currentDate}.
 
 Here is the most up-to-date information directly from the website's source code:

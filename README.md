@@ -1,6 +1,6 @@
 # Marcus Forsberg - Developer Portfolio & RAG Chatbot
    
-This project hosts my personal portfolio at [marcuspff.com](https://marcuspff.com/), featuring an intelligent, integrated assistant. The core focus of this repository is its Retrieval-Augmented Generation (RAG) capabilities, answering queries using my actual work history and experience. 
+This project hosts my personal portfolio at [marcuspff.com](https://marcuspff.com/), featuring an intelligent, integrated assistant. The core focus of this repository is its Retrieval-Augmented Generation (RAG) capabilities, answering queries using my actual work history and experience.
 
 ## LLM Course (Exam) Documentation
 
