@@ -20,8 +20,7 @@ export default function GlassHero() {
 
           <div className="hero-enter-delay-2">
             <p className="text-slate-500 max-w-xl text-lg md:text-xl leading-relaxed mb-12 font-light">
-              I craft elegant, accessible, and performant web experiences — blurring
-              the lines between beautiful design and robust engineering.
+              Still under development
             </p>
           </div>
 
