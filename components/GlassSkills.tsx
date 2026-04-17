@@ -1,27 +1,6 @@
 import ScrollReveal from './ScrollReveal';
+import { skillGroups } from '../lib/data';
 
-const skillGroups = [
-  {
-    category: 'Languages',
-    icon: '{ }',
-    items: ['Java', 'TypeScript', 'JavaScript', 'Python', 'HTML/CSS', 'SQL'],
-  },
-  {
-    category: 'Frameworks & Libraries',
-    icon: '⚡',
-    items: ['React', 'Next.js', 'Node.js', 'Javalin', 'JPA/Hibernate', 'JUnit'],
-  },
-  {
-    category: 'Data & ML',
-    icon: '📊',
-    items: ['Scikit-learn', 'Pandas', 'Jupyter', 'PostgreSQL', 'MySQL'],
-  },
-  {
-    category: 'Tools & Platforms',
-    icon: '✦',
-    items: ['Git', 'Docker', 'Tailwind CSS', 'Figma', 'Vercel', 'REST APIs'],
-  },
-];
 
 export default function GlassSkills() {
   return (

@@ -2,50 +2,16 @@ import { createGroq } from '@ai-sdk/groq';
 import { streamText, embed } from 'ai';
 import { createClient } from '@supabase/supabase-js';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
+import { personalDetails, skillGroups, projects, classes } from '@/lib/data';
+import { isRateLimited } from '@/lib/rate-limit';
 
-// --- Rate Limiter (in-memory, per IP) ---
-const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
-const MAX_REQUESTS_PER_WINDOW = 6; // 6 messages per minute per IP
 const MAX_MESSAGE_LENGTH = 500; // max chars per message
 const MAX_MESSAGES = 20; // max conversation length
-
-const requestLog = new Map<string, number[]>();
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const timestamps = requestLog.get(ip) || [];
-  const recent = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
-  requestLog.set(ip, recent);
-
-  if (recent.length >= MAX_REQUESTS_PER_WINDOW) {
-    return true;
-  }
-
-  recent.push(now);
-  return false;
-}
-
-// Clean up stale entries every 5 minutes
-setInterval(() => {
-  const now = Date.now();
-  for (const [ip, timestamps] of requestLog.entries()) {
-    const recent = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
-    if (recent.length === 0) {
-      requestLog.delete(ip);
-    } else {
-      requestLog.set(ip, recent);
-    }
-  }
-}, 5 * 60 * 1000);
 
 // --- Groq client ---
 const groq = createGroq({
   apiKey: process.env.GROQ_API_KEY,
 });
-
-// Log on startup to verify key is loaded
-const apiKey = process.env.GROQ_API_KEY;
-console.log(`[Chat API] Groq key loaded: ${apiKey ? `yes (${apiKey.slice(0, 8)}...)` : 'NO — missing!'}`);
 
 // --- Supabase & Google setup ---
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
@@ -56,7 +22,7 @@ const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || '';
 const google = googleKey ? createGoogleGenerativeAI({ apiKey: googleKey }) : null;
 
 // --- Knowledge base (Fallback) ---
-const marcusContextFallback = "Marcus is a 22-year-old developer from Copenhagen, Denmark. His database is currently unavailable.";
+const marcusContextFallback = "Marcus is a developer from Copenhagen, Denmark. His database is currently unavailable.";
 
 export async function POST(req: Request) {
   // Get client IP
@@ -106,7 +72,7 @@ export async function POST(req: Request) {
 
   try {
     let retrievedContext = '';
-    
+
     // 1. Perform RAG Retrieval if services are configured
     if (supabase && google && lastMessage?.content) {
       try {
@@ -155,8 +121,14 @@ export async function POST(req: Request) {
       system: `You are a friendly, concise AI assistant on Marcus Forsberg's portfolio website. 
 Current date and time in Denmark: ${currentDate}.
 
-You answer questions about Marcus based ONLY on the following information. 
-IMPORTANT: Always check the "Relevant information" below for details on Marcus' background, technologies, and birth date. 
+Here is the most up-to-date information directly from the website's source code:
+Personal Details: ${JSON.stringify(personalDetails)}
+Skills: ${JSON.stringify(skillGroups)}
+Projects: ${JSON.stringify(projects)}
+Course Timeline: ${JSON.stringify(classes)}
+
+You answer questions about Marcus based ONLY on the above website data and the "Relevant information" below. 
+IMPORTANT: Always check the "Relevant information" below for additional details on Marcus' background, technologies, and birth date. 
 - If birth year/month is mentioned, you MUST calculate his current age using today's date (${currentDate}). 
 - If the exact day is missing, say he is "omkring X år" or just "X år".
 - Be specific about the technologies he uses (Java, Spring Boot, etc.) if they are listed below.
@@ -165,7 +137,7 @@ If the information is not in the context, say you don't know.
 Keep answers short (2-3 sentences).
 Use a warm, professional tone.
 
-Relevant information about Marcus:
+Relevant information about Marcus (from knowledge base):
 ${retrievedContext}`,
       messages,
     });

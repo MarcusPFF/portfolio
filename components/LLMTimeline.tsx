@@ -2,34 +2,8 @@
 
 import { useState } from 'react';
 import ScrollReveal from './ScrollReveal';
+import { classes } from '../lib/data';
 
-const classes = [
-  {
-    title: 'Course 1',
-    subtitle: 'Creation of the portfolio website',
-    desc: 'I denne uge, lavede jeg min portfolio hjemmeside, som du ser lige nu. Jeg brugte Next.js og Tailwind CSS til at lave den.',
-    tags: ['Next.js', 'Tailwind CSS', 'Portfolio', 'Vercel'],
-    color: 'from-blue-400/20 to-purple-400/20',
-    hidden: false,
-  },
-  {
-    title: 'Course 2',
-    subtitle: 'RAG chatbot',
-    desc: 'I denne uge, lavede jeg en RAG chatbot, som kan svare på spørgsmål om min portfolio hjemmeside.',
-    tags: ['RAG', 'Vector Search', 'Supabase'],
-    color: 'from-green-400/20 to-emerald-400/20',
-    hidden: false,
-  },
-  {
-    title: 'Course 3',
-    subtitle: 'Coming soon',
-    desc: '...',
-    tags: ['RAG', 'Prompting', 'Context'],
-    color: 'from-amber-400/20 to-orange-400/20',
-    hidden: false,
-  },
-  // Add more weeks here as the course progresses
-];
 
 export default function LLMTimeline() {
   const [showAll, setShowAll] = useState(false);

@@ -63,7 +63,7 @@ export default function GlassContact() {
 
             <div className="mt-14 pt-8 border-t border-white/30">
               <a
-                href="marcus.pff03@gmail.com"
+                href="mailto:marcus.pff03@gmail.com"
                 className="text-slate-400 hover:text-slate-700 transition-colors font-light text-sm"
               >
                 Email coming soon

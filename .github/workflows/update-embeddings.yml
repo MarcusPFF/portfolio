@@ -1,0 +1,37 @@
+name: Update Vector Embeddings
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'marcus.md'
+      - 'scripts/embed.ts'
+      - 'package.json'
+      - 'package-lock.json'
+  workflow_dispatch: # Allows manual trigger from the Actions tab
+
+jobs:
+  embed:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run embedding script
+        run: npx tsx scripts/embed.ts
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          GOOGLE_GENERATIVE_AI_API_KEY: ${{ secrets.GOOGLE_GENERATIVE_AI_API_KEY }}
