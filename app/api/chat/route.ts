@@ -119,8 +119,8 @@ export async function POST(req: Request) {
         console.log('[Chat API] Querying Supabase for matches...');
         const { data, error } = await supabase.rpc('match_document_chunks', {
           query_embedding: embedding,
-          match_threshold: 0.3, // Lowered threshold slightly for better matching
-          match_count: 5 // Get top 5 relevant chunks
+          match_threshold: 0.2, // Lowered threshold for broader matching
+          match_count: 10 // Get top 10 relevant chunks to ensure we don't miss key info
         });
 
         if (error) {
@@ -140,29 +140,32 @@ export async function POST(req: Request) {
       retrievedContext = marcusContextFallback;
     }
 
-    const currentDate = new Date().toLocaleDateString('en-US', {
+    const currentDate = new Date().toLocaleString('da-DK', {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'Europe/Copenhagen'
     });
 
     const result = streamText({
       model: groq('llama-3.3-70b-versatile'),
       system: `You are a friendly, concise AI assistant on Marcus Forsberg's portfolio website. 
-Today's date is ${currentDate}.
+Current date and time in Denmark: ${currentDate}.
 
 You answer questions about Marcus based ONLY on the following information. 
-IMPORTANT: Your internal knowledge cutoff is in the past. You must use the "Relevant information" provided below as your primary source of truth. 
-If birth year/month is provided, use today's date (${currentDate}) to calculate age. 
-If the exact day is missing, provide a conversational estimate (e.g., "Han er 22 år").
+IMPORTANT: Always check the "Relevant information" below for details on Marcus' background, technologies, and birth date. 
+- If birth year/month is mentioned, you MUST calculate his current age using today's date (${currentDate}). 
+- If the exact day is missing, say he is "omkring X år" or just "X år".
+- Be specific about the technologies he uses (Java, Spring Boot, etc.) if they are listed below.
 
-If you don't know something based on the provided info, say so honestly.
-Keep answers short and conversational (2-4 sentences max).
+If the information is not in the context, say you don't know.
+Keep answers short (2-3 sentences).
 Use a warm, professional tone.
 
-Here is the relevant information about Marcus to answer the user's query:
-
+Relevant information about Marcus:
 ${retrievedContext}`,
       messages,
     });
