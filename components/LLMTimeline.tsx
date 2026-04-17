@@ -8,7 +8,7 @@ const classes = [
     title: 'Course 1',
     subtitle: 'Creation of the portfolio website',
     desc: 'I denne uge, lavede jeg min portfolio hjemmeside, som du ser lige nu. Jeg brugte Next.js og Tailwind CSS til at lave den.',
-    tags: ['Next.js', 'Tailwind CSS', 'Portfolio'],
+    tags: ['Next.js', 'Tailwind CSS', 'Portfolio', 'Vercel'],
     color: 'from-blue-400/20 to-purple-400/20',
     hidden: false,
   },
