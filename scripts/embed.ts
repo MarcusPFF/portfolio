@@ -31,11 +31,40 @@ async function main() {
   const filePath = path.join(process.cwd(), 'marcus.md');
   const fileContent = fs.readFileSync(filePath, 'utf-8');
 
-  // 3. Chunk the document. We split by headings (## or ###)
-  const rawChunks = fileContent.split(/\n(?=#{2,3}\s)/);
-  const chunks = rawChunks
-    .map((chunk) => chunk.trim())
-    .filter((chunk) => chunk.length > 0);
+  let chunks: string[] = [];
+  let metadataList: any[] = [];
+
+  // 3. Chunk the document. Detect JSON or Markdown
+  try {
+    const jsonData = JSON.parse(fileContent);
+    if (Array.isArray(jsonData)) {
+      console.log('Detected JSON format. Parsing items...');
+      jsonData.forEach((item: any) => {
+        if (item.text) {
+          chunks.push(item.text);
+          metadataList.push({
+            id: item.id || 'unknown',
+            source: 'marcus.md',
+            ...(item.metadata || {})
+          });
+        }
+      });
+    } else {
+      throw new Error('JSON is not an array');
+    }
+  } catch (e) {
+    console.log('Detected Markdown format (or invalid JSON). Splitting by headings...');
+    // Fallback to original Markdown splitting
+    const rawChunks = fileContent.split(/\n(?=#{2,3}\s)/);
+    chunks = rawChunks
+      .map((chunk) => chunk.trim())
+      .filter((chunk) => chunk.length > 0);
+    
+    chunks.forEach((chunk) => {
+       const firstLine = chunk.split('\n')[0];
+       metadataList.push({ source: 'marcus.md', heading: firstLine });
+    });
+  }
 
   console.log(`Found ${chunks.length} chunks. Generating embeddings...`);
 
@@ -64,10 +93,7 @@ async function main() {
   for (let i = 0; i < chunks.length; i++) {
     const chunk = chunks[i];
     const embedding = embeddings[i];
-
-    // Determine a rough heading to use as metadata (first line usually has the heading)
-    const firstLine = chunk.split('\n')[0];
-    const metadata = { source: 'marcus.md', heading: firstLine };
+    const metadata = metadataList[i];
 
     const { error } = await supabase.from('document_chunks').insert({
       content: chunk,
