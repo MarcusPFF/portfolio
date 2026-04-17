@@ -2,6 +2,10 @@
    
 This project hosts my personal portfolio at [marcuspff.com](https://marcuspff.com/), featuring an intelligent, integrated assistant. The core focus of this repository is its Retrieval-Augmented Generation (RAG) capabilities, answering queries using my actual work history and experience. 
 
+## LLM Course (Exam) Documentation
+
+As part of this portfolio, there is a dedicated section titled **LLM Course (Exam)**. This serves as a live journal where I document my entire learning journey. Every time there is a new course or significant milestone, it is logged and appended there.
+
 ## Search & Automation Infrastructure
 
 - **RAG Chatbot:** Powered by Groq (Llama-3) to handle user queries.
@@ -20,6 +24,7 @@ The chatbot uses a hybrid context approach that blends static injection and vect
    - The query itself is vectorized.
    - The API fetches semantically similar knowledge chunks from the Supabase pgvector database.
    - These retrieved contexts are appended directly to the end of the prompt before passing it to Llama-3.
+
 
 ## Setup Instructions
 
