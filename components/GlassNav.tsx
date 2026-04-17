@@ -1,15 +1,19 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 const navLinks = [
-  { label: 'Projects', href: '#projects' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Projects', href: '/#projects' },
+  { label: 'Skills', href: '/#skills' },
+  { label: 'Contact', href: '/#contact' },
+  { label: 'LLM Course (Exam)', href: '/llm' },
+
 ];
 
 export default function GlassNav() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -24,7 +28,7 @@ export default function GlassNav() {
         : 'bg-transparent'
         }`}
     >
-      <a href="#" className="font-bold text-slate-800 text-lg tracking-tight hover:opacity-70 transition-opacity">
+      <a href="/" className="font-bold text-slate-800 text-lg tracking-tight hover:opacity-70 transition-opacity">
         M.
       </a>
 
@@ -33,19 +37,15 @@ export default function GlassNav() {
           <a
             key={link.label}
             href={link.href}
-            className="text-slate-600 hover:text-slate-900 font-medium text-sm tracking-wide transition-colors duration-300"
+            className={`text-sm font-medium tracking-wide transition-colors duration-300 ${pathname === link.href || (pathname === '/' && link.href.startsWith('/#'))
+                ? 'text-slate-900'
+                : 'text-slate-600 hover:text-slate-900'
+              }`}
           >
             {link.label}
           </a>
         ))}
       </div>
-
-      <a
-        href="#contact"
-        className="ml-2 px-5 py-2 bg-slate-800 text-white rounded-full text-sm font-medium hover:bg-slate-700 transition-colors duration-300 shadow-sm"
-      >
-        Say Hello
-      </a>
     </nav>
   );
 }

@@ -1,3 +1,6 @@
+'use client';
+
+import { useState } from 'react';
 import ScrollReveal from './ScrollReveal';
 
 const projects = [
@@ -8,6 +11,7 @@ const projects = [
     tags: ['Python', 'Jupyter', 'Scikit-learn'],
     color: 'from-green-400/20 to-emerald-400/20',
     link: 'https://github.com/MarcusPFF/Football_MachineLearning_exam',
+    hidden: false,
   },
   {
     title: 'Carport Fog',
@@ -16,6 +20,7 @@ const projects = [
     tags: ['Java', 'MySQL', 'JSP', 'CSS'],
     color: 'from-amber-400/20 to-orange-400/20',
     link: 'https://github.com/MarcusPFF/Carport-Fog',
+    hidden: false,
   },
   {
     title: 'Calculator',
@@ -24,6 +29,7 @@ const projects = [
     tags: ['Java', 'JavaScript', 'REST API', 'HTML/CSS'],
     color: 'from-blue-400/20 to-purple-400/20',
     link: 'https://github.com/MarcusPFF/calcAPI',
+    hidden: false,
   },
   {
     title: 'Car Price Predictor',
@@ -32,6 +38,7 @@ const projects = [
     tags: ['Python', 'Jupyter', 'Pandas'],
     color: 'from-pink-400/20 to-rose-400/20',
     link: 'https://github.com/MarcusPFF/car-price-prediction-machine-learning',
+    hidden: false,
   },
   {
     title: 'Exam Fall API',
@@ -40,6 +47,7 @@ const projects = [
     tags: ['Java', 'Javalin', 'JPA', 'PostgreSQL'],
     color: 'from-violet-400/20 to-indigo-400/20',
     link: 'https://github.com/MarcusPFF/Exam_fallE24_API',
+    hidden: false,
   },
   {
     title: 'Movie Repository',
@@ -48,6 +56,7 @@ const projects = [
     tags: ['Java', 'JPA', 'REST API', 'PostgreSQL'],
     color: 'from-teal-400/20 to-cyan-400/20',
     link: 'https://github.com/MarcusPFF/sp1_movierepository',
+    hidden: false,
   },
   {
     title: 'Streaming Service',
@@ -56,6 +65,7 @@ const projects = [
     tags: ['Java', 'OOP', 'File I/O'],
     color: 'from-red-400/20 to-orange-400/20',
     link: 'https://github.com/MarcusPFF/SP3-StreamingServiceProject',
+    hidden: false,
   },
   {
     title: 'Discord On A Budget',
@@ -64,10 +74,17 @@ const projects = [
     tags: ['Java', 'TCP', 'Multithreading'],
     color: 'from-sky-400/20 to-blue-400/20',
     link: 'https://github.com/MarcusPFF/Discord-On-A-Budget',
+    hidden: false,
   },
 ];
 
 export default function GlassProjects() {
+  const [showAll, setShowAll] = useState(false);
+  const INITIAL_PROJECTS_COUNT = 3;
+
+  const filteredProjects = projects.filter(p => !p.hidden);
+  const visibleProjects = showAll ? filteredProjects : filteredProjects.slice(0, INITIAL_PROJECTS_COUNT);
+
   return (
     <section id="projects" className="py-28 px-6 md:px-24">
       <div className="max-w-6xl mx-auto">
@@ -79,7 +96,7 @@ export default function GlassProjects() {
         </ScrollReveal>
 
         <div className="flex flex-col gap-10">
-          {projects.map((proj, idx) => (
+          {visibleProjects.map((proj, idx) => (
             <ScrollReveal key={idx} delay={idx * 100}>
               <a
                 href={proj.link}
@@ -128,6 +145,26 @@ export default function GlassProjects() {
             </ScrollReveal>
           ))}
         </div>
+
+        {filteredProjects.length > INITIAL_PROJECTS_COUNT && (
+          <div className="mt-12 flex justify-center">
+            <button
+              onClick={() => setShowAll(!showAll)}
+              className="px-8 py-3 glass-pill rounded-full text-sm font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 flex items-center gap-2 group border border-slate-200/50"
+            >
+              <span>{showAll ? 'Show Fewer Projects' : 'Show All Projects'}</span>
+              <svg
+                className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -45,7 +45,20 @@ async function main() {
     values: chunks,
   });
 
-  console.log('Embeddings generated successfully. Inserting into Supabase...');
+  console.log('Embeddings generated successfully. Clearing old chunks from Supabase...');
+
+  // 4.5. Clear existing records so we don't have duplicates
+  const { error: deleteError } = await supabase
+    .from('document_chunks')
+    .delete()
+    .neq('id', 0); // Deletes all rows
+
+  if (deleteError) {
+    console.error('Error deleting old chunks:', deleteError);
+    return;
+  }
+
+  console.log('Old chunks cleared. Inserting new chunks into Supabase...');
 
   // 5. Insert into Supabase
   for (let i = 0; i < chunks.length; i++) {
