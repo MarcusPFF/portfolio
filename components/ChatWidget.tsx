@@ -101,6 +101,7 @@ export default function ChatWidget() {
     }
   };
 
+  
   return (
     <>
       {/* Floating toggle button */}
