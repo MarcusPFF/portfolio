@@ -23,10 +23,19 @@ export default function LLMTimeline() {
         </ScrollReveal>
 
         <div className="flex flex-col gap-10">
-          {visibleItems.map((cls, idx) => (
+          {visibleItems.map((cls, idx) => {
+            const CardWrapper = ({ children }: { children: React.ReactNode }) =>
+              cls.link ? (
+                <a href={cls.link} className="block">
+                  {children}
+                </a>
+              ) : (
+                <div className="block">{children}</div>
+              );
+            return (
             <ScrollReveal key={idx} delay={idx * 100}>
-              <div className="block">
-                <div className="glass-card-hover p-8 md:p-10 group overflow-hidden relative">
+              <CardWrapper>
+                <div className={`glass-card-hover p-8 md:p-10 group overflow-hidden relative ${cls.link ? 'cursor-pointer' : ''}`}>
                   {/* Subtle gradient overlay on hover */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${cls.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.25rem]`} />
 
@@ -55,17 +64,22 @@ export default function LLMTimeline() {
                       </div>
                     </div>
 
-                    {/* Timeline bullet / Check icon instead of an arrow, since it's a timeline */}
+                    {/* Arrow for linked items, check mark for completed timeline items */}
                     <div className="w-12 h-12 rounded-full bg-white/40 flex items-center justify-center group-hover:bg-slate-800 group-hover:text-white transition-all duration-300 shrink-0 self-start md:self-center">
                       <svg className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        {cls.link ? (
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
+                        ) : (
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        )}
                       </svg>
                     </div>
                   </div>
                 </div>
-              </div>
+              </CardWrapper>
             </ScrollReveal>
-          ))}
+            );
+          })}
         </div>
 
         {filteredItems.length > INITIAL_ITEMS_COUNT && (

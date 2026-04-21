@@ -101,7 +101,7 @@ export default function ChatWidget() {
     }
   };
 
-  
+
   return (
     <>
       {/* Floating toggle button */}
@@ -123,11 +123,10 @@ export default function ChatWidget() {
 
       {/* Chat panel */}
       <div
-        className={`fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] transition-all duration-400 ${
-          isOpen
-            ? 'opacity-100 translate-y-0 scale-100'
-            : 'opacity-0 translate-y-4 scale-95 pointer-events-none'
-        }`}
+        className={`fixed bottom-24 right-6 z-50 w-[380px] max-w-[calc(100vw-2rem)] transition-all duration-400 ${isOpen
+          ? 'opacity-100 translate-y-0 scale-100'
+          : 'opacity-0 translate-y-4 scale-95 pointer-events-none'
+          }`}
       >
         <div className="glass-card overflow-hidden flex flex-col" style={{ height: '520px' }}>
           {/* Header */}
@@ -155,11 +154,10 @@ export default function ChatWidget() {
                 className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 <div
-                  className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${
-                    msg.role === 'user'
-                      ? 'bg-slate-800 text-white rounded-br-md'
-                      : 'bg-white/50 text-slate-700 rounded-bl-md border border-white/40'
-                  }`}
+                  className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${msg.role === 'user'
+                    ? 'bg-slate-800 text-white rounded-br-md'
+                    : 'bg-white/50 text-slate-700 rounded-bl-md border border-white/40'
+                    }`}
                 >
                   {msg.content}
                 </div>

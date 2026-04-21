@@ -107,7 +107,17 @@ export const projects = [
   },
 ];
 
-export const classes = [
+type ClassItem = {
+  title: string;
+  subtitle: string;
+  desc: string;
+  tags: string[];
+  color: string;
+  link?: string;
+  hidden: boolean;
+};
+
+export const classes: ClassItem[] = [
   {
     title: 'Course 1',
     subtitle: 'Creation of the portfolio website',
@@ -126,10 +136,11 @@ export const classes = [
   },
   {
     title: 'Course 3',
-    subtitle: 'Coming soon',
-    desc: '...',
-    tags: ['RAG', 'Prompting', 'Context'],
+    subtitle: 'Meditations-quiz',
+    desc: 'Interaktiv quiz i 5 sektioner med 29 spørgsmål om meditation — stilhed, afspændthed, opmærksomhed og at lade alting være. Vælg svar, aflever, og få facit med markering af rigtigt/forkert.',
+    tags: ['Quiz', 'React', 'State'],
     color: 'from-amber-400/20 to-orange-400/20',
+    link: '/llm/course3',
     hidden: false,
   },
   // Add more weeks here as the course progresses
