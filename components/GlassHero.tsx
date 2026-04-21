@@ -1,4 +1,4 @@
-import ScrollReveal from './ScrollReveal';
+import TypewriterRoles from './TypewriterRoles';
 
 export default function GlassHero() {
   return (
@@ -6,8 +6,8 @@ export default function GlassHero() {
       <div className="w-full max-w-5xl mx-auto">
         <div className="glass-card p-10 md:p-20">
           <div className="hero-enter">
-            <p className="text-slate-400 font-medium tracking-[0.2em] uppercase mb-6 text-sm">
-              Developer  ·  QA  ·  Guide
+            <p className="text-slate-400 font-medium tracking-[0.2em] uppercase mb-6 text-sm flex items-center gap-2">
+              <TypewriterRoles />
             </p>
           </div>
 

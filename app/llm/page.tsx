@@ -1,3 +1,4 @@
+import { ViewTransition } from 'react';
 import GlassNav from '@/components/GlassNav';
 import ChatWidget from '@/components/ChatWidget';
 import LLMTimeline from '@/components/LLMTimeline';
@@ -20,13 +21,19 @@ export default function LLMPage() {
         <div className="absolute bottom-[10%] left-[20%] w-[250px] h-[250px] bg-orange-200/15 rounded-full blur-3xl float-slow" />
       </div>
 
-      <main className="relative z-10 pt-20">
-        <LLMTimeline />
+      <ViewTransition
+        enter={{ 'nav-forward': 'nav-forward', 'nav-back': 'nav-back', default: 'none' }}
+        exit={{ 'nav-forward': 'nav-forward', 'nav-back': 'nav-back', default: 'none' }}
+        default="none"
+      >
+        <main className="relative z-10 pt-20">
+          <LLMTimeline />
 
-        <footer className="py-12 text-center text-slate-400 font-light text-sm">
-          <p>© 2026 Marcus Forsberg</p>
-        </footer>
-      </main>
+          <footer className="py-12 text-center text-slate-400 font-light text-sm">
+            <p>© 2026 Marcus Forsberg</p>
+          </footer>
+        </main>
+      </ViewTransition>
 
       <ChatWidget />
     </>

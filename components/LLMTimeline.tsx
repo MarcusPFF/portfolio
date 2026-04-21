@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import ScrollReveal from './ScrollReveal';
 import { classes } from '../lib/data';
 
@@ -26,9 +27,9 @@ export default function LLMTimeline() {
           {visibleItems.map((cls, idx) => {
             const CardWrapper = ({ children }: { children: React.ReactNode }) =>
               cls.link ? (
-                <a href={cls.link} className="block">
+                <Link href={cls.link} transitionTypes={['nav-forward']} className="block">
                   {children}
-                </a>
+                </Link>
               ) : (
                 <div className="block">{children}</div>
               );
