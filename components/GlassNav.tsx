@@ -131,7 +131,11 @@ export default function GlassNav() {
       {menuOpen && (
         <div
           id="mobile-nav"
-          className="sm:hidden absolute top-full right-0 mt-3 w-56 rounded-2xl glass-nav shadow-lg overflow-hidden flex flex-col py-2"
+          style={{
+            background: '#ffffff',
+            boxShadow: '0 12px 40px rgba(15, 23, 42, 0.18), 0 2px 6px rgba(15, 23, 42, 0.08)',
+          }}
+          className="sm:hidden absolute top-full right-0 mt-3 w-56 rounded-2xl overflow-hidden flex flex-col py-2 border border-slate-200"
         >
           {navLinks.map((link) => {
             const dir = directionFor(link.href);
@@ -145,8 +149,8 @@ export default function GlassNav() {
                 onClick={() => setMenuOpen(false)}
                 className={`px-5 py-3 text-sm font-medium transition-colors ${
                   isActive
-                    ? 'text-slate-900 bg-white/50'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-white/40'
+                    ? 'text-slate-900 bg-slate-100'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
                 }`}
               >
                 {link.label}
