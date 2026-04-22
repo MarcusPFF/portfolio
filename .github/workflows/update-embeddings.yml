@@ -8,6 +8,8 @@ on:
     paths:
       - 'marcus.md'
       - 'scripts/embed.ts'
+      - 'lib/trips.ts'
+      - 'lib/data.ts'
       - 'package.json'
       - 'package-lock.json'
   workflow_dispatch: # Allows manual trigger from the Actions tab
