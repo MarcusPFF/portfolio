@@ -2,7 +2,7 @@ import { createGroq } from '@ai-sdk/groq';
 import { streamText, embed } from 'ai';
 import { createClient } from '@supabase/supabase-js';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
-import { personalDetails, skillGroups, projects, classes } from '@/lib/data';
+import { personalDetails } from '@/lib/data';
 import { isRateLimited } from '@/lib/rate-limit';
 
 const MAX_MESSAGE_LENGTH = 500; // max chars per message
@@ -85,8 +85,8 @@ export async function POST(req: Request) {
         console.log('[Chat API] Querying Supabase for matches...');
         const { data, error } = await supabase.rpc('match_document_chunks', {
           query_embedding: embedding,
-          match_threshold: 0.2, // Lowered threshold for broader matching
-          match_count: 10 // Get top 10 relevant chunks to ensure we don't miss key info
+          match_threshold: 0.2,
+          match_count: 15, // Broad retrieval — trips, projects, courses and skills all live here now
         });
 
         if (error) {
@@ -118,27 +118,23 @@ export async function POST(req: Request) {
 
     const result = streamText({
       model: groq('llama-3.3-70b-versatile'),
-      system: `You are a friendly, concise AI assistant on Marcus Forsberg's portfolio website. 
-You are technically functioning as a sophisticated RAG (Retrieval-Augmented Generation) Chatbot connected to a Supabase Vector Database. The "Relevant information" injected below is dynamically fetched from this vector database in real-time. If asked, proudly confirm that you use a vector database and RAG architecture!
+      system: `You are a friendly, concise AI assistant on Marcus Forsberg's portfolio website.
+Technically you are a RAG (Retrieval-Augmented Generation) chatbot: the "Relevant information" below is fetched live from a Supabase vector database populated with content about Marcus — his background, skills, projects, LLM course, and motorcycle trips. If asked, proudly confirm that you use a vector database and RAG architecture.
+
 Current date and time in Denmark: ${currentDate}.
 
-Here is the most up-to-date information directly from the website's source code:
-Personal Details: ${JSON.stringify(personalDetails)}
-Skills: ${JSON.stringify(skillGroups)}
-Projects: ${JSON.stringify(projects)}
-Course Timeline: ${JSON.stringify(classes)}
+Core profile (always authoritative): Marcus Forsberg. Roles: ${personalDetails.roles.join(
+        ', ',
+      )}. Status: ${personalDetails.status}.
 
-You answer questions about Marcus based ONLY on the above website data and the "Relevant information" below. 
-IMPORTANT: Always check the "Relevant information" below for additional details on Marcus' background, technologies, and birth date. 
-- If birth year/month is mentioned, you MUST calculate his current age using today's date (${currentDate}). 
-- If the exact day is missing, say he is "omkring X år" or just "X år".
-- Be specific about the technologies he uses (Java, Spring Boot, etc.) if they are listed below.
+Answer questions about Marcus based on the "Relevant information" below. Rules:
+- If birth year/month is mentioned, calculate his current age using today's date (${currentDate}). If the exact day is missing, say "omkring X år" or just "X år".
+- Be specific about technologies he uses when they appear in the retrieved information.
+- For questions about motorcycle trips, cite the trip name, year, distance and bike when available.
+- If the answer isn't in the context, say you don't know rather than guessing.
+- Keep answers short (2-3 sentences). Warm, professional tone.
 
-If the information is not in the context, say you don't know.
-Keep answers short (2-3 sentences).
-Use a warm, professional tone.
-
-Relevant information about Marcus (from knowledge base):
+Relevant information (from the vector database):
 ${retrievedContext}`,
       messages,
     });

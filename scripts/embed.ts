@@ -4,111 +4,208 @@ import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as dotenv from 'dotenv';
+import { trips, pick, type Trip } from '../lib/trips';
+import { personalDetails, skillGroups, projects, classes } from '../lib/data';
 
-// Load environment variables from .env.local
 dotenv.config({ path: '.env.local' });
 
-// 1. Initialize Supabase
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
 if (!supabaseUrl || !supabaseKey) {
   throw new Error('Supabase URL or Service Role Key is missing in .env.local');
 }
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// 2. Initialize Google Generative AI
 const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY;
 if (!googleKey) {
   throw new Error('Google Generative AI Key is missing in .env.local');
 }
-const google = createGoogleGenerativeAI({
-  apiKey: googleKey,
-});
+const google = createGoogleGenerativeAI({ apiKey: googleKey });
+
+type Metadata = Record<string, unknown>;
+type MarcusMdItem = { id?: string; text?: string; metadata?: Metadata };
+
+type Chunk = { content: string; metadata: Metadata };
+
+function loadMarcusMd(): Chunk[] {
+  const filePath = path.join(process.cwd(), 'marcus.md');
+  const raw = fs.readFileSync(filePath, 'utf-8');
+  const out: Chunk[] = [];
+  try {
+    const data = JSON.parse(raw) as MarcusMdItem[];
+    if (!Array.isArray(data)) throw new Error('not an array');
+    console.log(`marcus.md: JSON format, ${data.length} entries`);
+    for (const item of data) {
+      if (!item.text) continue;
+      out.push({
+        content: item.text,
+        metadata: {
+          id: item.id ?? 'unknown',
+          source: 'marcus.md',
+          ...(item.metadata ?? {}),
+        },
+      });
+    }
+  } catch {
+    console.log('marcus.md: markdown fallback, splitting by headings');
+    const rawChunks = raw.split(/\n(?=#{2,3}\s)/);
+    for (const c of rawChunks) {
+      const text = c.trim();
+      if (!text) continue;
+      const firstLine = text.split('\n')[0];
+      out.push({
+        content: text,
+        metadata: { source: 'marcus.md', heading: firstLine },
+      });
+    }
+  }
+  return out;
+}
+
+function tripToChunks(trip: Trip): Chunk[] {
+  // Use Danish fields — the embedding model (gemini-embedding-001) is
+  // multilingual, so Danish content still matches English queries.
+  const lang = 'dk' as const;
+  const title = pick(trip.title, lang);
+  const waypoints = trip.waypoints.map((w) => w.name).join(' → ');
+  const highlights = pick(trip.highlights, lang).join(' · ');
+  const story = pick(trip.story, lang).join(' ');
+
+  const header = `Motorcykel-tur: ${title}. Periode: ${trip.dateSort}. Varighed: ${pick(
+    trip.duration,
+    lang,
+  )}. Distance: ca. ${trip.distanceKm.toLocaleString('da-DK')} km. Område: ${pick(trip.location, lang)}.${
+    trip.bike ? ` Cykel: ${trip.bike}.` : ''
+  }`;
+  const body = `${pick(trip.subtitle, lang)}. ${pick(trip.summary, lang)}`;
+  const routeLine = `Rute: ${waypoints}.`;
+  const highlightsLine = `Højdepunkter: ${highlights}.`;
+
+  // One primary chunk with the summary + metadata, and a second chunk with
+  // the longer story so both shorter "what is the trip" queries and deeper
+  // "tell me about the ride" queries can retrieve relevant context.
+  const meta = {
+    source: 'trips.ts',
+    category: 'motorcycle_trip',
+    slug: trip.slug,
+    dateSort: trip.dateSort,
+    distanceKm: trip.distanceKm,
+    bike: trip.bike ?? null,
+  };
+
+  return [
+    {
+      content: [header, body, routeLine, highlightsLine].join(' '),
+      metadata: { ...meta, part: 'summary' },
+    },
+    {
+      content: `${title} (${trip.dateSort}): ${story}`,
+      metadata: { ...meta, part: 'story' },
+    },
+  ];
+}
+
+function projectsChunks(): Chunk[] {
+  return projects
+    .filter((p) => !p.hidden)
+    .map((p) => ({
+      content: `Projekt: ${p.title} — ${p.subtitle}. ${p.desc} Teknologier: ${p.tags.join(', ')}. Kildekode: ${p.link}.`,
+      metadata: {
+        source: 'data.ts',
+        category: 'project',
+        title: p.title,
+        tags: p.tags,
+      },
+    }));
+}
+
+function classesChunks(): Chunk[] {
+  return classes
+    .filter((c) => !c.hidden)
+    .map((c) => ({
+      content: `LLM-kursus: ${c.title} — ${c.subtitle}. ${c.desc} Emner: ${c.tags.join(', ')}.`,
+      metadata: {
+        source: 'data.ts',
+        category: 'course',
+        title: c.title,
+      },
+    }));
+}
+
+function skillsChunks(): Chunk[] {
+  return skillGroups.map((g) => ({
+    content: `Færdigheder — ${g.category}: ${g.items.join(', ')}.`,
+    metadata: {
+      source: 'data.ts',
+      category: 'skill_group',
+      group: g.category,
+    },
+  }));
+}
+
+function personalChunks(): Chunk[] {
+  return [
+    {
+      content: `Marcus Forsberg. Roller: ${personalDetails.roles.join(', ')}. Status: ${personalDetails.status}. Statistik: ${personalDetails.stats
+        .map((s) => `${s.value} ${s.label}`)
+        .join(', ')}.`,
+      metadata: { source: 'data.ts', category: 'personal_details' },
+    },
+  ];
+}
 
 async function main() {
-  console.log('Reading marcus.md...');
-  const filePath = path.join(process.cwd(), 'marcus.md');
-  const fileContent = fs.readFileSync(filePath, 'utf-8');
+  const chunks: Chunk[] = [
+    ...loadMarcusMd(),
+    ...personalChunks(),
+    ...skillsChunks(),
+    ...projectsChunks(),
+    ...classesChunks(),
+    ...trips.flatMap(tripToChunks),
+  ];
 
-  let chunks: string[] = [];
-  let metadataList: any[] = [];
+  console.log(`\nTotal chunks to embed: ${chunks.length}`);
+  console.log(`  marcus.md:          ${loadMarcusMd().length}`);
+  console.log(`  personal:           ${personalChunks().length}`);
+  console.log(`  skill groups:       ${skillsChunks().length}`);
+  console.log(`  projects:           ${projectsChunks().length}`);
+  console.log(`  courses:            ${classesChunks().length}`);
+  console.log(`  trips:              ${trips.flatMap(tripToChunks).length}`);
 
-  // 3. Chunk the document. Detect JSON or Markdown
-  try {
-    const jsonData = JSON.parse(fileContent);
-    if (Array.isArray(jsonData)) {
-      console.log('Detected JSON format. Parsing items...');
-      jsonData.forEach((item: any) => {
-        if (item.text) {
-          chunks.push(item.text);
-          metadataList.push({
-            id: item.id || 'unknown',
-            source: 'marcus.md',
-            ...(item.metadata || {})
-          });
-        }
-      });
-    } else {
-      throw new Error('JSON is not an array');
-    }
-  } catch (e) {
-    console.log('Detected Markdown format (or invalid JSON). Splitting by headings...');
-    // Fallback to original Markdown splitting
-    const rawChunks = fileContent.split(/\n(?=#{2,3}\s)/);
-    chunks = rawChunks
-      .map((chunk) => chunk.trim())
-      .filter((chunk) => chunk.length > 0);
-    
-    chunks.forEach((chunk) => {
-       const firstLine = chunk.split('\n')[0];
-       metadataList.push({ source: 'marcus.md', heading: firstLine });
-    });
-  }
-
-  console.log(`Found ${chunks.length} chunks. Generating embeddings...`);
-
-  // 4. Generate Embeddings using Google's gemini-embedding-001
+  console.log('\nGenerating embeddings...');
   const { embeddings } = await embedMany({
     model: google.textEmbeddingModel('gemini-embedding-001'),
-    values: chunks,
+    values: chunks.map((c) => c.content),
   });
 
-  console.log('Embeddings generated successfully. Clearing old chunks from Supabase...');
-
-  // 4.5. Clear existing records so we don't have duplicates
+  console.log('Clearing existing rows in document_chunks...');
   const { error: deleteError } = await supabase
     .from('document_chunks')
     .delete()
-    .neq('id', 0); // Deletes all rows
-
+    .neq('id', 0);
   if (deleteError) {
     console.error('Error deleting old chunks:', deleteError);
     return;
   }
 
-  console.log('Old chunks cleared. Inserting new chunks into Supabase...');
-
-  // 5. Insert into Supabase
+  console.log('Inserting new rows...');
   for (let i = 0; i < chunks.length; i++) {
-    const chunk = chunks[i];
-    const embedding = embeddings[i];
-    const metadata = metadataList[i];
-
     const { error } = await supabase.from('document_chunks').insert({
-      content: chunk,
-      metadata: metadata,
-      embedding: embedding,
+      content: chunks[i].content,
+      metadata: chunks[i].metadata,
+      embedding: embeddings[i],
     });
-
     if (error) {
-      console.error(`Error inserting chunk ${i + 1}:`, error);
+      console.error(`  × chunk ${i + 1}:`, error.message);
     } else {
-      console.log(`Successfully inserted chunk ${i + 1}/${chunks.length}`);
+      console.log(`  ✓ chunk ${i + 1}/${chunks.length}`);
     }
   }
 
-  console.log('✅ Finished embedding and inserting all chunks!');
+  console.log('\n✅ Done.');
 }
 
-main().catch(console.error);
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
