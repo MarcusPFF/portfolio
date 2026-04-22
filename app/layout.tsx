@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 const geistSans = Geist({
@@ -26,6 +27,7 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body suppressHydrationWarning className="antialiased min-h-screen font-sans selection:bg-slate-300/50 selection:text-slate-900 overflow-x-hidden">
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
