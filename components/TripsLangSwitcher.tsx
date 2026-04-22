@@ -20,7 +20,7 @@ export default function TripsLangSwitcher({
   onChange: (l: Lang) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const [pos, setPos] = useState<{ top: number; right: number }>({ top: 0, right: 0 });
+  const [pos, setPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLUListElement>(null);
   const current = OPTIONS.find((o) => o.code === lang) ?? OPTIONS[1];
@@ -28,7 +28,16 @@ export default function TripsLangSwitcher({
   useLayoutEffect(() => {
     if (!open || !buttonRef.current) return;
     const r = buttonRef.current.getBoundingClientRect();
-    setPos({ top: r.bottom + 8, right: window.innerWidth - r.right });
+    const MENU_WIDTH = 192; // Tailwind w-48
+    const MARGIN = 8;
+    // Prefer aligning the menu's right edge with the button's right edge,
+    // but clamp to the viewport so we never overflow on either side.
+    let left = r.right - MENU_WIDTH;
+    if (left < MARGIN) left = MARGIN;
+    if (left + MENU_WIDTH > window.innerWidth - MARGIN) {
+      left = window.innerWidth - MENU_WIDTH - MARGIN;
+    }
+    setPos({ top: r.bottom + 8, left });
   }, [open]);
 
   useEffect(() => {
@@ -97,7 +106,7 @@ export default function TripsLangSwitcher({
             style={{
               position: 'fixed',
               top: pos.top,
-              right: pos.right,
+              left: pos.left,
               zIndex: 9999,
               background: '#ffffff',
               borderRadius: '1rem',
