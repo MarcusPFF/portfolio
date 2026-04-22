@@ -34,29 +34,44 @@ type OrbitControls = {
   maxDistance: number;
 };
 
-const EARTH_TEXTURE_HIGH = '/trips/earth-16k.jpg';
-const EARTH_TEXTURE_LOW = '/trips/earth-8k.jpg';
+const EARTH_TEXTURE_HIGH = '/trips/earth-16k.jpg'; // 21600×10800, desktop only
+const EARTH_TEXTURE_MID = '/trips/earth-8k.jpg'; //   8192×4096,  capable mobiles
+const EARTH_TEXTURE_LOW = '/trips/earth-2k.jpg'; //   2048×1024,  safe fallback
 const TOPOLOGY_TEXTURE = '/trips/earth-topology-4k.jpg';
 
-/*
-  Mobile GPUs typically cap MAX_TEXTURE_SIZE at 4096-8192 px while the 16K
-  NASA Blue Marble is 21600×10800 — way beyond that, which causes WebGL to
-  fail silently and renders the globe black. Pick the texture the device
-  can actually handle at runtime.
-*/
-function pickEarthTexture(): string {
-  if (typeof document === 'undefined') return EARTH_TEXTURE_LOW;
+type DeviceCaps = { maxTextureSize: number; isMobile: boolean };
+
+function probeDevice(): DeviceCaps {
+  if (typeof document === 'undefined' || typeof window === 'undefined') {
+    return { maxTextureSize: 2048, isMobile: true };
+  }
+  const isMobile =
+    window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
   try {
     const canvas = document.createElement('canvas');
     const gl =
       (canvas.getContext('webgl2') as WebGL2RenderingContext | null) ??
       (canvas.getContext('webgl') as WebGLRenderingContext | null);
-    if (!gl) return EARTH_TEXTURE_LOW;
-    const maxSize = gl.getParameter(gl.MAX_TEXTURE_SIZE) as number;
-    return maxSize >= 16384 ? EARTH_TEXTURE_HIGH : EARTH_TEXTURE_LOW;
+    if (!gl) return { maxTextureSize: 2048, isMobile };
+    const maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE) as number;
+    return { maxTextureSize, isMobile };
   } catch {
-    return EARTH_TEXTURE_LOW;
+    return { maxTextureSize: 2048, isMobile };
   }
+}
+
+/*
+  Pick the largest texture the device can actually render reliably.
+  Mobile browsers often refuse textures far below their reported
+  MAX_TEXTURE_SIZE due to memory pressure, so we're conservative there.
+*/
+function pickEarthTexture(caps: DeviceCaps): string {
+  if (caps.isMobile) {
+    return caps.maxTextureSize >= 8192 ? EARTH_TEXTURE_MID : EARTH_TEXTURE_LOW;
+  }
+  if (caps.maxTextureSize >= 16384) return EARTH_TEXTURE_HIGH;
+  if (caps.maxTextureSize >= 8192) return EARTH_TEXTURE_MID;
+  return EARTH_TEXTURE_LOW;
 }
 const WATER_MASK = '/trips/earth-water.png';
 const COUNTRIES_URL =
@@ -231,29 +246,40 @@ export default function TripsGlobeInner({
         loader.load(url, (t) => resolve(t), undefined, (err) => reject(err));
       });
 
-    Promise.all([load(pickEarthTexture()), load(TOPOLOGY_TEXTURE), load(WATER_MASK)])
-      .then(([earth, topo, water]) => {
+    const caps = probeDevice();
+    const earthUrl = pickEarthTexture(caps);
+
+    // On mobile, skip the heavier texture channels (displacement +
+    // specular map). They're nice-to-have on desktop but push many
+    // mobile GPUs over memory/shader limits and cause a black globe.
+    const texturesToLoad = caps.isMobile
+      ? [load(earthUrl), load(TOPOLOGY_TEXTURE)]
+      : [load(earthUrl), load(TOPOLOGY_TEXTURE), load(WATER_MASK)];
+
+    Promise.all(texturesToLoad)
+      .then((results) => {
         if (cancelled) return;
+        const [earth, topo, water] = results;
         tuneTexture(earth);
         tuneTexture(topo);
-        tuneTexture(water);
+        if (water) tuneTexture(water);
 
         const mat = new MeshPhongMaterial({
           map: earth,
           bumpMap: topo,
-          // Displacement kept subtle so trip lines and borders can sit
-          // nearly flat on the surface without being buried in peaks.
-          // Bump scale compensates so mountains still read in 3D via
-          // lighting/shadow, even though the geometry is barely pushed.
-          bumpScale: 3.2,
-          displacementMap: topo,
-          displacementScale: 0.6,
-          displacementBias: -0.15,
-          // Water mask → only oceans pick up specular highlights.
-          // Land stays matte, oceans get subtle shine — big realism win.
-          specularMap: water,
-          specular: '#64748b',
-          shininess: 14,
+          bumpScale: caps.isMobile ? 2.4 : 3.2,
+          ...(caps.isMobile
+            ? {}
+            : {
+                // Desktop only — mobile GPUs silently drop or black-box
+                // the combination of displacement + specular + bump.
+                displacementMap: topo,
+                displacementScale: 0.6,
+                displacementBias: -0.15,
+                specularMap: water,
+                specular: '#64748b',
+                shininess: 14,
+              }),
         });
         setMaterial(mat);
       })
