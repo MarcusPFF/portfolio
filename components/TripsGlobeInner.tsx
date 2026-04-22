@@ -34,8 +34,30 @@ type OrbitControls = {
   maxDistance: number;
 };
 
-const EARTH_TEXTURE = '/trips/earth-16k.jpg';
+const EARTH_TEXTURE_HIGH = '/trips/earth-16k.jpg';
+const EARTH_TEXTURE_LOW = '/trips/earth-8k.jpg';
 const TOPOLOGY_TEXTURE = '/trips/earth-topology-4k.jpg';
+
+/*
+  Mobile GPUs typically cap MAX_TEXTURE_SIZE at 4096-8192 px while the 16K
+  NASA Blue Marble is 21600×10800 — way beyond that, which causes WebGL to
+  fail silently and renders the globe black. Pick the texture the device
+  can actually handle at runtime.
+*/
+function pickEarthTexture(): string {
+  if (typeof document === 'undefined') return EARTH_TEXTURE_LOW;
+  try {
+    const canvas = document.createElement('canvas');
+    const gl =
+      (canvas.getContext('webgl2') as WebGL2RenderingContext | null) ??
+      (canvas.getContext('webgl') as WebGLRenderingContext | null);
+    if (!gl) return EARTH_TEXTURE_LOW;
+    const maxSize = gl.getParameter(gl.MAX_TEXTURE_SIZE) as number;
+    return maxSize >= 16384 ? EARTH_TEXTURE_HIGH : EARTH_TEXTURE_LOW;
+  } catch {
+    return EARTH_TEXTURE_LOW;
+  }
+}
 const WATER_MASK = '/trips/earth-water.png';
 const COUNTRIES_URL =
   'https://vasturiano.github.io/react-globe.gl/example/datasets/ne_110m_admin_0_countries.geojson';
@@ -209,7 +231,7 @@ export default function TripsGlobeInner({
         loader.load(url, (t) => resolve(t), undefined, (err) => reject(err));
       });
 
-    Promise.all([load(EARTH_TEXTURE), load(TOPOLOGY_TEXTURE), load(WATER_MASK)])
+    Promise.all([load(pickEarthTexture()), load(TOPOLOGY_TEXTURE), load(WATER_MASK)])
       .then(([earth, topo, water]) => {
         if (cancelled) return;
         tuneTexture(earth);
