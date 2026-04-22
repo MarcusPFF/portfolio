@@ -236,7 +236,7 @@ export const trips: Trip[] = [
   },
   {
     slug: 'sverige-tur',
-    dateSort: '2025-07',
+    dateSort: '2024-08',
     distanceKm: 1155,
     color: 'from-blue-400/20 to-indigo-400/20',
     hexColor: '#3b82f6',
@@ -309,7 +309,7 @@ export const trips: Trip[] = [
   },
   {
     slug: 'norge-tur',
-    dateSort: '2025-08',
+    dateSort: '2024-10',
     distanceKm: 2950,
     color: 'from-red-400/20 to-rose-400/20',
     hexColor: '#ef4444',
