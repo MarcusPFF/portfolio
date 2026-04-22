@@ -1,4 +1,4 @@
-import TypewriterRoles from './TypewriterRoles';
+import TypewriterRoles from "./TypewriterRoles";
 
 export default function GlassHero() {
   return (
@@ -20,7 +20,8 @@ export default function GlassHero() {
 
           <div className="hero-enter-delay-2">
             <p className="text-slate-500 max-w-xl text-lg md:text-xl leading-relaxed mb-12 font-light">
-              Still under development
+              Welcome to my personal site. Here you will find projects, my
+              motorcycle trips and information about me.
             </p>
           </div>
 
@@ -30,8 +31,18 @@ export default function GlassHero() {
               className="group px-8 py-4 bg-slate-800 text-white rounded-full font-medium shadow-sm hover:shadow-lg hover:bg-slate-700 transition-all duration-300 flex items-center gap-2"
             >
               View My Work
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              <svg
+                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M17 8l4 4m0 0l-4 4m4-4H3"
+                />
               </svg>
             </a>
             <a

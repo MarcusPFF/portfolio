@@ -1,7 +1,7 @@
 export const personalDetails = {
   name: 'Marcus Forsberg',
   roles: ['Developer', 'QA', 'Guide'],
-  status: 'Still under development',
+  status: 'Welcome to my personal site. Here you will find projects, my motorcycle trips and information about me.',
   stats: [
     { value: '3+', label: 'Years Experience' },
     { value: '10+', label: 'Projects Built' },

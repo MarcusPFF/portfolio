@@ -150,6 +150,22 @@
     transform: translateY(-3px) scale(1.05);
   }
 
+  /* ---- Reveal-from-top (quick staggered fade-in, top → bottom) ---- */
+  .reveal-top {
+    opacity: 0;
+    animation: revealFromTop 420ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .reveal-top-1 { animation-delay: 60ms; }
+  .reveal-top-2 { animation-delay: 120ms; }
+  .reveal-top-3 { animation-delay: 180ms; }
+  .reveal-top-4 { animation-delay: 240ms; }
+  .reveal-top-5 { animation-delay: 300ms; }
+  .reveal-top-6 { animation-delay: 360ms; }
+}
+
+@keyframes revealFromTop {
+  from { opacity: 0; transform: translateY(-14px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);     filter: blur(0); }
 }
 
 /* ---- View transitions (enabled via next.config experimental.viewTransition) ---- */
@@ -192,6 +208,25 @@
 }
 ::view-transition-new(site-header) {
   animation: none;
+}
+
+/* Sidebar on /trips/[slug] stays put during navigation */
+::view-transition-group(trips-sidebar) {
+  animation: none;
+}
+::view-transition-old(trips-sidebar) {
+  display: none;
+}
+::view-transition-new(trips-sidebar) {
+  animation: none;
+}
+
+/* Very quick, very subtle crossfade — used for sidebar navigation */
+::view-transition-old(.quick) {
+  animation: 100ms ease-in both vt-fade reverse;
+}
+::view-transition-new(.quick) {
+  animation: 100ms ease-out both vt-fade;
 }
 
 @keyframes vt-fade {

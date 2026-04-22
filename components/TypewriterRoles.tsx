@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const ROLES = ["Developer", "Quality Assurance (QA)", "Guide"];
+const ROLES = ["Developer", "Quality Assurance (QA)", "Guide", "Adventurer"];
 const TYPE_MS = 80;
 const DELETE_MS = 45;
 const HOLD_MS = 1600;

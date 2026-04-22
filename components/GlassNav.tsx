@@ -8,6 +8,7 @@ const navLinks = [
   { label: 'Projects', href: '/#projects' },
   { label: 'Skills', href: '/#skills' },
   { label: 'Contact', href: '/#contact' },
+  { label: 'Motorcycle Trips', href: '/trips' },
   { label: 'LLM Course (Exam)', href: '/llm' },
 ];
 
@@ -23,12 +24,12 @@ export default function GlassNav() {
 
   function directionFor(href: string): 'nav-forward' | 'nav-back' | null {
     if (href.startsWith('/#')) return null;
-    if (href === '/') return 'nav-back';
-    if (pathname === '/' || (pathname.startsWith('/llm') && href.startsWith('/llm') && href.length > pathname.length)) {
-      return 'nav-forward';
-    }
-    if (pathname.startsWith('/llm') && href === '/llm' && pathname !== '/llm') return 'nav-back';
-    return 'nav-forward';
+    if (href === pathname) return null;
+    const current = pathname.split('/').filter(Boolean).length;
+    const target = href.split('/').filter(Boolean).length;
+    if (target > current) return 'nav-forward';
+    if (target < current) return 'nav-back';
+    return pathname.startsWith(href) ? 'nav-back' : 'nav-forward';
   }
 
   return (
