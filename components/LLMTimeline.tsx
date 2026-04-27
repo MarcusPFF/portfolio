@@ -7,7 +7,7 @@ import { classes } from '../lib/data';
 
 
 export default function LLMTimeline() {
-  const [showAll, setShowAll] = useState(false);
+  const [showAll, setShowAll] = useState(true);
   const INITIAL_ITEMS_COUNT = 3;
 
   const filteredItems = classes.filter(cls => !cls.hidden);

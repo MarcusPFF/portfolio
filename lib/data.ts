@@ -143,5 +143,29 @@ export const classes: ClassItem[] = [
     link: '/llm/course3',
     hidden: false,
   },
+  {
+    title: 'Course 4',
+    subtitle: 'Coming soon',
+    desc: '...',
+    tags: ['TBD'],
+    color: 'from-pink-400/20 to-rose-400/20',
+    hidden: false,
+  },
+  {
+    title: 'Course 5',
+    subtitle: 'Coming soon',
+    desc: '...',
+    tags: ['TBD'],
+    color: 'from-teal-400/20 to-cyan-400/20',
+    hidden: false,
+  },
+  {
+    title: 'Course 6',
+    subtitle: 'Coming soon',
+    desc: '...',
+    tags: ['TBD'],
+    color: 'from-violet-400/20 to-fuchsia-400/20',
+    hidden: false,
+  },
   // Add more weeks here as the course progresses
 ];
