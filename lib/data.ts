@@ -110,10 +110,11 @@ export const projects = [
 type ClassItem = {
   title: string;
   subtitle: string;
-  desc: string;
+  desc?: string;
   tags: string[];
   color: string;
   link?: string;
+  blogSlug?: string;
   hidden: boolean;
 };
 
@@ -121,50 +122,35 @@ export const classes: ClassItem[] = [
   {
     title: 'Course 1',
     subtitle: 'Creation of the portfolio website',
-    desc: 'I denne uge, lavede jeg min portfolio hjemmeside, som du ser lige nu. Jeg brugte Next.js og Tailwind CSS til at lave den.',
     tags: ['Next.js', 'Tailwind CSS', 'Portfolio', 'Vercel'],
     color: 'from-blue-400/20 to-purple-400/20',
+    blogSlug: 'course1',
     hidden: false,
   },
   {
-    title: 'Course 2',
+    title: 'Course 2 + 3',
     subtitle: 'RAG chatbot',
-    desc: 'I denne uge har jeg smidt en RAG-chatbot (Retrieval-Augmented Generation) på siden, så den ikke bare står og gætter. Rent teknisk har jeg oversat hele mit CV til matematiske vektorer og lagt det i en Supabase-database. Når du stiller et spørgsmål, bliver det også lavet om til en vektor. Så sammenligner mit API de to vektorer for at finde de steder i mit CV, der bedst matcher det du spørger om. Til sidst ryger teksten over i Llama-3, som bruger den til at stykke et fornuftigt svar sammen.',
     tags: ['RAG', 'Vector Search', 'Supabase'],
     color: 'from-green-400/20 to-emerald-400/20',
-    hidden: false,
-  },
-  {
-    title: 'Course 3',
-    subtitle: 'Meditations-quiz',
-    desc: 'Interaktiv quiz i 5 sektioner med 29 spørgsmål om meditation — stilhed, afspændthed, opmærksomhed og at lade alting være. Vælg svar, aflever, og få facit med markering af rigtigt/forkert.',
-    tags: ['Quiz', 'React', 'State'],
-    color: 'from-amber-400/20 to-orange-400/20',
-    link: '/llm/course3',
+    blogSlug: 'course2',
     hidden: false,
   },
   {
     title: 'Course 4',
-    subtitle: 'Coming soon',
-    desc: '...',
-    tags: ['TBD'],
-    color: 'from-pink-400/20 to-rose-400/20',
+    subtitle: 'Meditations-quiz',
+    tags: ['Quiz', 'React', 'State'],
+    color: 'from-amber-400/20 to-orange-400/20',
+    link: '/llm/course3',
+    blogSlug: 'course4',
     hidden: false,
   },
   {
-    title: 'Course 5',
-    subtitle: 'Coming soon',
-    desc: '...',
-    tags: ['TBD'],
+    title: 'Course 5 + 6',
+    subtitle: 'LLM API Integration',
+    tags: ['Groq', 'Llama 3.3', 'API', 'Server-side'],
     color: 'from-teal-400/20 to-cyan-400/20',
-    hidden: false,
-  },
-  {
-    title: 'Course 6',
-    subtitle: 'Coming soon',
-    desc: '...',
-    tags: ['TBD'],
-    color: 'from-violet-400/20 to-fuchsia-400/20',
+    link: '/llm/course-5',
+    blogSlug: 'course5',
     hidden: false,
   },
   // Add more weeks here as the course progresses

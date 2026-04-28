@@ -120,16 +120,37 @@ function projectsChunks(): Chunk[] {
 }
 
 function classesChunks(): Chunk[] {
+  // Each course chunk = title + subtitle + tags + (if available) the
+  // matching blog post markdown file. Strips HTML comments to keep the
+  // chunk focused on real content.
   return classes
     .filter((c) => !c.hidden)
-    .map((c) => ({
-      content: `LLM-kursus: ${c.title} — ${c.subtitle}. ${c.desc} Emner: ${c.tags.join(', ')}.`,
-      metadata: {
-        source: 'data.ts',
-        category: 'course',
-        title: c.title,
-      },
-    }));
+    .map((c) => {
+      let blogText = '';
+      if (c.blogSlug) {
+        try {
+          const md = fs.readFileSync(
+            path.join(process.cwd(), 'content/course-blogs', `${c.blogSlug}.md`),
+            'utf-8',
+          );
+          blogText = md.replace(/<!--[\s\S]*?-->/g, '').trim();
+        } catch {
+          /* file missing — fall through with empty blogText */
+        }
+      }
+      const parts = [`LLM-kursus: ${c.title} — ${c.subtitle}.`];
+      if (blogText) parts.push(blogText);
+      parts.push(`Emner: ${c.tags.join(', ')}.`);
+      return {
+        content: parts.join(' '),
+        metadata: {
+          source: 'data.ts',
+          category: 'course',
+          title: c.title,
+          blogSlug: c.blogSlug ?? null,
+        },
+      };
+    });
 }
 
 function skillsChunks(): Chunk[] {

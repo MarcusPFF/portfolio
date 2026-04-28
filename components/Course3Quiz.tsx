@@ -49,7 +49,7 @@ export default function Course3Quiz() {
       <div className="max-w-3xl mx-auto">
         <header className="mb-10">
           <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-sm mb-3">
-            Course 3
+            Course 4
           </p>
           <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
             Meditations-quiz

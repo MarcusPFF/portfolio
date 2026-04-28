@@ -1,14 +1,24 @@
 import { ViewTransition } from 'react';
+import { readFileSync } from 'fs';
+import path from 'path';
 import GlassNav from '@/components/GlassNav';
 import ChatWidget from '@/components/ChatWidget';
-import Course3Quiz from '@/components/Course3Quiz';
+import Course5Assessor from '@/components/Course5Assessor';
+
+const dataDir = path.join(process.cwd(), 'app/llm/course-5/data');
+const exampleSubmissions = {
+  '1': readFileSync(path.join(dataDir, 'student1.md'), 'utf-8'),
+  '2': readFileSync(path.join(dataDir, 'student2.md'), 'utf-8'),
+  '3': readFileSync(path.join(dataDir, 'student3.md'), 'utf-8'),
+} as const;
 
 export const metadata = {
-  title: 'Course 4 · Meditations-quiz | Marcus Forsberg',
-  description: 'Interaktiv meditations-quiz i fem sektioner om stilhed, afspændthed, opmærksomhed og at lade alting være.',
+  title: 'Course 5 + 6 · AI Assignment Assessor | Marcus Forsberg',
+  description:
+    'Server-side Gemini 2.0 integration that grades student assignments against a fixed rubric and returns a structured JSON assessment.',
 };
 
-export default function Course3Page() {
+export default function Course5Page() {
   return (
     <>
       <GlassNav />
@@ -26,7 +36,7 @@ export default function Course3Page() {
         default="none"
       >
         <main className="relative z-10 pt-20">
-          <Course3Quiz />
+          <Course5Assessor exampleSubmissions={exampleSubmissions} />
 
           <footer className="py-12 text-center text-slate-400 font-light text-sm">
             <p>© 2026 Marcus Forsberg</p>
