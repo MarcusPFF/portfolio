@@ -1,6 +1,6 @@
 import { ViewTransition } from 'react';
 import GlassNav from '@/components/GlassNav';
-import ChatWidget from '@/components/ChatWidget';
+import ChatWidgetLazy from '@/components/ChatWidgetLazy';
 import Course3Quiz from '@/components/Course3Quiz';
 
 export const metadata = {
@@ -34,7 +34,7 @@ export default function Course3Page() {
         </main>
       </ViewTransition>
 
-      <ChatWidget />
+      <ChatWidgetLazy />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { Resend } from 'resend';
 import { isContactRateLimited, isGlobalContactCapped } from '@/lib/rate-limit';
+import { isAllowedOrigin } from '@/lib/api-security';
 
 const resendKey = process.env.RESEND_API_KEY || '';
 const resend = resendKey ? new Resend(resendKey) : null;
@@ -61,6 +62,10 @@ async function verifyTurnstile(token: string, ip: string): Promise<boolean> {
 }
 
 export async function POST(req: Request) {
+  if (!isAllowedOrigin(req)) {
+    return jsonResponse({ error: 'Forbidden.' }, 403);
+  }
+
   const forwarded = req.headers.get('x-forwarded-for');
   const ip = forwarded?.split(',')[0]?.trim() || 'unknown';
 
