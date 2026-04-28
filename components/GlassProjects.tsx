@@ -7,81 +7,97 @@ import { projects } from '../lib/data';
 
 export default function GlassProjects() {
   const [showAll, setShowAll] = useState(false);
-  const INITIAL_PROJECTS_COUNT = 3;
+  const INITIAL_PROJECTS_COUNT = 4;
 
-  const filteredProjects = projects.filter(p => !p.hidden);
-  const visibleProjects = showAll ? filteredProjects : filteredProjects.slice(0, INITIAL_PROJECTS_COUNT);
+  const filteredProjects = projects.filter((p) => !p.hidden);
+  const visibleProjects = showAll
+    ? filteredProjects
+    : filteredProjects.slice(0, INITIAL_PROJECTS_COUNT);
 
   return (
-    <section id="projects" className="py-28 px-6 md:px-24">
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="pt-6 pb-20 px-6 md:px-24">
+      <div className="max-w-4xl mx-auto">
         <ScrollReveal>
-          <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-sm mb-3">Portfolio</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-16 tracking-tight">
-            Selected Projects (More coming soon)
+          <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-xs mb-3">
+            Portfolio
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
+            Selected Projects
           </h2>
+          <p className="text-slate-400 font-light text-sm mb-10">More coming soon</p>
         </ScrollReveal>
 
-        <div className="flex flex-col gap-10">
-          {visibleProjects.map((proj, idx) => (
-            <ScrollReveal key={idx} delay={idx * 100}>
-              <a
-                href={proj.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block"
-              >
-                <div className="glass-card-hover p-8 md:p-10 group cursor-pointer overflow-hidden relative">
-                  {/* Subtle gradient overlay on hover */}
-                  <div className={`absolute inset-0 bg-gradient-to-br ${proj.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.25rem]`} />
+        <ScrollReveal>
+          <div className="glass-card overflow-hidden">
+            <ul>
+              {visibleProjects.map((proj, idx) => (
+                <li
+                  key={idx}
+                  className={idx > 0 ? 'border-t border-white/40' : ''}
+                >
+                  <a
+                    href={proj.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block px-5 md:px-7 py-5 hover:bg-white/30 transition-colors"
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="text-xs text-slate-400 font-mono tabular-nums shrink-0 w-7 text-center">
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
 
-                  <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-6">
-                    <div className="flex-1">
-                      <div className="flex items-baseline gap-3 mb-3">
-                        <h3 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
-                          {proj.title}
-                        </h3>
-                        <span className="text-slate-400 font-light text-lg hidden sm:inline">
-                          — {proj.subtitle}
-                        </span>
-                      </div>
-                      <p className="text-slate-500 font-light leading-relaxed max-w-2xl mb-5">
-                        {proj.desc}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {proj.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-3 py-1.5 glass-pill rounded-full text-sm text-slate-600 font-medium"
-                          >
-                            {tag}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline justify-between gap-3 mb-0.5">
+                          <h3 className="text-base md:text-lg font-bold text-slate-800 tracking-tight truncate">
+                            {proj.title}
+                          </h3>
+                          <span className="text-slate-400 font-medium text-[10px] uppercase tracking-[0.15em] shrink-0 hidden sm:inline">
+                            {proj.subtitle}
                           </span>
-                        ))}
+                        </div>
+                        <p className="text-slate-500 font-light text-sm leading-snug line-clamp-1 mb-1.5">
+                          {proj.desc}
+                        </p>
+                        <p className="text-[10px] font-medium text-slate-400 uppercase tracking-[0.15em] truncate">
+                          {proj.tags.join(' · ')}
+                        </p>
                       </div>
-                    </div>
 
-                    {/* Arrow */}
-                    <div className="w-12 h-12 rounded-full bg-white/40 flex items-center justify-center group-hover:bg-slate-800 group-hover:text-white transition-all duration-300 shrink-0">
-                      <svg className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 17L17 7M17 7H7M17 7v10" />
+                      <svg
+                        className="w-4 h-4 text-slate-400 group-hover:text-slate-800 group-hover:translate-x-1 transition-all shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
                       </svg>
                     </div>
-                  </div>
-                </div>
-              </a>
-            </ScrollReveal>
-          ))}
-        </div>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </ScrollReveal>
 
         {filteredProjects.length > INITIAL_PROJECTS_COUNT && (
-          <div className="mt-12 flex justify-center">
+          <div className="mt-8 flex justify-center">
             <button
               onClick={() => setShowAll(!showAll)}
-              className="px-8 py-3 glass-pill rounded-full text-sm font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 flex items-center gap-2 group border border-slate-200/50"
+              className="px-5 py-2 glass-pill rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 flex items-center gap-2 group border border-slate-200/50"
             >
-              <span>{showAll ? 'Show Fewer Projects' : 'Show All Projects'}</span>
+              <span>
+                {showAll
+                  ? 'Show fewer'
+                  : `Show all ${filteredProjects.length} projects`}
+              </span>
               <svg
-                className={`w-4 h-4 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
+                className={`w-3.5 h-3.5 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

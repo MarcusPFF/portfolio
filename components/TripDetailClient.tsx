@@ -23,8 +23,8 @@ export default function TripDetailClient({ trip, allTrips }: { trip: Trip; allTr
   const grouped = groupByYear(allTrips);
 
   return (
-    <div className="max-w-6xl mx-auto px-6 md:px-10">
-      <div className="flex items-center justify-between mb-8">
+    <div className="max-w-5xl mx-auto px-6 md:px-10">
+      <div className="flex items-center justify-between mb-7">
         <Link
           href="/trips"
           transitionTypes={['nav-back']}
@@ -44,14 +44,14 @@ export default function TripDetailClient({ trip, allTrips }: { trip: Trip; allTr
         <TripsLangSwitcher lang={lang} onChange={setLang} />
       </div>
 
-      <div className="flex flex-col md:flex-row gap-10 md:gap-14">
+      <div className="flex flex-col md:flex-row gap-8 md:gap-12">
         {/* Sidebar — anchored, does not animate during navigation */}
         <aside
           style={{ viewTransitionName: 'trips-sidebar' }}
-          className="md:w-56 md:shrink-0"
+          className="md:w-48 md:shrink-0"
         >
-          <div className="md:sticky md:top-24">
-            <p className="text-slate-400 font-semibold tracking-[0.2em] uppercase text-xs mb-5">
+          <div className="md:sticky md:top-20">
+            <p className="text-slate-400 font-semibold tracking-[0.2em] uppercase text-[10px] mb-4">
               {t('all_trips')}
             </p>
             <nav>
@@ -93,18 +93,18 @@ export default function TripDetailClient({ trip, allTrips }: { trip: Trip; allTr
         </aside>
 
         {/* Main content */}
-        <article className="flex-1 min-w-0 max-w-3xl">
+        <article className="flex-1 min-w-0 max-w-2xl">
           <ViewTransition name={`trip-card-${trip.slug}`}>
             <header
-              className={`glass-card p-8 md:p-12 overflow-hidden relative bg-gradient-to-br ${trip.color}`}
+              className={`glass-card p-6 md:p-10 overflow-hidden relative bg-gradient-to-br ${trip.color}`}
             >
-              <p className="text-slate-500 font-medium tracking-widest uppercase text-xs mb-3">
+              <p className="text-slate-500 font-medium tracking-widest uppercase text-[10px] mb-2">
                 {formatDate(trip.dateSort, lang)} · {pick(trip.location, lang)}
               </p>
-              <h1 className="text-4xl md:text-5xl font-bold text-slate-800 tracking-tight mb-3">
+              <h1 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight mb-2">
                 {pick(trip.title, lang)}
               </h1>
-              <p className="text-slate-600 font-light text-lg mb-6">
+              <p className="text-slate-600 font-light text-base mb-5">
                 {pick(trip.subtitle, lang)}
               </p>
               <div className="flex flex-wrap gap-3">
@@ -135,33 +135,33 @@ export default function TripDetailClient({ trip, allTrips }: { trip: Trip; allTr
             </header>
           </ViewTransition>
 
-          <section className="mt-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight mb-5">
+          <section className="mt-10">
+            <h2 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight mb-4">
               {t('highlights')}
             </h2>
-            <ul className="space-y-2">
+            <ul className="space-y-1.5">
               {pick(trip.highlights, lang).map((h, i) => (
-                <li key={i} className="flex items-start gap-3 text-slate-700">
-                  <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0" />
+                <li key={i} className="flex items-start gap-3 text-slate-700 text-sm">
+                  <span className="mt-1.5 inline-block w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0" />
                   <span className="font-light leading-relaxed">{h}</span>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section className="mt-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight mb-5">
+          <section className="mt-10">
+            <h2 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight mb-4">
               {t('the_trip')}
             </h2>
-            <div className="flex flex-col gap-5 text-slate-700 font-light leading-relaxed">
+            <div className="flex flex-col gap-4 text-slate-700 text-sm font-light leading-relaxed">
               {pick(trip.story, lang).map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
             </div>
           </section>
 
-          <section className="mt-12">
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight mb-5">
+          <section className="mt-10">
+            <h2 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight mb-4">
               {t('pictures')}
             </h2>
             {trip.images && trip.images.length > 0 ? (

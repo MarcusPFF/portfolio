@@ -16,18 +16,21 @@ export default function GlassNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
+  const [lastPathname, setLastPathname] = useState(pathname);
   const rootRef = useRef<HTMLElement>(null);
+
+  // Close mobile menu when the route actually changes (e.g. browser back/forward
+  // while the menu is open). Derived state — runs in render, no effect needed.
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
+    setMenuOpen(false);
+  }
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Close mobile menu when the user navigates (pathname change)
-  useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
 
   // Close on outside click / Escape
   useEffect(() => {

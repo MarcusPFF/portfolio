@@ -1,40 +1,46 @@
 import ScrollReveal from './ScrollReveal';
 import { skillGroups } from '../lib/data';
 
-
 export default function GlassSkills() {
   return (
-    <section id="skills" className="py-28 px-6 md:px-24">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" className="py-20 px-6 md:px-24">
+      <div className="max-w-4xl mx-auto">
         <ScrollReveal>
-          <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-sm mb-3">Expertise</p>
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-800 mb-16 tracking-tight">
-            Skills & Tools
+          <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-xs mb-3">
+            Expertise
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
+            Skills &amp; Tools
           </h2>
+          <p className="text-slate-400 font-light text-sm mb-10">Things I work with</p>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {skillGroups.map((group, idx) => (
-            <ScrollReveal key={idx} delay={idx * 150}>
-              <div className="glass-card p-8 h-full">
-                <div className="w-12 h-12 rounded-xl bg-white/50 flex items-center justify-center mb-6 text-xl">
-                  {group.icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-800 mb-6 tracking-tight">{group.category}</h3>
-                <div className="flex flex-wrap gap-2">
-                  {group.items.map((skill) => (
-                    <span
-                      key={skill}
-                      className="glass-pill px-4 py-2.5 rounded-xl text-slate-600 font-medium text-sm"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
+        <ScrollReveal>
+          <div className="glass-card overflow-hidden">
+            <ul>
+              {skillGroups.map((group, idx) => (
+                <li
+                  key={group.category}
+                  className={idx > 0 ? 'border-t border-white/40' : ''}
+                >
+                  <div className="px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6">
+                    <div className="md:w-44 shrink-0 flex items-baseline gap-2">
+                      <span className="text-base" aria-hidden="true">
+                        {group.icon}
+                      </span>
+                      <p className="text-slate-500 font-semibold tracking-[0.15em] uppercase text-[10px]">
+                        {group.category}
+                      </p>
+                    </div>
+                    <p className="flex-1 text-sm text-slate-700 font-light leading-relaxed">
+                      {group.items.join(' · ')}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

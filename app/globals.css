@@ -226,6 +226,17 @@
   animation: none;
 }
 
+/* Sidebar on /llm/[course]/blog stays put during navigation */
+::view-transition-group(course-blog-sidebar) {
+  animation: none;
+}
+::view-transition-old(course-blog-sidebar) {
+  display: none;
+}
+::view-transition-new(course-blog-sidebar) {
+  animation: none;
+}
+
 /* Very quick, very subtle crossfade — used for sidebar navigation */
 ::view-transition-old(.quick) {
   animation: 100ms ease-in both vt-fade reverse;

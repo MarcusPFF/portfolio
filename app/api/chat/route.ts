@@ -92,7 +92,8 @@ export async function POST(req: Request) {
         if (error) {
           console.error('[Chat API] Supabase RPC error:', error);
         } else if (data && data.length > 0) {
-          retrievedContext = data.map((chunk: any) => chunk.content).join('\n\n');
+          const chunks = data as Array<{ content: string }>;
+          retrievedContext = chunks.map((c) => c.content).join('\n\n');
           console.log(`[Chat API] RAG retrieved ${data.length} relevant chunks`);
         }
       } catch (e) {

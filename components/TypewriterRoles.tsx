@@ -2,10 +2,15 @@
 
 import { useEffect, useState } from "react";
 
-const ROLES = ["Developer", "Quality Assurance (QA)", "Guide", "Adventurer"];
-const TYPE_MS = 80;
-const DELETE_MS = 45;
-const HOLD_MS = 1600;
+const ROLES = [
+  "a Fullstack Developer",
+  "doing Software Quality Assurance",
+  "a Property Onboarding Specialist",
+  "an Adventurer",
+];
+const TYPE_MS = 55;
+const DELETE_MS = 30;
+const HOLD_MS = 1400;
 
 export default function TypewriterRoles() {
   const [display, setDisplay] = useState("");
@@ -48,9 +53,9 @@ export default function TypewriterRoles() {
 
   return (
     <span className="inline-flex items-baseline">
-      <span className="text-slate-600">{display}</span>
+      <span>{display}</span>
       <span
-        className="ml-0.5 w-[2px] h-[0.9em] bg-slate-500 inline-block animate-pulse"
+        className="ml-0.5 w-[2px] h-[0.9em] bg-current inline-block animate-pulse"
         aria-hidden="true"
       />
     </span>

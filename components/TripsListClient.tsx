@@ -29,23 +29,23 @@ export default function TripsListClient() {
 
   return (
     <section className="py-20 px-6 md:px-24">
-      <div className="max-w-6xl mx-auto">
-        <p className="reveal-top text-slate-400 font-medium tracking-[0.2em] uppercase text-sm mb-3">
+      <div className="max-w-5xl mx-auto">
+        <p className="reveal-top text-slate-400 font-medium tracking-[0.2em] uppercase text-xs mb-3">
           {t('adventurer')}
         </p>
-        <h1 className="reveal-top reveal-top-1 text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
+        <h1 className="reveal-top reveal-top-1 text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
           {t('motorcycle_trips')}
         </h1>
-        <p className="reveal-top reveal-top-2 text-slate-500 font-light leading-relaxed max-w-2xl mb-10">
+        <p className="reveal-top reveal-top-2 text-slate-500 font-light text-sm leading-relaxed max-w-xl mb-8">
           {t('intro')}
         </p>
 
-        <div className="reveal-top reveal-top-2 mb-6">
+        <div className="reveal-top reveal-top-2 mb-5">
           <button
             type="button"
             onClick={() => setShowGlobe((v) => !v)}
             aria-pressed={showGlobe}
-            className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold transition-colors border min-h-10 ${
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-colors border min-h-9 ${
               showGlobe
                 ? 'bg-slate-800 text-white border-slate-800'
                 : 'glass-pill text-slate-700 hover:text-slate-900 border-transparent'
@@ -69,13 +69,13 @@ export default function TripsListClient() {
         </div>
 
         {showGlobe && (
-          <div className="reveal-top mb-10">
+          <div className="reveal-top mb-8">
             <TripsGlobe trips={trips} lang={lang} hint={t('globe_hint')} />
           </div>
         )}
 
-        <div className="reveal-top reveal-top-2 flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-10">
-          <div className="flex flex-wrap gap-2">
+        <div className="reveal-top reveal-top-2 flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-8">
+          <div className="flex flex-wrap gap-1.5">
             {SORT_KEYS.map((k) => {
               const active = sort === k;
               return (
@@ -84,7 +84,7 @@ export default function TripsListClient() {
                   type="button"
                   onClick={() => setSort(k)}
                   aria-pressed={active}
-                  className={`px-4 py-2 rounded-full text-xs font-semibold tracking-wider transition-colors min-h-9 border ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider transition-colors min-h-8 border ${
                     active
                       ? 'bg-slate-800 text-white border-slate-800'
                       : 'glass-pill text-slate-600 hover:text-slate-900 border-transparent'
@@ -98,7 +98,7 @@ export default function TripsListClient() {
           <TripsLangSwitcher lang={lang} onChange={setLang} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {sortedTrips.map((trip, idx) => (
             <Link
               key={trip.slug}
@@ -107,35 +107,35 @@ export default function TripsListClient() {
               className={`block group reveal-top reveal-top-${Math.min(idx + 3, 6)}`}
             >
               <ViewTransition name={`trip-card-${trip.slug}`}>
-                <article className="glass-card-hover p-8 md:p-10 overflow-hidden relative h-full">
+                <article className="glass-card-hover p-6 md:p-8 overflow-hidden relative h-full">
                   <div
                     className={`absolute inset-0 bg-gradient-to-br ${trip.color} opacity-40 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.25rem]`}
                   />
                   <div className="relative z-10 flex flex-col h-full">
-                    <div className="flex items-baseline justify-between mb-3">
-                      <p className="text-slate-400 font-medium tracking-widest uppercase text-xs">
+                    <div className="flex items-baseline justify-between mb-2">
+                      <p className="text-slate-400 font-medium tracking-widest uppercase text-[10px]">
                         {formatDate(trip.dateSort, lang)}
                       </p>
-                      <p className="text-slate-500 text-xs font-medium">
+                      <p className="text-slate-500 text-[11px] font-medium">
                         {formatKm(trip.distanceKm, lang)}
                       </p>
                     </div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight mb-2">
+                    <h2 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight mb-1.5">
                       {pick(trip.title, lang)}
                     </h2>
-                    <p className="text-slate-500 text-sm font-light mb-5">
+                    <p className="text-slate-500 text-xs font-light mb-4">
                       {pick(trip.subtitle, lang)}
                     </p>
-                    <p className="text-slate-600 font-light leading-relaxed mb-6 flex-1">
+                    <p className="text-slate-600 font-light text-sm leading-relaxed mb-5 flex-1">
                       {pick(trip.summary, lang)}
                     </p>
                     <div className="flex items-center justify-between">
-                      <div className="flex flex-col gap-1">
-                        <span className="text-slate-500 text-sm">{pick(trip.location, lang)}</span>
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-slate-500 text-xs">{pick(trip.location, lang)}</span>
                         {trip.bike && (
-                          <span className="inline-flex items-center gap-1.5 text-slate-500 text-xs font-medium">
+                          <span className="inline-flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
                             <svg
-                              className="w-3.5 h-3.5"
+                              className="w-3 h-3"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -150,10 +150,10 @@ export default function TripsListClient() {
                           </span>
                         )}
                       </div>
-                      <span className="inline-flex items-center gap-2 text-slate-700 font-medium text-sm group-hover:gap-3 transition-all">
+                      <span className="inline-flex items-center gap-2 text-slate-700 font-medium text-xs group-hover:gap-3 transition-all">
                         {t('read_more')}
                         <svg
-                          className="w-4 h-4"
+                          className="w-3.5 h-3.5"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"

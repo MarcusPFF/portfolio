@@ -1,6 +1,6 @@
 export const personalDetails = {
   name: 'Marcus Forsberg',
-  roles: ['Developer', 'QA', 'Guide'],
+  roles: ['Fullstack Developer', 'QA', 'Guide'],
   status: 'Welcome to my personal site. Here you will find projects, my motorcycle trips and information about me.',
   stats: [
     { value: '3+', label: 'Years Experience' },
@@ -18,17 +18,47 @@ export const skillGroups = [
   {
     category: 'Frameworks & Libraries',
     icon: '⚡',
-    items: ['React', 'Next.js', 'Node.js', 'Javalin', 'JPA/Hibernate', 'JUnit'],
+    items: [
+      'React',
+      'Next.js',
+      'Node.js',
+      'Javalin',
+      'JPA/Hibernate',
+      'JUnit',
+      'JWT',
+      'Three.js',
+      'Tailwind CSS',
+      'Streamlit',
+    ],
   },
   {
     category: 'Data & ML',
     icon: '📊',
-    items: ['Scikit-learn', 'Pandas', 'Jupyter', 'PostgreSQL', 'MySQL'],
+    items: [
+      'Scikit-learn',
+      'Pandas',
+      'Jupyter',
+      'PostgreSQL',
+      'MySQL',
+      'Supabase',
+      'RAG',
+    ],
   },
   {
     category: 'Tools & Platforms',
     icon: '✦',
-    items: ['Git', 'Docker', 'Tailwind CSS', 'Figma', 'Vercel', 'REST APIs'],
+    items: [
+      'Git',
+      'GitHub Actions',
+      'Maven',
+      'Docker',
+      'Vercel',
+      'Cloudflare',
+      'Groq',
+      'Resend',
+      'Figma',
+      'REST APIs',
+    ],
   },
 ];
 
