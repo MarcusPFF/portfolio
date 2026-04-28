@@ -4,6 +4,8 @@ import GlassHero from '@/components/GlassHero';
 import GlassProjects from '@/components/GlassProjects';
 import GlassSkills from '@/components/GlassSkills';
 import GlassContact from '@/components/GlassContact';
+import GithubActivity from '@/components/GithubActivity';
+import ParticleField from '@/components/ParticleField';
 
 export default function Home() {
   return (
@@ -18,6 +20,9 @@ export default function Home() {
         <div className="absolute bottom-[10%] left-[20%] w-[250px] h-[250px] bg-orange-200/15 rounded-full blur-3xl float-slow" />
       </div>
 
+      {/* Cursor-reactive particle field — sits above orbs, below content */}
+      <ParticleField />
+
       <ViewTransition
         enter={{ 'nav-forward': 'nav-forward', 'nav-back': 'nav-back', default: 'none' }}
         exit={{ 'nav-forward': 'nav-forward', 'nav-back': 'nav-back', default: 'none' }}
@@ -27,6 +32,7 @@ export default function Home() {
           <GlassHero />
           <GlassProjects />
           <GlassSkills />
+          <GithubActivity />
           <GlassContact />
 
           <footer className="py-12 text-center text-slate-400 font-light text-sm">

@@ -93,7 +93,7 @@ export default function HeroQA() {
           type="submit"
           disabled={!input.trim() || isLoading}
           aria-label="Send question"
-          className="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-slate-700 disabled:bg-slate-300 disabled:cursor-not-allowed transition-colors"
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-slate-700 disabled:bg-slate-300 disabled:cursor-not-allowed active:scale-[0.94] transition-[transform,background-color] duration-200 ease-out"
         >
           {isLoading ? (
             <span

@@ -16,6 +16,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   body {
@@ -33,6 +34,7 @@
     color: var(--color-slate-900);
     min-height: 100vh;
   }
+
 }
 
 @layer utilities {
@@ -67,6 +69,28 @@
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Nav link with animated underline (active dot is rendered as a single
+     sliding element inside GlassNav, not per-link) */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
   }
 
   .glass-pill {

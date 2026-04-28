@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent, type MouseEvent } from 'react';
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
 
 type Status = 'idle' | 'sending' | 'success' | 'error';
@@ -20,6 +20,30 @@ export default function ContactForm() {
   const honeypotRef = useRef<HTMLInputElement>(null);
   const mountedAtRef = useRef<number>(Date.now());
   const turnstileRef = useRef<TurnstileInstance | null>(null);
+  const submitBtnRef = useRef<HTMLButtonElement>(null);
+
+  // Magnetic pull on the submit button — very subtle, almost imperceptible.
+  // Translate is driven via CSS custom properties so the `:active` scale
+  // utility can compose with it instead of being overridden by inline transform.
+  const onSubmitMove = (e: MouseEvent<HTMLButtonElement>) => {
+    const el = submitBtnRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const factor = 0.08;
+    const max = 3;
+    const rawX = (e.clientX - rect.left - rect.width / 2) * factor;
+    const rawY = (e.clientY - rect.top - rect.height / 2) * factor;
+    const x = Math.max(-max, Math.min(max, rawX));
+    const y = Math.max(-max, Math.min(max, rawY));
+    el.style.setProperty('--mx', `${x}px`);
+    el.style.setProperty('--my', `${y}px`);
+  };
+  const onSubmitLeave = () => {
+    const el = submitBtnRef.current;
+    if (!el) return;
+    el.style.setProperty('--mx', '0px');
+    el.style.setProperty('--my', '0px');
+  };
 
   const emailValid = EMAIL_RE.test(email.trim());
   const questionLen = question.trim().length;
@@ -198,9 +222,18 @@ export default function ContactForm() {
 
       <div className="mt-6 flex justify-end">
         <button
+          ref={submitBtnRef}
           type="submit"
           disabled={!canSubmit}
-          className="group inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white text-sm rounded-full font-medium shadow-sm hover:shadow-lg hover:bg-slate-700 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none transition-all"
+          onMouseMove={onSubmitMove}
+          onMouseLeave={onSubmitLeave}
+          style={{
+            transform:
+              'translate3d(var(--mx, 0px), var(--my, 0px), 0) scale(var(--press, 1))',
+          }}
+          onMouseDown={(e) => e.currentTarget.style.setProperty('--press', '0.97')}
+          onMouseUp={(e) => e.currentTarget.style.setProperty('--press', '1')}
+          className="group inline-flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white text-sm rounded-full font-medium shadow-sm hover:shadow-lg hover:bg-slate-700 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:shadow-none transition-[transform,background-color,box-shadow] duration-150 ease-out will-change-transform"
         >
           {status === 'sending' ? (
             <>

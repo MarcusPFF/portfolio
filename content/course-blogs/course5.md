@@ -16,5 +16,3 @@ Flow:
 12. Farvekodede niveau-badges. Rosé for lavt, amber for midt, emerald for højt.
 13. Delte rate-limiteren med chatten (6 requests per minut per IP).
 14. Outputtet er struktureret JSON: overall assessment, criteria, dare_share_care, strengths, weaknesses, suggestions, dialogueQuestions.
-
-Det jeg lærte var at man ikke bare kan finde på en rubric. Den skal komme fra det opgaven faktisk kræver, ellers bliver vurderingen overfladisk.

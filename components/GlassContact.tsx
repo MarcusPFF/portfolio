@@ -1,5 +1,6 @@
 import ScrollReveal from './ScrollReveal';
 import ContactForm from './ContactForm';
+import CopyEmail from './CopyEmail';
 
 const socials = [
   {
@@ -62,12 +63,16 @@ export default function GlassContact() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="social-link glass-pill flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm text-slate-600 hover:text-slate-800 font-medium"
+                  className="social-link glass-pill flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm text-slate-600 hover:text-slate-800 font-medium active:scale-[0.97] transition-transform"
                 >
                   {social.icon}
                   {social.label}
                 </a>
               ))}
+            </div>
+
+            <div className="mt-6 flex justify-center">
+              <CopyEmail email="hello@marcuspff.com" />
             </div>
           </div>
         </ScrollReveal>

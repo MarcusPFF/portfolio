@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import KonamiCode from '@/components/KonamiCode';
+import CommandPalette from '@/components/CommandPalette';
 import './globals.css';
 
 const geistSans = Geist({
@@ -67,7 +69,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
       <body
         suppressHydrationWarning
         className="antialiased min-h-screen font-sans selection:bg-slate-300/50 selection:text-slate-900 overflow-x-hidden"
@@ -79,6 +84,8 @@ export default function RootLayout({
           Skip to content
         </a>
         {children}
+        <CommandPalette />
+        <KonamiCode />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

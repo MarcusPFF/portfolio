@@ -12,18 +12,24 @@ const navLinks = [
   { label: 'LLM Course (Exam)', href: '/llm' },
 ];
 
+const SECTION_IDS = ['projects', 'skills', 'contact'] as const;
+
 export default function GlassNav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+  const [dotX, setDotX] = useState<number | null>(null);
+  const [dotVisible, setDotVisible] = useState(false);
   const pathname = usePathname();
   const [lastPathname, setLastPathname] = useState(pathname);
   const rootRef = useRef<HTMLElement>(null);
+  const linksContainerRef = useRef<HTMLDivElement>(null);
+  const linkRefs = useRef<Map<string, HTMLAnchorElement>>(new Map());
 
-  // Close mobile menu when the route actually changes (e.g. browser back/forward
-  // while the menu is open). Derived state — runs in render, no effect needed.
   if (pathname !== lastPathname) {
     setLastPathname(pathname);
     setMenuOpen(false);
+    setActiveSection(null);
   }
 
   useEffect(() => {
@@ -31,6 +37,62 @@ export default function GlassNav() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Track which homepage section is in view via IntersectionObserver. The
+  // observer reports each section's visibility state; we pick the first
+  // visible section in document order. When nothing is visible (top of page)
+  // the dot disappears.
+  useEffect(() => {
+    if (pathname !== '/') return;
+
+    const visibility = new Map<string, boolean>();
+    SECTION_IDS.forEach((id) => visibility.set(id, false));
+
+    const els = SECTION_IDS
+      .map((id) => document.getElementById(id))
+      .filter((e): e is HTMLElement => !!e);
+    if (els.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          visibility.set(entry.target.id, entry.isIntersecting);
+        }
+        const firstVisible = SECTION_IDS.find((id) => visibility.get(id));
+        setActiveSection(firstVisible ?? null);
+      },
+      { rootMargin: '-100px 0px -50% 0px' },
+    );
+    els.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, [pathname]);
+
+  // Compute the sliding dot's x-position from the active link's bbox.
+  // When activeSection becomes null (e.g. scrolling through GitHub Activity
+  // between Skills and Contact), keep the last known dotX so the dot fades
+  // out in place rather than sliding back to left:0 and reappearing.
+  useEffect(() => {
+    let raf = 0;
+    const recompute = () => {
+      if (!activeSection) {
+        setDotVisible(false);
+        return;
+      }
+      const link = linkRefs.current.get(`/#${activeSection}`);
+      const container = linksContainerRef.current;
+      if (!link || !container) return;
+      const linkRect = link.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
+      setDotX(linkRect.left - containerRect.left + linkRect.width / 2);
+      setDotVisible(true);
+    };
+    raf = requestAnimationFrame(recompute);
+    window.addEventListener('resize', recompute);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('resize', recompute);
+    };
+  }, [activeSection]);
 
   // Close on outside click / Escape
   useEffect(() => {
@@ -63,29 +125,36 @@ export default function GlassNav() {
     <nav
       ref={rootRef}
       style={{ viewTransitionName: 'site-header' }}
-      className={`fixed top-4 left-1/2 -translate-x-1/2 z-50 rounded-full px-5 py-2.5 sm:px-8 sm:py-3 flex items-center gap-4 sm:gap-8 transition-all duration-500 ${
+      className={`fixed top-3 left-1/2 -translate-x-1/2 z-50 rounded-full px-4 py-2 sm:px-6 sm:py-2.5 flex items-center gap-3 sm:gap-6 transition-all duration-500 ${
         scrolled || menuOpen ? 'glass-nav shadow-lg' : 'bg-transparent'
       }`}
     >
       <Link
         href="/"
         transitionTypes={directionFor('/') ? [directionFor('/') as string] : undefined}
-        className="font-bold text-slate-800 text-lg tracking-tight hover:opacity-70 transition-opacity"
+        className="font-bold text-slate-800 text-base tracking-tight hover:opacity-70 transition-opacity"
       >
         M.
       </Link>
 
-      <div className="hidden sm:flex items-center gap-6">
+      <div ref={linksContainerRef} className="hidden sm:flex items-center gap-6 relative">
         {navLinks.map((link) => {
           const dir = directionFor(link.href);
-          const isActive =
-            pathname === link.href || (pathname === '/' && link.href.startsWith('/#'));
-          const className = `text-sm font-medium tracking-wide transition-colors duration-300 ${
+          const isHashLink = link.href.startsWith('/#');
+          const sectionId = isHashLink ? link.href.slice(2) : null;
+          const isActive = isHashLink
+            ? pathname === '/' && activeSection === sectionId
+            : pathname === link.href;
+          const className = `nav-link text-[13px] font-medium tracking-wide transition-colors duration-300 ${
             isActive ? 'text-slate-900' : 'text-slate-600 hover:text-slate-900'
           }`;
           return (
             <Link
               key={link.label}
+              ref={(el) => {
+                if (el) linkRefs.current.set(link.href, el);
+                else linkRefs.current.delete(link.href);
+              }}
               href={link.href}
               transitionTypes={dir ? [dir] : undefined}
               className={className}
@@ -94,9 +163,19 @@ export default function GlassNav() {
             </Link>
           );
         })}
+
+        <span
+          aria-hidden="true"
+          className="absolute -bottom-2 w-1 h-1 rounded-full bg-violet-500 pointer-events-none"
+          style={{
+            left: dotX ?? 0,
+            transform: 'translateX(-50%)',
+            opacity: dotVisible ? 1 : 0,
+            transition: 'left 300ms ease-out, opacity 300ms ease-out',
+          }}
+        />
       </div>
 
-      {/* Mobile hamburger — visible below sm breakpoint */}
       <button
         type="button"
         onClick={() => setMenuOpen((v) => !v)}
@@ -130,7 +209,6 @@ export default function GlassNav() {
         </svg>
       </button>
 
-      {/* Mobile dropdown — only rendered when open */}
       {menuOpen && (
         <div
           id="mobile-nav"
@@ -142,8 +220,11 @@ export default function GlassNav() {
         >
           {navLinks.map((link) => {
             const dir = directionFor(link.href);
-            const isActive =
-              pathname === link.href || (pathname === '/' && link.href.startsWith('/#'));
+            const isHashLink = link.href.startsWith('/#');
+            const sectionId = isHashLink ? link.href.slice(2) : null;
+            const isActive = isHashLink
+              ? pathname === '/' && activeSection === sectionId
+              : pathname === link.href;
             return (
               <Link
                 key={link.label}

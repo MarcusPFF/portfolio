@@ -16,8 +16,8 @@ export default function GlassHero() {
 
         <div className="hero-enter-delay-1">
           <h1
-            className="text-6xl md:text-8xl lg:text-9xl font-bold text-slate-800 leading-[0.95] mb-12"
-            style={{ letterSpacing: '-0.02em' }}
+            className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-800 leading-[1] mb-12"
+            style={{ letterSpacing: '-0.025em' }}
           >
             Marcus Forsberg<span className="text-violet-500">.</span>
           </h1>

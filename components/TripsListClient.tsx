@@ -45,7 +45,7 @@ export default function TripsListClient() {
             type="button"
             onClick={() => setShowGlobe((v) => !v)}
             aria-pressed={showGlobe}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-colors border min-h-11 sm:min-h-9 ${
+            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-colors border min-h-11 sm:min-h-9 active:scale-[0.97] ${
               showGlobe
                 ? 'bg-slate-800 text-white border-slate-800'
                 : 'glass-pill text-slate-700 hover:text-slate-900 border-transparent'
@@ -84,7 +84,7 @@ export default function TripsListClient() {
                   type="button"
                   onClick={() => setSort(k)}
                   aria-pressed={active}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider transition-colors min-h-11 sm:min-h-8 border ${
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider transition-colors min-h-11 sm:min-h-8 border active:scale-[0.97] ${
                     active
                       ? 'bg-slate-800 text-white border-slate-800'
                       : 'glass-pill text-slate-600 hover:text-slate-900 border-transparent'
