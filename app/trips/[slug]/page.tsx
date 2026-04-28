@@ -1,7 +1,7 @@
 import { ViewTransition } from 'react';
 import { notFound } from 'next/navigation';
 import GlassNav from '@/components/GlassNav';
-import ChatWidget from '@/components/ChatWidget';
+import ChatWidgetLazy from '@/components/ChatWidgetLazy';
 import TripDetailClient from '@/components/TripDetailClient';
 import { trips, getTripBySlug } from '@/lib/trips';
 
@@ -63,7 +63,7 @@ export default async function TripDetailPage({
         </main>
       </ViewTransition>
 
-      <ChatWidget />
+      <ChatWidgetLazy />
     </>
   );
 }

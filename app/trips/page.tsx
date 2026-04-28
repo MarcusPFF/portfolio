@@ -1,6 +1,6 @@
 import { ViewTransition } from 'react';
 import GlassNav from '@/components/GlassNav';
-import ChatWidget from '@/components/ChatWidget';
+import ChatWidgetLazy from '@/components/ChatWidgetLazy';
 import TripsListClient from '@/components/TripsListClient';
 
 export const metadata = {
@@ -34,7 +34,7 @@ export default function TripsPage() {
         </main>
       </ViewTransition>
 
-      <ChatWidget />
+      <ChatWidgetLazy />
     </>
   );
 }

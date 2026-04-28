@@ -24,7 +24,7 @@ export default function GlassProjects() {
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
             Selected Projects
           </h2>
-          <p className="text-slate-400 font-light text-sm mb-10">More coming soon</p>
+          <p className="text-slate-500 font-light text-sm mb-10">More coming soon</p>
         </ScrollReveal>
 
         <ScrollReveal>
@@ -89,7 +89,7 @@ export default function GlassProjects() {
           <div className="mt-8 flex justify-center">
             <button
               onClick={() => setShowAll(!showAll)}
-              className="px-5 py-2 glass-pill rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 flex items-center gap-2 group border border-slate-200/50"
+              className="px-5 py-2 min-h-11 sm:min-h-9 glass-pill rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 transition-all duration-300 flex items-center gap-2 group border border-slate-200/50"
             >
               <span>
                 {showAll

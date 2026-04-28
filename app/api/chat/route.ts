@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import { personalDetails } from '@/lib/data';
 import { isRateLimited } from '@/lib/rate-limit';
+import { isAllowedOrigin } from '@/lib/api-security';
 
 const MAX_MESSAGE_LENGTH = 500; // max chars per message
 const MAX_MESSAGES = 20; // max conversation length
@@ -25,6 +26,13 @@ const google = googleKey ? createGoogleGenerativeAI({ apiKey: googleKey }) : nul
 const marcusContextFallback = "Marcus is a developer from Copenhagen, Denmark. His database is currently unavailable.";
 
 export async function POST(req: Request) {
+  if (!isAllowedOrigin(req)) {
+    return new Response(JSON.stringify({ error: 'Forbidden.' }), {
+      status: 403,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
   // Get client IP
   const forwarded = req.headers.get('x-forwarded-for');
   const ip = forwarded?.split(',')[0]?.trim() || 'unknown';

@@ -12,7 +12,7 @@ export default function GlassSkills() {
           <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
             Skills &amp; Tools
           </h2>
-          <p className="text-slate-400 font-light text-sm mb-10">Things I work with</p>
+          <p className="text-slate-500 font-light text-sm mb-10">Things I work with</p>
         </ScrollReveal>
 
         <ScrollReveal>

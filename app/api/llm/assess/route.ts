@@ -4,6 +4,7 @@ import { createGroq } from '@ai-sdk/groq';
 import { generateText } from 'ai';
 import { RUBRIC, type Level } from '@/app/llm/course-5/rubric';
 import { isRateLimited } from '@/lib/rate-limit';
+import { isAllowedOrigin } from '@/lib/api-security';
 
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
 const MAX_CHARS = 15_000;
@@ -111,6 +112,10 @@ function rubricAsMarkdown(): string {
 const RUBRIC_MD = rubricAsMarkdown();
 
 export async function POST(req: Request) {
+  if (!isAllowedOrigin(req)) {
+    return Response.json({ error: 'Forbidden.' }, { status: 403 });
+  }
+
   // Rate limit per IP — every call burns Groq tokens, so we cap requests
   // to prevent abuse / runaway cost. Reuses the same limiter as /api/chat.
   const forwarded = req.headers.get('x-forwarded-for');

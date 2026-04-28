@@ -6,7 +6,7 @@ import path from 'path';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import GlassNav from '@/components/GlassNav';
-import ChatWidget from '@/components/ChatWidget';
+import ChatWidgetLazy from '@/components/ChatWidgetLazy';
 import { classes } from '@/lib/data';
 
 type Params = { course: string };
@@ -37,7 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }) 
   if (!post) return { title: 'Blog not found | Marcus Forsberg' };
   return {
     title: `${post.title} · Blog | Marcus Forsberg`,
-    description: (post.desc ?? post.subtitle).slice(0, 160),
+    description: post.subtitle.slice(0, 160),
   };
 }
 
@@ -187,7 +187,7 @@ export default async function CourseBlogPage({ params }: { params: Promise<Param
         </main>
       </ViewTransition>
 
-      <ChatWidget />
+      <ChatWidgetLazy />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { ViewTransition } from 'react';
 import GlassNav from '@/components/GlassNav';
-import ChatWidget from '@/components/ChatWidget';
+import ChatWidgetLazy from '@/components/ChatWidgetLazy';
 import LLMTimeline from '@/components/LLMTimeline';
 
 export const metadata = {
@@ -35,7 +35,7 @@ export default function LLMPage() {
         </main>
       </ViewTransition>
 
-      <ChatWidget />
+      <ChatWidgetLazy />
     </>
   );
 }

@@ -2,7 +2,7 @@ import { ViewTransition } from "react";
 import { readFileSync } from "fs";
 import path from "path";
 import GlassNav from "@/components/GlassNav";
-import ChatWidget from "@/components/ChatWidget";
+import ChatWidgetLazy from "@/components/ChatWidgetLazy";
 import Course5Assessor from "@/components/Course5Assessor";
 
 const dataDir = path.join(process.cwd(), "app/llm/course-5/data");
@@ -52,7 +52,7 @@ export default function Course5Page() {
         </main>
       </ViewTransition>
 
-      <ChatWidget />
+      <ChatWidgetLazy />
     </>
   );
 }

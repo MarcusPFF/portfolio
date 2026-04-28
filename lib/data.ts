@@ -5,7 +5,7 @@ export const personalDetails = {
   stats: [
     { value: '3+', label: 'Years Experience' },
     { value: '10+', label: 'Projects Built' },
-    { value: '∞', label: 'White monsters' },
+    { value: '14k+', label: 'Km Ridden' },
   ],
 };
 
@@ -140,7 +140,6 @@ export const projects = [
 type ClassItem = {
   title: string;
   subtitle: string;
-  desc?: string;
   tags: string[];
   color: string;
   link?: string;
