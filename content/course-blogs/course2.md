@@ -1,18 +1,20 @@
-I denne uge har jeg smidt en RAG-chatbot (Retrieval-Augmented Generation) på siden, så den ikke bare står og gætter. Rent teknisk har jeg oversat hele mit CV til matematiske vektorer og lagt det i en Supabase-database. Når du stiller et spørgsmål, bliver det også lavet om til en vektor. Så sammenligner mit API de to vektorer for at finde de steder i mit CV, der bedst matcher det du spørger om. Til sidst ryger teksten over i Llama-3, som bruger den til at stykke et fornuftigt svar sammen.
+Den her uge byggede jeg en RAG-chatbot ind på siden, så den faktisk ved noget om mig i stedet for bare at gætte. Du kan prøve den nede i hjørnet.
+
+Kort fortalt: jeg har taget mit CV (og mine ture, projekter, kurser) og oversat det til vektorer, altså lange rækker af tal, og gemt det i en Supabase-database. Når du stiller et spørgsmål, bliver det også lavet om til en vektor, og så finder mit API de stykker tekst der ligger tættest på. De stykker ryger over i Llama 3.3, der bruger dem til at skrive et svar.
 
 Flow:
 
-1. Første version proppede hele mit CV ind i system-prompten. Det virkede, men det var spild af tokens og kunne ikke skalere.
-2. Læste mig ind på RAG. Idéen er simpel: hent kun det der er relevant, og giv det til modellen.
-3. Satte Supabase op med pgvector så jeg kunne gemme embeddings i en database.
-4. Skrev et embed-script der deler teksten op i chunks og laver embeddings.
-5. Valgte Google Gemini til embeddings. Billigt og god kvalitet.
-6. Valgte Groq med Llama 3.3 70B til selve svaret. Det streamer hurtigt, og prisen er til at leve med.
-7. Første retrieval var dårligt. Den hentede for få chunks og tærsklen var for høj, så jeg fik tomme svar.
-8. Justerede til top 15 chunks med threshold 0.2. Det fangede mere af det relevante uden at flyde ud.
-9. Indså at chatten kun vidste ting fra marcus.md. Den vidste ikke noget om mine motorcykelture, projekter eller kurser.
-10. Skrev embed-scriptet om så det også henter fra lib/data.ts, lib/trips.ts og course-blogs/*.md.
-11. Fjernede alt det inline data fra system-prompten. Nu står der bare et lille anker (rolle + status), resten kommer fra retrieval.
-12. Satte en GitHub Action op der kører embed-scriptet automatisk når data ændrer sig.
+1. Min første version proppede bare hele mit CV ind i system-prompten. Det virkede sådan set, men det var dyrt på tokens og det ville aldrig skalere hvis jeg ville have mere indhold med.
+2. Læste mig lidt ind på RAG. Idéen er egentlig ret enkel: hent kun det der er relevant for spørgsmålet, og giv det til modellen i stedet for at smide alt ind.
+3. Satte Supabase op med pgvector så jeg kunne gemme embeddings direkte i databasen. Første gang jeg arbejder med vektorer på den måde, og det var faktisk overraskende ligetil at komme i gang.
+4. Skrev et embed-script der deler teksterne op i mindre stykker (chunks) og laver embeddings af hver enkelt.
+5. Valgte Google Gemini til embeddings. Det er billigt og kvaliteten er god nok til det jeg laver.
+6. Selve svaret kommer fra Groq med Llama 3.3 70B. Det streamer rigtig hurtigt, og prisen er til at leve med.
+7. Min første retrieval var ærligt talt skidt. Den hentede for få chunks, og jeg havde sat tærsklen for højt, så jeg fik tomme eller halve svar tilbage.
+8. Skruede op til 15 chunks og sænkede threshold til 0.2. Det ramte væsentligt bedre, den fangede det relevante uden at jeg fik en hel mur af tekst stoppet ind i konteksten.
+9. På et tidspunkt opdagede jeg at chatten faktisk kun vidste ting fra min marcus.md. Den anede ikke noget om mine motorcykelture, mine projekter eller kurserne. Det var lidt en aha-oplevelse.
+10. Skrev embed-scriptet om så det også henter fra lib/data.ts, lib/trips.ts og alle markdown-filerne i course-blogs. Pludselig kunne den svare på meget mere.
+11. Fjernede så al det data jeg havde stoppet ind i system-prompten i starten. Nu står der bare et lille anker, altså hvem jeg er og hvad jeg laver, og resten kommer ind via retrieval.
+12. Til sidst satte jeg en GitHub Action op der automatisk kører embed-scriptet når noget af kildedataen ændrer sig. Det betyder at jeg ikke skal huske at re-embedde manuelt hver gang jeg opdaterer en tekst.
 
-Det største skift var at lade være med at proppe alt ind i system-prompten og i stedet lade modellen hente det den skal bruge.
+Det store skift for mig i den her opgave var at slippe idéen om at modellen skal vide alting på forhånd. Det fungerer langt bedre at lade den hente det den skal bruge i øjeblikket.

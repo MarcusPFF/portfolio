@@ -166,8 +166,8 @@ export const classes: ClassItem[] = [
   },
   {
     title: 'Course 4',
-    subtitle: 'Meditations-quiz',
-    tags: ['Quiz', 'React', 'State'],
+    subtitle: 'Kodeagenter',
+    tags: ['Code Agents', 'Claude Code', 'Quiz', 'React'],
     color: 'from-amber-400/20 to-orange-400/20',
     link: '/llm/course3',
     blogSlug: 'course4',
