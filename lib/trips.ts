@@ -364,7 +364,7 @@ export const trips: Trip[] = [
     ],
     title: {
       en: 'Norway Grand Tour',
-      dk: 'Norgestur',
+      dk: 'Norge-tur',
       de: 'Norwegen-Tour',
     },
     subtitle: {
