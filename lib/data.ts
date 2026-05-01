@@ -1,6 +1,11 @@
 export const personalDetails = {
   name: 'Marcus Forsberg',
-  roles: ['Fullstack Developer', 'QA', 'Guide'],
+  roles: [
+    'a Property Onboarding Specialist',
+    'a Fullstack Developer',
+    'doing Software Quality Assurance',
+    'an Adventurer',
+  ],
   status: 'Welcome to my personal site. Here you will find projects, my motorcycle trips and information about me.',
   stats: [
     { value: '3+', label: 'Years Experience' },
@@ -180,6 +185,14 @@ export const classes: ClassItem[] = [
     color: 'from-teal-400/20 to-cyan-400/20',
     link: '/llm/course-5',
     blogSlug: 'course5',
+    hidden: false,
+  },
+  {
+    title: 'Course 7',
+    subtitle: 'Placeholder',
+    tags: ['TBD'],
+    color: 'from-rose-400/20 to-pink-400/20',
+    blogSlug: 'course7',
     hidden: false,
   },
   // Add more weeks here as the course progresses

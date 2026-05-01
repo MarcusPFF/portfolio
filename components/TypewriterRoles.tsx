@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 
 const ROLES = [
+  "a Property Onboarding Specialist",
   "a Fullstack Developer",
   "doing Software Quality Assurance",
-  "a Property Onboarding Specialist",
   "an Adventurer",
 ];
 const TYPE_MS = 55;
