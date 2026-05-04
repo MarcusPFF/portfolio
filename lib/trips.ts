@@ -59,6 +59,72 @@ export type Trip = {
 
 export const trips: Trip[] = [
   {
+    slug: 'immeln-tur',
+    dateSort: '2026-05',
+    distanceKm: 350,
+    color: 'from-emerald-400/20 to-teal-400/20',
+    hexColor: '#10b981',
+    bike: 'Honda Africa Twin XRV 750 (RD07)',
+    waypoints: [
+      { name: 'Hillerød' },
+      { name: 'Helsingør' },
+      { name: 'Helsingborg' },
+      { name: 'Klippan' },
+      { name: 'Arkelstorp (Immeln)' },
+      { name: 'Klippan' },
+      { name: 'Helsingborg' },
+      { name: 'Helsingør' },
+      { name: 'Hillerød' },
+    ],
+    title: {
+      en: 'Lake Immeln Loop',
+      dk: 'Immeln-tur',
+      de: 'Immeln-Tour',
+    },
+    subtitle: {
+      en: 'A backroad ride to a Swedish forest lake',
+      dk: 'En tur ad bagveje til en svensk skovsø',
+      de: 'Eine Nebenstraßentour zu einem schwedischen Waldsee',
+    },
+    location: {
+      en: 'Denmark · Sweden',
+      dk: 'Danmark · Sverige',
+      de: 'Dänemark · Schweden',
+    },
+    duration: {
+      en: 'A weekend',
+      dk: 'En weekend',
+      de: 'Ein Wochenende',
+    },
+    summary: {
+      en: 'A 350 km loop from Hillerød over to Sweden, through Klippan and on to Lake Immeln near Arkelstorp, and back home the same way.',
+      dk: 'En 350 km sløjfe fra Hillerød over til Sverige, gennem Klippan og videre til Immeln-søen ved Arkelstorp, og hjem igen ad samme rute.',
+      de: 'Eine 350 km Schleife von Hillerød hinüber nach Schweden, durch Klippan und weiter zum Immeln-See bei Arkelstorp, und auf demselben Weg zurück.',
+    },
+    highlights: {
+      en: [
+        'Ferry crossing Helsingør → Helsingborg',
+        'Backroads through Klippan',
+        'Lake Immeln at Arkelstorp',
+      ],
+      dk: [
+        'Færge Helsingør → Helsingborg',
+        'Bagveje gennem Klippan',
+        'Immeln-søen ved Arkelstorp',
+      ],
+      de: [
+        'Fähre Helsingør → Helsingborg',
+        'Nebenstraßen durch Klippan',
+        'Immeln-See bei Arkelstorp',
+      ],
+    },
+    story: {
+      en: ['Placeholder, add trip notes later.'],
+      dk: ['Placeholder, tilføj tur-noter senere.'],
+      de: ['Platzhalter, Tournotizen später ergänzen.'],
+    },
+  },
+  {
     slug: 'europa-grand-tour',
     dateSort: '2025-07',
     distanceKm: 10000,
