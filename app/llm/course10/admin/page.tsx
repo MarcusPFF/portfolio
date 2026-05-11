@@ -2,15 +2,45 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { isAdmin } from '../_lib/admin-auth';
 import { logoutAdmin } from '../_actions/admin';
+import { getSupabase } from '../_lib/supabase';
 import SectionHeading from '../_components/section-heading';
 import AdminResetButton from '../_components/admin-reset-button';
+import AdminDeleteAllButton from '../_components/admin-delete-all-button';
+import AdminResetTrelloButton from '../_components/admin-reset-trello-button';
+import SyncButton from '../_components/sync-button';
 
 export const dynamic = 'force-dynamic';
+
+async function getLastSyncTimestamps(): Promise<{
+  download: string | null;
+  upload: string | null;
+}> {
+  try {
+    const supabase = getSupabase();
+    const { data } = await supabase
+      .from('sync_log')
+      .select('finished_at, started_at, success, direction')
+      .eq('success', true)
+      .order('finished_at', { ascending: false, nullsFirst: false })
+      .limit(20);
+    const rows = data ?? [];
+    const download = rows.find((r) => r.direction === 'download');
+    const upload = rows.find((r) => r.direction === 'upload');
+    return {
+      download: download?.finished_at ?? download?.started_at ?? null,
+      upload: upload?.finished_at ?? upload?.started_at ?? null,
+    };
+  } catch {
+    return { download: null, upload: null };
+  }
+}
 
 export default async function AdminPage() {
   if (!(await isAdmin())) {
     redirect('/llm/course10/admin/login');
   }
+
+  const lastSyncedAt = await getLastSyncTimestamps();
 
   return (
     <div>
@@ -33,22 +63,29 @@ export default async function AdminPage() {
       <div className="space-y-8">
         <Card
           title="Reset til seed"
-          description="Slet alle bryllupper, opgaver, tilkøb, betalinger og overnatninger, og indsæt de 6 oprindelige demo-bryllupper igen. Brug det når besøgende har rodet for meget i demo-dataen."
+          description="Slet alt eksisterende data og indsæt 10 mock-bryllupper med forskellige statusser (forespørgsel, tilbud sendt, booket, afholdt, aflyst). Bruges efter en demo eller når besøgende har rodet i dataen."
         >
           <AdminResetButton />
         </Card>
 
         <Card
-          title="Trello-sync"
-          description="Ikke implementeret endnu. Kommer i Phase 5 når Engestofte sender mock-board skabelonen."
+          title="Fjern alle bryllupper"
+          description="Slet ALLE bryllupper fra Supabase uden at indsætte noget bagefter. Kaskaderer til opgaver, tilkøb, betalinger og overnatninger. Bruges når du vil demonstrere at appen henter data fra Trello (klik denne, dernæst 'Hent fra Trello')."
         >
-          <button
-            type="button"
-            disabled
-            className="px-4 py-2 border border-[#dad3c4] text-[#a89b87] rounded-md text-sm font-medium cursor-not-allowed"
-          >
-            Sync fra Trello
-          </button>
+          <AdminDeleteAllButton />
+        </Card>
+
+        <Card
+          title="Trello-sync"
+          description="To-vejs synkronisering med Trello-boardet. 'Hent' trækker lister og kort fra Trello til Supabase. 'Upload' sender Supabase-data tilbage til Trello — kan overskrive manuelle ændringer. 'Reset Trello' arkiverer alle lister på boardet (også standardlister som 'To Do/Doing/Done'). Alle tre er idempotente; bryllupper matches på trello_list_id, opgaver på trello_card_id."
+        >
+          <div className="space-y-5">
+            <SyncButton variant="download" lastSyncedAt={lastSyncedAt.download} />
+            <SyncButton variant="upload" lastSyncedAt={lastSyncedAt.upload} />
+            <div className="pt-3 border-t border-[#dad3c4]">
+              <AdminResetTrelloButton />
+            </div>
+          </div>
         </Card>
 
         <Card

@@ -1,19 +1,22 @@
 'use client';
 
 import { useState, useTransition } from 'react';
-import { resetToSeed, type ResetResult } from '../_actions/admin';
+import {
+  deleteAllBryllupperAction,
+  type DeleteAllResult,
+} from '../_actions/admin';
 
-export default function AdminResetButton() {
+export default function AdminDeleteAllButton() {
   const [pending, startTransition] = useTransition();
-  const [result, setResult] = useState<ResetResult | null>(null);
+  const [result, setResult] = useState<DeleteAllResult | null>(null);
 
   function handleClick() {
     const ok = confirm(
-      'Nulstil alt demo-data til de 10 oprindelige mock-bryllupper? Alle ændringer går tabt.',
+      'Fjern ALLE bryllupper fra Supabase? Også opgaver, tilkøb, betalinger og overnatninger. Kan ikke fortrydes.',
     );
     if (!ok) return;
     startTransition(async () => {
-      const res = await resetToSeed();
+      const res = await deleteAllBryllupperAction();
       setResult(res);
     });
   }
@@ -24,9 +27,9 @@ export default function AdminResetButton() {
         type="button"
         onClick={handleClick}
         disabled={pending}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-[#3d4a3a] text-[#f0ede2] rounded-md text-sm font-medium hover:bg-[#2e3a2c] disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+        className="inline-flex items-center gap-2 px-4 py-2 bg-[#7a3327] text-[#f0ede2] rounded-md text-sm font-medium hover:bg-[#6a2c22] disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
       >
-        {pending ? 'Nulstiller…' : 'Reset til seed (10 mock-bryllupper)'}
+        {pending ? 'Sletter…' : 'Fjern alle bryllupper'}
       </button>
       {result ? (
         <p

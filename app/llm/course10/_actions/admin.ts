@@ -185,6 +185,50 @@ export async function resetToSeed(): Promise<ResetResult> {
   };
 }
 
+export type DeleteAllResult = {
+  ok: boolean;
+  deleted: number;
+  message: string;
+};
+
+export async function deleteAllBryllupperAction(): Promise<DeleteAllResult> {
+  if (!(await isAdmin())) {
+    return { ok: false, deleted: 0, message: 'Ikke autoriseret.' };
+  }
+
+  const supabase = getSupabase();
+  const { count: beforeCount } = await supabase
+    .from('bryllupper')
+    .select('id', { count: 'exact', head: true });
+
+  const { error } = await supabase
+    .from('bryllupper')
+    .delete()
+    .not('id', 'is', null);
+  if (error) {
+    console.error('[engestofte deleteAllBryllupper]', error);
+    return {
+      ok: false,
+      deleted: 0,
+      message: 'Kunne ikke slette bryllupper. Tjek serverlog.',
+    };
+  }
+
+  const deleted = beforeCount ?? 0;
+  await logAudit({
+    event: 'admin.delete_all_weddings',
+    actor: 'admin',
+    ip: await clientIp(),
+    details: { count: deleted },
+  });
+  revalidateAll();
+  return {
+    ok: true,
+    deleted,
+    message: `Slettede ${deleted} bryllup${deleted === 1 ? '' : 'per'} + tilhørende opgaver, tilkøb, betalinger og overnatninger.`,
+  };
+}
+
 export async function deleteBryllup(id: string): Promise<void> {
   if (!(await isAdmin())) {
     redirect('/llm/course10/admin/login');

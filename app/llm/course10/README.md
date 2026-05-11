@@ -57,6 +57,10 @@ SQL ligger i `_migrations/`. Kør i Supabase SQL Editor:
 1. `001_initial.sql` — skema, RLS, triggers.
 2. `002_seed.sql` — 6 mock-bryllupper med opgaver, tilkøb, betalinger, overnatninger.
 3. `003_audit_log.sql` — audit_log tabel + indexes.
+4. `004_overnatninger_properties.sql` — navngivne ejendomme (Hospitalet, Hushovmesterboligen, m.fl.).
+5. `005_overnatninger_fiskerhuset.sql` — tilføj Fiskerhuset.
+6. `006_trello_ids.sql` — trello_list_id på bryllupper, trello_card_id på opgaver (upsert-nøgler).
+7. `007_sync_log.sql` — sync_log tabel til Trello-sync historik.
 
 Begge er idempotente. Seed truncater tabellerne først, så du kan re-run for at
 nulstille demo-data.
@@ -72,6 +76,7 @@ Når pitchet er forbi:
 5. Drop tabellerne i Supabase:
 
 ```sql
+drop table if exists sync_log;
 drop table if exists audit_log;
 drop table if exists overnatninger;
 drop table if exists betalinger;
@@ -87,7 +92,31 @@ oprydning der kræves.
 ## Faser
 
 - **Phase 1** ✓ Foundation: layout, dashboard, kalender, bryllupsliste, detalje.
-- **Phase 2** Opret/rediger bryllup. Form-validation.
-- **Phase 3** Admin-gate (password `exam2026`). Reset til seed.
-- **Phase 4** AI-opgaveforslag via Groq Llama 3.3 70B.
-- **Phase 5** Trello-sync når mock-boardet kommer fra Engestofte.
+- **Phase 2** ✓ Opret/rediger bryllup. Form-validation.
+- **Phase 3** ✓ Admin-gate (password `exam2026`). Reset til seed.
+- **Phase 4** ✓ AI-opgaveforslag og AI-tilkøbsforslag via Groq Llama 3.3 70B.
+- **Phase 5** ✓ Trello-sync. Refactor af mapping når Engestofte sender deres egen skabelon.
+
+## Trello board-format
+
+Mapping-detaljer i `_lib/trello/mapping.ts`. Kort version:
+
+- **Hver liste** på boardet = ét bryllup. Liste-navn = brudepar.
+- **Første kort med titel "📋 Bryllup detaljer"** indeholder metadata i sin description:
+  ```
+  Bryllupsdato: 2026-06-14
+  Antal kuverter: 85
+  Pakke: festpakke
+  Lokation: vaerkstedet
+  Vielsestype: maribo_domkirke
+  Koordinator: johan
+  Status: booket
+  Email: anna.lars@example.dk
+  Tlf: +45 24 55 66 77
+  Noter: Frihjul med Anemonen
+  ```
+- **Alle øvrige kort** = opgaver. Kort-navn = titel, kort-due = deadline,
+  dueComplete = status (done/todo), kort-desc = beskrivelse.
+
+Sync er idempotent (upsert på `trello_list_id`/`trello_card_id`) og additiv —
+slettede kort/lister forbliver i Supabase for at undgå datatab.

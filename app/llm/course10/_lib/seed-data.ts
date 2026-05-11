@@ -158,6 +158,62 @@ export const SEED_BRYLLUPPER: SeedBryllup[] = [
     kontakt_tlf: '+45 21 33 22 11',
     noter: 'Første henvendelse. Mangler afklaring på pakke og lokation.',
   },
+  {
+    slug: 'km',
+    brudepar: 'Karoline & Magnus',
+    bryllupsdato: '2026-06-28',
+    antal_kuverter: 70,
+    pakke: 'festpakke',
+    lokation: 'vaerkstedet',
+    vielsestype: 'borgerlig',
+    koordinator: 'johan',
+    status: 'aflyst',
+    kontakt_email: 'karo.mag@example.dk',
+    kontakt_tlf: '+45 25 11 33 44',
+    noter: 'Aflyst pga sygdom. Forventer at flytte til 2027 — depositum overført.',
+  },
+  {
+    slug: 'lo',
+    brudepar: 'Liva & Oskar',
+    bryllupsdato: '2025-10-04',
+    antal_kuverter: 110,
+    pakke: 'grundpakke',
+    lokation: 'den_gamle_lade',
+    vielsestype: 'engestofte_kirke',
+    koordinator: 'lise',
+    status: 'afholdt',
+    kontakt_email: 'liva.oskar@example.dk',
+    kontakt_tlf: '+45 23 44 55 66',
+    noter: 'Efterårsbryllup. Stor succes, alle var begejstrede for menuen.',
+  },
+  {
+    slug: 'ib',
+    brudepar: 'Ida & Benjamin',
+    bryllupsdato: '2026-02-14',
+    antal_kuverter: 50,
+    pakke: 'festpakke',
+    lokation: 'vaerkstedet',
+    vielsestype: 'ingen',
+    koordinator: 'lise',
+    status: 'booket',
+    kontakt_email: 'ida.ben@example.dk',
+    kontakt_tlf: '+45 28 99 11 22',
+    noter: 'Valentinsbryllup. Intimt selskab uden vielse — parret blev gift før.',
+  },
+  {
+    slug: 'nt',
+    brudepar: 'Nynne & Theis',
+    bryllupsdato: '2026-10-11',
+    antal_kuverter: 130,
+    pakke: 'grundpakke',
+    lokation: 'den_gamle_lade',
+    vielsestype: 'engestofte_kirke',
+    koordinator: 'johan',
+    status: 'booket',
+    kontakt_email: 'nynne.theis@example.dk',
+    kontakt_tlf: '+45 27 66 88 99',
+    noter: 'Efterårsbryllup med fokus på lokale råvarer og høstmenu.',
+  },
 ];
 
 export const SEED_OPGAVER: SeedOpgave[] = [
@@ -195,6 +251,29 @@ export const SEED_OPGAVER: SeedOpgave[] = [
   // Julie & Andreas — forespoergsel
   { bryllup_slug: 'ja', titel: 'Send pakke-info og prisliste',   kategori: 'koordinering', deadline: '2026-05-18', status: 'todo', ansvarlig: 'Johan', raekkefoelge: 1 },
   { bryllup_slug: 'ja', titel: 'Foreslå datoer for besigtigelse', kategori: 'koordinering', deadline: '2026-05-25', status: 'todo', ansvarlig: 'Johan', raekkefoelge: 2 },
+
+  // Karoline & Magnus — aflyst, kun afslutningsopgaver
+  { bryllup_slug: 'km', titel: 'Afklar depositum-håndtering med brudepar', kategori: 'koordinering', deadline: '2026-07-10', status: 'todo',        ansvarlig: 'Johan', raekkefoelge: 1 },
+  { bryllup_slug: 'km', titel: 'Sæt ressourcer fri i kalenderen',          kategori: 'koordinering', deadline: '2026-06-29', status: 'done',        ansvarlig: 'Johan', raekkefoelge: 2 },
+
+  // Liva & Oskar — afholdt 2025, alt færdigt
+  { bryllup_slug: 'lo', titel: 'Kontakt præst i Engestofte Kirke',  kategori: 'praest',       deadline: '2025-08-04', status: 'done', ansvarlig: 'Lise', raekkefoelge: 1 },
+  { bryllup_slug: 'lo', titel: 'Bekræft efterårsmenu med køkken',    kategori: 'mad',          deadline: '2025-08-09', status: 'done', ansvarlig: 'Lise', raekkefoelge: 2 },
+  { bryllup_slug: 'lo', titel: 'Bestil bryllupskage',                kategori: 'andet',        deadline: '2025-09-04', status: 'done', ansvarlig: 'Lise', raekkefoelge: 3 },
+  { bryllup_slug: 'lo', titel: 'Slutbetaling',                       kategori: 'betaling',     deadline: '2025-09-20', status: 'done', ansvarlig: 'Lise', raekkefoelge: 4 },
+  { bryllup_slug: 'lo', titel: 'Endelig walkthrough',                kategori: 'koordinering', deadline: '2025-09-27', status: 'done', ansvarlig: 'Lise', raekkefoelge: 5 },
+
+  // Ida & Benjamin — booket, intimt valentinsbryllup
+  { bryllup_slug: 'ib', titel: 'Bekræft menu (50 personer)',     kategori: 'mad',          deadline: '2026-01-17', status: 'in_progress', ansvarlig: 'Lise', raekkefoelge: 1 },
+  { bryllup_slug: 'ib', titel: 'Bestil rosenblade til borde',    kategori: 'blomster',     deadline: '2026-02-07', status: 'todo',        ansvarlig: 'Lise', raekkefoelge: 2 },
+  { bryllup_slug: 'ib', titel: 'Slutbetaling',                   kategori: 'betaling',     deadline: '2026-01-31', status: 'todo',        ansvarlig: 'Lise', raekkefoelge: 3 },
+  { bryllup_slug: 'ib', titel: 'Walkthrough med Ida og Benjamin',kategori: 'koordinering', deadline: '2026-02-07', status: 'todo',        ansvarlig: 'Lise', raekkefoelge: 4 },
+
+  // Nynne & Theis — booket, efterår
+  { bryllup_slug: 'nt', titel: 'Kontakt præst i Engestofte Kirke',  kategori: 'praest',    deadline: '2026-07-19', status: 'done',        ansvarlig: 'Johan', raekkefoelge: 1 },
+  { bryllup_slug: 'nt', titel: 'Aftale efterårsmenu med køkken',    kategori: 'mad',       deadline: '2026-08-16', status: 'in_progress', ansvarlig: 'Johan', raekkefoelge: 2 },
+  { bryllup_slug: 'nt', titel: 'Bestil bryllupskage',               kategori: 'andet',     deadline: '2026-09-13', status: 'todo',        ansvarlig: 'Johan', raekkefoelge: 3 },
+  { bryllup_slug: 'nt', titel: 'Slutbetaling',                      kategori: 'betaling',  deadline: '2026-09-27', status: 'todo',        ansvarlig: 'Johan', raekkefoelge: 4 },
 ];
 
 export const SEED_TILKOEB: SeedTilkoeb[] = [
@@ -210,6 +289,16 @@ export const SEED_TILKOEB: SeedTilkoeb[] = [
 
   { bryllup_slug: 'cf', type: 'shuttlebus',     beskrivelse: 'Shuttle fra Maribo, 2 afgange', pris: 6500,  status: 'forespurgt' },
   { bryllup_slug: 'cf', type: 'fotografering',  beskrivelse: 'Hele dagen + dronebilleder',    pris: 22000, status: 'bekraeftet' },
+
+  { bryllup_slug: 'lo', type: 'bryllupskage',         beskrivelse: 'Karamel-æble, 110 personer',  pris: 12100, status: 'leveret' },
+  { bryllup_slug: 'lo', type: 'fotografering',        beskrivelse: 'Hele dagen, 10 timer',         pris: 18000, status: 'leveret' },
+  { bryllup_slug: 'lo', type: 'blomsterdekorationer', beskrivelse: 'Efterårsfarver, bordpynt',     pris: 7700,  status: 'leveret' },
+
+  { bryllup_slug: 'ib', type: 'brudebuket',    beskrivelse: 'Røde roser', pris: 2200, status: 'bekraeftet' },
+  { bryllup_slug: 'ib', type: 'fotografering', beskrivelse: 'Halv dag',   pris: 9500, status: 'forespurgt' },
+
+  { bryllup_slug: 'nt', type: 'bryllupskage',  beskrivelse: 'Æbletærte-inspireret, 130 personer', pris: 14300, status: 'forespurgt' },
+  { bryllup_slug: 'nt', type: 'fotografering', beskrivelse: 'Hele dagen + dronebilleder',         pris: 22000, status: 'bekraeftet' },
 ];
 
 export const SEED_BETALINGER: SeedBetaling[] = [
@@ -224,6 +313,17 @@ export const SEED_BETALINGER: SeedBetaling[] = [
 
   { bryllup_slug: 'cf', type: 'depositum',    beloeb: 62875,  forfald: '2026-04-09', betalt_dato: '2026-04-08', status: 'betalt' },
   { bryllup_slug: 'cf', type: 'slutbetaling', beloeb: 188625, forfald: '2026-08-09', betalt_dato: null,         status: 'afventer' },
+
+  { bryllup_slug: 'km', type: 'depositum', beloeb: 17500, forfald: '2026-03-14', betalt_dato: '2026-03-12', status: 'betalt' },
+
+  { bryllup_slug: 'lo', type: 'depositum',    beloeb: 39312,  forfald: '2025-07-21', betalt_dato: '2025-07-20', status: 'betalt' },
+  { bryllup_slug: 'lo', type: 'slutbetaling', beloeb: 117938, forfald: '2025-09-20', betalt_dato: '2025-09-19', status: 'betalt' },
+
+  { bryllup_slug: 'ib', type: 'depositum',    beloeb: 12000, forfald: '2025-12-29', betalt_dato: '2025-12-27', status: 'betalt' },
+  { bryllup_slug: 'ib', type: 'slutbetaling', beloeb: 36000, forfald: '2026-01-31', betalt_dato: null,         status: 'afventer' },
+
+  { bryllup_slug: 'nt', type: 'depositum',    beloeb: 46063,  forfald: '2026-06-12', betalt_dato: '2026-06-10', status: 'betalt' },
+  { bryllup_slug: 'nt', type: 'slutbetaling', beloeb: 138187, forfald: '2026-09-27', betalt_dato: null,         status: 'afventer' },
 ];
 
 export const SEED_OVERNATNINGER: SeedOvernatning[] = [
@@ -236,4 +336,9 @@ export const SEED_OVERNATNINGER: SeedOvernatning[] = [
   { bryllup_slug: 'mc', type: 'grevindens_hus',  antal_personer: 6, fra_dato: '2026-07-19', til_dato: '2026-07-21', pris: 4400 },
 
   { bryllup_slug: 'cf', type: 'hospitalet', antal_personer: 2, fra_dato: '2026-08-23', til_dato: '2026-08-24', pris: 0 },
+
+  { bryllup_slug: 'lo', type: 'hospitalet',      antal_personer: 2, fra_dato: '2025-10-04', til_dato: '2025-10-05', pris: 0 },
+  { bryllup_slug: 'ib', type: 'hospitalet',      antal_personer: 2, fra_dato: '2026-02-14', til_dato: '2026-02-15', pris: 0 },
+  { bryllup_slug: 'nt', type: 'hospitalet',      antal_personer: 2, fra_dato: '2026-10-11', til_dato: '2026-10-12', pris: 0 },
+  { bryllup_slug: 'nt', type: 'skovloeberhuset', antal_personer: 4, fra_dato: '2026-10-11', til_dato: '2026-10-12', pris: 3500 },
 ];

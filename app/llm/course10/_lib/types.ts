@@ -62,6 +62,7 @@ export type Bryllup = {
   kontakt_email: string | null;
   kontakt_tlf: string | null;
   noter: string | null;
+  trello_list_id: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -77,7 +78,24 @@ export type Opgave = {
   ansvarlig: string | null;
   raekkefoelge: number;
   ai_genereret: boolean;
+  trello_card_id: string | null;
   created_at: string;
+};
+
+export type SyncDirection = 'download' | 'upload';
+
+export type SyncLogEntry = {
+  id: string;
+  started_at: string;
+  finished_at: string | null;
+  success: boolean | null;
+  direction: SyncDirection;
+  weddings_created: number;
+  weddings_updated: number;
+  tasks_created: number;
+  tasks_updated: number;
+  duration_ms: number | null;
+  error_message: string | null;
 };
 
 export type Tilkoeb = {

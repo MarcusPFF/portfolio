@@ -25,6 +25,7 @@ const FILTERS: { value: string; label: string }[] = [
   { value: 'wedding.', label: 'Bryllup' },
   { value: 'ai.', label: 'AI' },
   { value: 'ai.generate_failed', label: 'AI-fejl' },
+  { value: 'admin.sync_', label: 'Trello-sync' },
 ];
 
 const EVENT_LABELS: Record<AuditEvent, string> = {
@@ -37,6 +38,11 @@ const EVENT_LABELS: Record<AuditEvent, string> = {
   'admin.delete_tilkoeb': 'Slet tilkøb',
   'admin.delete_betaling': 'Slet betaling',
   'admin.delete_overnatning': 'Slet overnatning',
+  'admin.sync_download': 'Hent fra Trello',
+  'admin.sync_upload': 'Upload til Trello',
+  'admin.sync_failed': 'Sync fejlede',
+  'admin.reset_trello_board': 'Reset Trello board',
+  'admin.delete_all_weddings': 'Slet alle bryllupper',
   'wedding.create': 'Nyt bryllup',
   'wedding.update': 'Opdater bryllup',
   'ai.generate_tasks': 'AI: opgaver',
@@ -98,8 +104,8 @@ export default async function AuditLogPage({
     .limit(100);
 
   if (eventFilter) {
-    if (eventFilter.endsWith('.')) {
-      // Prefix-filter: alle 'admin.*' eller 'ai.*' osv.
+    if (eventFilter.endsWith('.') || eventFilter.endsWith('_')) {
+      // Prefix-filter: alle 'admin.*' eller 'admin.sync_*' osv.
       query = query.like('event', `${eventFilter}%`);
     } else {
       query = query.eq('event', eventFilter);
