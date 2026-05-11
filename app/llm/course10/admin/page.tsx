@@ -80,6 +80,14 @@ export default async function AdminPage() {
           description="To-vejs synkronisering med Trello-boardet. 'Hent' trækker lister og kort fra Trello til Supabase. 'Upload' sender Supabase-data tilbage til Trello — kan overskrive manuelle ændringer. 'Reset Trello' arkiverer alle lister på boardet (også standardlister som 'To Do/Doing/Done'). Alle tre er idempotente; bryllupper matches på trello_list_id, opgaver på trello_card_id."
         >
           <div className="space-y-5">
+            <a
+              href="https://trello.com/b/bM7VVJmB/engestofte"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs text-[#3d4a3a] hover:underline underline-offset-4"
+            >
+              Åbn Trello-boardet ↗
+            </a>
             <SyncButton variant="download" lastSyncedAt={lastSyncedAt.download} />
             <SyncButton variant="upload" lastSyncedAt={lastSyncedAt.upload} />
             <div className="pt-3 border-t border-[#dad3c4]">
