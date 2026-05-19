@@ -58,7 +58,7 @@ export async function deleteTilkoeb(
     .delete()
     .eq('id', tilkoebId);
   if (error) {
-    console.error('[engestofte deleteTilkoeb]', error);
+    console.error('[eg deleteTilkoeb]', error);
     return;
   }
 

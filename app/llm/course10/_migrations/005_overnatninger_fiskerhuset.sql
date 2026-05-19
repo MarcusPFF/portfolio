@@ -1,4 +1,4 @@
--- Engestofte Gods booking demo — tilføj Fiskerhuset
+-- E.G. booking demo — tilføj Fiskerhuset
 -- Udvider overnatninger-typen med Fiskerhuset.
 
 alter table overnatninger drop constraint if exists overnatninger_type_check;

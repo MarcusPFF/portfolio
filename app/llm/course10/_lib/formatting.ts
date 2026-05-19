@@ -77,7 +77,7 @@ export const LOKATION_LABELS: Record<Lokation, string> = {
 };
 
 export const VIELSESTYPE_LABELS: Record<Vielsestype, string> = {
-  engestofte_kirke: 'Engestofte Kirke',
+  engestofte_kirke: 'E.G. Kirke',
   maribo_domkirke: 'Maribo Domkirke',
   park: 'Parken',
   borgerlig: 'Borgerlig vielse',
@@ -165,7 +165,7 @@ export const OVERNATNING_PROPERTIES: Record<
   },
   grevindens_hus: {
     label: 'Grevindens hus',
-    description: '6 soveværelser, plads til 11 personer. Et af Engestoftes skønneste huse.',
+    description: '6 soveværelser, plads til 11 personer. Et af E.G.s skønneste huse.',
     maxGuests: 11,
   },
   skovloeberhuset: {

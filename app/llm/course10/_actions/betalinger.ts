@@ -86,7 +86,7 @@ export async function createBetaling(
   });
 
   if (error) {
-    console.error('[engestofte createBetaling]', error);
+    console.error('[eg createBetaling]', error);
     return { ok: false, error: 'Kunne ikke registrere betaling. Prøv igen.' };
   }
 
@@ -153,7 +153,7 @@ export async function deleteBetaling(
     .delete()
     .eq('id', betalingId);
   if (error) {
-    console.error('[engestofte deleteBetaling]', error);
+    console.error('[eg deleteBetaling]', error);
     return;
   }
 

@@ -1,4 +1,4 @@
--- Engestofte Gods booking demo — Trello sync IDs
+-- E.G. booking demo — Trello sync IDs
 -- Stable external references der bruges som upsert-nøgler ved sync.
 -- Idempotent: kan re-køres uden problemer.
 

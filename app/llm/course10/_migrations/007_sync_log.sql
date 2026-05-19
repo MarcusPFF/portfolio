@@ -1,4 +1,4 @@
--- Engestofte Gods booking demo — Trello sync log
+-- E.G. booking demo — Trello sync log
 -- Hver sync skriver én række (success eller fejl). Bruges af SyncButton til at
 -- vise "sidst synkroniseret" og af admin til at undersøge fejlede sync-forsøg.
 

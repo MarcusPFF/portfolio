@@ -1,4 +1,4 @@
--- Engestofte Gods booking demo — seed data
+-- E.G. booking demo — seed data
 -- Re-run for at nulstille mock-data. Truncater først, så ingen dubletter.
 
 truncate table bryllupper restart identity cascade;
@@ -29,7 +29,7 @@ begin
   select id into v_ja from bryllupper where brudepar = 'Julie & Andreas';
 
   insert into opgaver (bryllup_id, titel, kategori, deadline, status, ansvarlig, raekkefoelge) values
-    (v_sm, 'Kontakt præst i Engestofte Kirke',    'praest',       '2026-02-25', 'done', 'Lise', 1),
+    (v_sm, 'Kontakt præst i E.G. Kirke',    'praest',       '2026-02-25', 'done', 'Lise', 1),
     (v_sm, 'Bekræft menu med køkken',             'mad',          '2026-03-25', 'done', 'Lise', 2),
     (v_sm, 'Bestil bryllupskage',                 'andet',        '2026-04-04', 'done', 'Lise', 3),
     (v_sm, 'Slutbetaling',                        'betaling',     '2026-04-11', 'done', 'Lise', 4),
@@ -60,7 +60,7 @@ begin
     (v_al, 'glamping',   8,  '2026-06-14', '2026-06-15', 4800);
 
   insert into opgaver (bryllup_id, titel, kategori, deadline, status, ansvarlig, raekkefoelge) values
-    (v_mc, 'Kontakt præst i Engestofte Kirke',    'praest',       '2026-05-24', 'done',        'Lise', 1),
+    (v_mc, 'Kontakt præst i E.G. Kirke',    'praest',       '2026-05-24', 'done',        'Lise', 1),
     (v_mc, 'Bekræft live-band',                   'musik',        '2026-06-21', 'in_progress', 'Lise', 2),
     (v_mc, 'Bekræft fyrværkeri (kl. 23)',         'andet',        '2026-07-05', 'todo',        'Lise', 3),
     (v_mc, 'Bestil blomsterdekorationer',         'blomster',     '2026-06-28', 'todo',        'Lise', 4),

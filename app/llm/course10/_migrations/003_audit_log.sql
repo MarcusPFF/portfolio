@@ -1,4 +1,4 @@
--- Engestofte Gods booking demo — audit log
+-- E.G. booking demo — audit log
 -- Kør i Supabase SQL Editor. Idempotent.
 
 create table if not exists audit_log (

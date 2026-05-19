@@ -129,7 +129,7 @@ export async function syncFromTrelloAction(): Promise<SyncActionResult> {
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Ukendt fejl';
-    console.error('[engestofte trello sync download]', message);
+    console.error('[eg trello sync download]', message);
     await finishLog(logId, {
       success: false,
       duration_ms: Date.now() - startedAt,
@@ -203,7 +203,7 @@ export async function uploadToTrelloAction(): Promise<SyncActionResult> {
     };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Ukendt fejl';
-    console.error('[engestofte trello sync upload]', message);
+    console.error('[eg trello sync upload]', message);
     await finishLog(logId, {
       success: false,
       duration_ms: Date.now() - startedAt,
@@ -266,7 +266,7 @@ export async function resetTrelloBoardAction(): Promise<ResetTrelloResult> {
     return { ok: true, lists_archived: archived };
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Ukendt fejl';
-    console.error('[engestofte trello reset]', message);
+    console.error('[eg trello reset]', message);
     return { ok: false, error: mapTrelloError(message) };
   }
 }

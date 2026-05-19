@@ -57,6 +57,6 @@ export async function logAudit(args: {
   } catch (err) {
     // Audit log må aldrig blokere selve operationen.
     const message = err instanceof Error ? err.message : 'ukendt';
-    console.error('[engestofte audit] log failed:', message);
+    console.error('[eg audit] log failed:', message);
   }
 }

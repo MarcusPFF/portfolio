@@ -2,7 +2,7 @@ import { createGroq } from '@ai-sdk/groq';
 import { generateText } from 'ai';
 import type { Bryllup, Tilkoeb, TilkoebType } from '../types';
 import {
-  ENGESTOFTE_TILKOEB_SYSTEM_PROMPT,
+  EG_TILKOEB_SYSTEM_PROMPT,
   buildTilkoebUserPrompt,
 } from './tilkoeb-prompt';
 
@@ -113,7 +113,7 @@ async function callGroq(
   const groq = createGroq({ apiKey });
   const result = await generateText({
     model: groq(GROQ_MODEL),
-    system: ENGESTOFTE_TILKOEB_SYSTEM_PROMPT,
+    system: EG_TILKOEB_SYSTEM_PROMPT,
     prompt: userPrompt,
     temperature,
   });

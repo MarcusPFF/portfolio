@@ -89,7 +89,7 @@ export async function createOvernatning(
   });
 
   if (error) {
-    console.error('[engestofte createOvernatning]', error);
+    console.error('[eg createOvernatning]', error);
     return { ok: false, error: 'Kunne ikke tilføje overnatning. Prøv igen.' };
   }
 
@@ -118,7 +118,7 @@ export async function deleteOvernatning(
     .delete()
     .eq('id', overnatningId);
   if (error) {
-    console.error('[engestofte deleteOvernatning]', error);
+    console.error('[eg deleteOvernatning]', error);
     return;
   }
 

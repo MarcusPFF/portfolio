@@ -1,15 +1,15 @@
-/* Engestofte demo — overrides the portfolio's pastel body bg
-   for everything under /llm/course10. Scoped via the .engestofte-shell
+/* E.G. demo — overrides the portfolio's pastel body bg
+   for everything under /llm/course10. Scoped via the .eg-shell
    wrapper so no other route is affected. */
 
-.engestofte-shell {
+.eg-shell {
   position: relative;
   background-color: #f7f3ec;
   color: #2a2723;
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui;
 }
 
-.engestofte-shell::before {
+.eg-shell::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -18,7 +18,7 @@
   pointer-events: none;
 }
 
-.engestofte-shell .display {
-  font-family: var(--font-engestofte-display), ui-serif, Georgia, serif;
+.eg-shell .display {
+  font-family: var(--font-eg-display), ui-serif, Georgia, serif;
   font-feature-settings: 'liga', 'dlig';
 }

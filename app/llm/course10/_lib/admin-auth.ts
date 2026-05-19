@@ -1,7 +1,7 @@
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { cookies } from 'next/headers';
 
-const COOKIE_NAME = 'engestofte_admin';
+const COOKIE_NAME = 'eg_admin';
 const COOKIE_PATH = '/llm/course10';
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 dage
 
@@ -16,12 +16,12 @@ function expected(): string | null {
  * bruges aldrig i praksis, men gør funktionen safe at kalde i tests/build.
  */
 function signingKey(): string {
-  return process.env.SUPABASE_SERVICE_ROLE_KEY ?? 'engestofte-fallback-key';
+  return process.env.SUPABASE_SERVICE_ROLE_KEY ?? 'eg-fallback-key';
 }
 
 function sign(value: string): string {
   return createHmac('sha256', signingKey())
-    .update('engestofte:admin:' + value)
+    .update('eg:admin:' + value)
     .digest('hex');
 }
 

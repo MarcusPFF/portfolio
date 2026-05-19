@@ -1,5 +1,5 @@
 /**
- * Engestofte-lokale rate limiters.
+ * E.G.-lokale rate limiters.
  *
  * AI-kald bruger portfoliets delte limiter i lib/rate-limit (6/min/IP) for at
  * dele cost-budget med chat og course-5. Disse to lokale buckets dækker

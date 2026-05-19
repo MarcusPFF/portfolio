@@ -81,7 +81,7 @@ export default async function AdminPage() {
         >
           <div className="space-y-5">
             <a
-              href="https://trello.com/b/bM7VVJmB/engestofte"
+              href="https://trello.com/b/bM7VVJmB/e-g"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-xs text-[#3d4a3a] hover:underline underline-offset-4"

@@ -1,7 +1,7 @@
 import { createGroq } from '@ai-sdk/groq';
 import { generateText } from 'ai';
 import type { Bryllup, OpgaveKategori, Tilkoeb } from '../types';
-import { ENGESTOFTE_SYSTEM_PROMPT, buildUserPrompt } from './system-prompt';
+import { EG_SYSTEM_PROMPT, buildUserPrompt } from './system-prompt';
 
 const GROQ_MODEL = 'llama-3.3-70b-versatile';
 
@@ -103,7 +103,7 @@ async function callGroq(
   const groq = createGroq({ apiKey });
   const result = await generateText({
     model: groq(GROQ_MODEL),
-    system: ENGESTOFTE_SYSTEM_PROMPT,
+    system: EG_SYSTEM_PROMPT,
     prompt: userPrompt,
     temperature,
   });

@@ -92,7 +92,7 @@ export async function generateTaskSuggestions(
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Ukendt fejl';
     const stack = err instanceof Error ? err.stack : undefined;
-    console.error('[engestofte ai] suggestTasks failed:', message);
+    console.error('[eg ai] suggestTasks failed:', message);
     if (stack) console.error(stack);
 
     const ctx = await getAuditContext();
@@ -283,7 +283,7 @@ export async function generateTilkoebSuggestions(
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Ukendt fejl';
     const stack = err instanceof Error ? err.stack : undefined;
-    console.error('[engestofte ai] suggestTilkoeb failed:', message);
+    console.error('[eg ai] suggestTilkoeb failed:', message);
     if (stack) console.error(stack);
 
     const ctx = await getAuditContext();

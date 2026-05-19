@@ -218,7 +218,7 @@ export const SEED_BRYLLUPPER: SeedBryllup[] = [
 
 export const SEED_OPGAVER: SeedOpgave[] = [
   // Sofie & Mikkel — afholdt, alt færdigt
-  { bryllup_slug: 'sm', titel: 'Kontakt præst i Engestofte Kirke',  kategori: 'praest',       deadline: '2026-02-25', status: 'done', ansvarlig: 'Lise', raekkefoelge: 1 },
+  { bryllup_slug: 'sm', titel: 'Kontakt præst i E.G. Kirke',  kategori: 'praest',       deadline: '2026-02-25', status: 'done', ansvarlig: 'Lise', raekkefoelge: 1 },
   { bryllup_slug: 'sm', titel: 'Bekræft menu med køkken',           kategori: 'mad',          deadline: '2026-03-25', status: 'done', ansvarlig: 'Lise', raekkefoelge: 2 },
   { bryllup_slug: 'sm', titel: 'Bestil bryllupskage',               kategori: 'andet',        deadline: '2026-04-04', status: 'done', ansvarlig: 'Lise', raekkefoelge: 3 },
   { bryllup_slug: 'sm', titel: 'Slutbetaling',                      kategori: 'betaling',     deadline: '2026-04-11', status: 'done', ansvarlig: 'Lise', raekkefoelge: 4 },
@@ -232,7 +232,7 @@ export const SEED_OPGAVER: SeedOpgave[] = [
   { bryllup_slug: 'al', titel: 'Slutbetaling',                    kategori: 'betaling',   deadline: '2026-05-31', status: 'todo',        ansvarlig: 'Johan', raekkefoelge: 5 },
 
   // Mette & Christian
-  { bryllup_slug: 'mc', titel: 'Kontakt præst i Engestofte Kirke', kategori: 'praest',    deadline: '2026-05-24', status: 'done',        ansvarlig: 'Lise', raekkefoelge: 1 },
+  { bryllup_slug: 'mc', titel: 'Kontakt præst i E.G. Kirke', kategori: 'praest',    deadline: '2026-05-24', status: 'done',        ansvarlig: 'Lise', raekkefoelge: 1 },
   { bryllup_slug: 'mc', titel: 'Bekræft live-band',                kategori: 'musik',     deadline: '2026-06-21', status: 'in_progress', ansvarlig: 'Lise', raekkefoelge: 2 },
   { bryllup_slug: 'mc', titel: 'Bekræft fyrværkeri (kl. 23)',      kategori: 'andet',     deadline: '2026-07-05', status: 'todo',        ansvarlig: 'Lise', raekkefoelge: 3 },
   { bryllup_slug: 'mc', titel: 'Bestil blomsterdekorationer',      kategori: 'blomster',  deadline: '2026-06-28', status: 'todo',        ansvarlig: 'Lise', raekkefoelge: 4 },
@@ -257,7 +257,7 @@ export const SEED_OPGAVER: SeedOpgave[] = [
   { bryllup_slug: 'km', titel: 'Sæt ressourcer fri i kalenderen',          kategori: 'koordinering', deadline: '2026-06-29', status: 'done',        ansvarlig: 'Johan', raekkefoelge: 2 },
 
   // Liva & Oskar — afholdt 2025, alt færdigt
-  { bryllup_slug: 'lo', titel: 'Kontakt præst i Engestofte Kirke',  kategori: 'praest',       deadline: '2025-08-04', status: 'done', ansvarlig: 'Lise', raekkefoelge: 1 },
+  { bryllup_slug: 'lo', titel: 'Kontakt præst i E.G. Kirke',  kategori: 'praest',       deadline: '2025-08-04', status: 'done', ansvarlig: 'Lise', raekkefoelge: 1 },
   { bryllup_slug: 'lo', titel: 'Bekræft efterårsmenu med køkken',    kategori: 'mad',          deadline: '2025-08-09', status: 'done', ansvarlig: 'Lise', raekkefoelge: 2 },
   { bryllup_slug: 'lo', titel: 'Bestil bryllupskage',                kategori: 'andet',        deadline: '2025-09-04', status: 'done', ansvarlig: 'Lise', raekkefoelge: 3 },
   { bryllup_slug: 'lo', titel: 'Slutbetaling',                       kategori: 'betaling',     deadline: '2025-09-20', status: 'done', ansvarlig: 'Lise', raekkefoelge: 4 },
@@ -270,7 +270,7 @@ export const SEED_OPGAVER: SeedOpgave[] = [
   { bryllup_slug: 'ib', titel: 'Walkthrough med Ida og Benjamin',kategori: 'koordinering', deadline: '2026-02-07', status: 'todo',        ansvarlig: 'Lise', raekkefoelge: 4 },
 
   // Nynne & Theis — booket, efterår
-  { bryllup_slug: 'nt', titel: 'Kontakt præst i Engestofte Kirke',  kategori: 'praest',    deadline: '2026-07-19', status: 'done',        ansvarlig: 'Johan', raekkefoelge: 1 },
+  { bryllup_slug: 'nt', titel: 'Kontakt præst i E.G. Kirke',  kategori: 'praest',    deadline: '2026-07-19', status: 'done',        ansvarlig: 'Johan', raekkefoelge: 1 },
   { bryllup_slug: 'nt', titel: 'Aftale efterårsmenu med køkken',    kategori: 'mad',       deadline: '2026-08-16', status: 'in_progress', ansvarlig: 'Johan', raekkefoelge: 2 },
   { bryllup_slug: 'nt', titel: 'Bestil bryllupskage',               kategori: 'andet',     deadline: '2026-09-13', status: 'todo',        ansvarlig: 'Johan', raekkefoelge: 3 },
   { bryllup_slug: 'nt', titel: 'Slutbetaling',                      kategori: 'betaling',  deadline: '2026-09-27', status: 'todo',        ansvarlig: 'Johan', raekkefoelge: 4 },

@@ -1,4 +1,4 @@
--- Engestofte Gods booking demo — sync direction
+-- E.G. booking demo — sync direction
 -- Skelner mellem download (Trello → Supabase) og upload (Supabase → Trello).
 -- Eksisterende rækker bliver markeret som 'download' siden det var det eneste flow før.
 

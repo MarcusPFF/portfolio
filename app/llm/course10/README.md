@@ -1,6 +1,6 @@
-# Engestofte Gods · Booking demo
+# E.G. · Booking demo
 
-Pitch-demo for Engestofte Gods (Course 10). Internt admin-værktøj til
+Pitch-demo for E.G. (Course 10). Internt admin-værktøj til
 bryllupskoordination. Bygget som sub-app inden i portfoliet, fuldstændig
 indeholdt i denne mappe.
 
@@ -35,9 +35,9 @@ af portfoliet og er allerede sat.
 
 ```
 app/llm/course10/
-  layout.tsx                      Engestofte-shell (cream + serif)
+  layout.tsx                      E.G.-shell (cream + serif)
   page.tsx                        Redirect til /dashboard
-  engestofte.css                  Scoped baggrunds-overrides
+  eg.css                          Scoped baggrunds-overrides
   dashboard/
   kalender/
   bryllupper/
@@ -86,7 +86,7 @@ drop table if exists bryllupper;
 drop function if exists set_updated_at();
 ```
 
-Ingen andre dele af portfoliet rører Engestofte-koden, så det er den eneste
+Ingen andre dele af portfoliet rører E.G.-koden, så det er den eneste
 oprydning der kræves.
 
 ## Faser
@@ -95,7 +95,7 @@ oprydning der kræves.
 - **Phase 2** ✓ Opret/rediger bryllup. Form-validation.
 - **Phase 3** ✓ Admin-gate (password `exam2026`). Reset til seed.
 - **Phase 4** ✓ AI-opgaveforslag og AI-tilkøbsforslag via Groq Llama 3.3 70B.
-- **Phase 5** ✓ Trello-sync. Refactor af mapping når Engestofte sender deres egen skabelon.
+- **Phase 5** ✓ Trello-sync. Refactor af mapping når E.G. sender deres egen skabelon.
 
 ## Trello board-format
 

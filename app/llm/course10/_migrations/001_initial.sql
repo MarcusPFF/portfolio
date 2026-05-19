@@ -1,4 +1,4 @@
--- Engestofte Gods booking demo — schema
+-- E.G. booking demo — schema
 -- Kør i Supabase SQL Editor. Idempotent.
 
 create table if not exists bryllupper (

@@ -56,7 +56,7 @@ export async function deleteOpgave(
 
   const { error } = await supabase.from('opgaver').delete().eq('id', opgaveId);
   if (error) {
-    console.error('[engestofte deleteOpgave]', error);
+    console.error('[eg deleteOpgave]', error);
     return;
   }
 

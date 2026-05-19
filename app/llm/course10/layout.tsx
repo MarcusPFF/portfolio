@@ -4,10 +4,10 @@ import { Cormorant_Garamond } from 'next/font/google';
 import Brand from './_components/brand';
 import Sidebar from './_components/sidebar';
 import { isAdmin } from './_lib/admin-auth';
-import './engestofte.css';
+import './eg.css';
 
 const cormorant = Cormorant_Garamond({
-  variable: '--font-engestofte-display',
+  variable: '--font-eg-display',
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   style: ['normal', 'italic'],
@@ -15,19 +15,19 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: 'Engestofte Gods — Bryllupskoordinator',
+  title: 'E.G. — Bryllupskoordinator',
   description:
-    'Internt admin-værktøj for bryllupskoordination på Engestofte Gods. Demo bygget af Marcus Forsberg.',
+    'Internt admin-værktøj for bryllupskoordination på E.G. Demo bygget af Marcus Forsberg.',
 };
 
-export default async function EngestofteLayout({
+export default async function Course10Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const admin = await isAdmin();
   return (
-    <div className={`${cormorant.variable} engestofte-shell min-h-screen`}>
+    <div className={`${cormorant.variable} eg-shell min-h-screen`}>
       <div className="flex flex-col md:flex-row min-h-screen">
         <Sidebar admin={admin} />
         <div className="flex-1 min-w-0 flex flex-col">
@@ -38,7 +38,7 @@ export default async function EngestofteLayout({
           <footer className="border-t border-[#dad3c4] py-6 px-6 md:px-10">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-2 text-xs text-[#6b6358]">
               <p>
-                Engestofte Gods · Demo bygget af{' '}
+                E.G. · Demo bygget af{' '}
                 <Link
                   href="/"
                   className="underline underline-offset-2 hover:text-[#2a2723]"

@@ -1,11 +1,11 @@
 /**
  * ============================================================================
- * Engestofte Trello board-format — mapping fra Trello til Supabase
+ * E.G. Trello board-format — mapping fra Trello til Supabase
  * ============================================================================
  *
  * Strukturen vi parser:
  *
- *   BOARD (Engestofte)
+ *   BOARD (E.G.)
  *   ├── LIST "Sofie & Mikkel"               ← liste-navn = brudepar
  *   │   ├── CARD "📋 Bryllup detaljer"      ← første kort = metadata (parses som desc)
  *   │   │   description:

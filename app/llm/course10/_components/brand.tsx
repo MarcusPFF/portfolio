@@ -5,7 +5,7 @@ export default function Brand() {
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
           <div>
             <p className="text-[10px] font-medium tracking-[0.22em] uppercase text-[#75695b]">
-              Engestofte Gods · Anno 1457
+              E.G. · Anno 1457
             </p>
             <h1 className="display text-2xl md:text-3xl text-[#2a2723] leading-tight mt-0.5">
               Bryllupskoordinator

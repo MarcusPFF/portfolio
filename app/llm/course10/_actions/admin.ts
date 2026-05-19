@@ -206,7 +206,7 @@ export async function deleteAllBryllupperAction(): Promise<DeleteAllResult> {
     .delete()
     .not('id', 'is', null);
   if (error) {
-    console.error('[engestofte deleteAllBryllupper]', error);
+    console.error('[eg deleteAllBryllupper]', error);
     return {
       ok: false,
       deleted: 0,

@@ -184,7 +184,7 @@ export async function createBryllup(
     .single();
 
   if (error || !data) {
-    console.error('[engestofte createBryllup]', error);
+    console.error('[eg createBryllup]', error);
     return {
       status: 'error',
       errors: { general: 'Kunne ikke oprette bryllup. Prøv igen.' },
@@ -237,7 +237,7 @@ export async function updateBryllup(
     .eq('id', id);
 
   if (error) {
-    console.error('[engestofte updateBryllup]', error);
+    console.error('[eg updateBryllup]', error);
     return {
       status: 'error',
       errors: { general: 'Kunne ikke gemme ændringer. Prøv igen.' },
