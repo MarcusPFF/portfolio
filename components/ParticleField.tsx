@@ -97,13 +97,13 @@ export default function ParticleField() {
 
     const drawStatic = () => {
       ctx.clearRect(0, 0, width, height);
-      ctx.fillStyle = 'rgba(100, 116, 139, 0.5)';
+      ctx.fillStyle = 'rgba(237, 230, 215, 0.35)';
       const scrollY = window.scrollY;
       particles.forEach((p) => {
         const drawY = p.y - scrollY;
         if (drawY < -10 || drawY > height + 10) return;
         ctx.beginPath();
-        ctx.arc(p.x, drawY, 2, 0, Math.PI * 2);
+        ctx.arc(p.x, drawY, 1.4, 0, Math.PI * 2);
         ctx.fill();
       });
     };
@@ -168,17 +168,19 @@ export default function ParticleField() {
         }
 
         if (pull > 0.05) {
-          ctx.fillStyle = `rgba(139, 92, 246, ${0.35 + pull * 0.55})`;
+          // Ember coral when pulled toward cursor
+          ctx.fillStyle = `rgba(232, 124, 86, ${0.55 + pull * 0.40})`;
         } else {
-          ctx.fillStyle = 'rgba(100, 116, 139, 0.5)';
+          // Warm bone idle
+          ctx.fillStyle = 'rgba(237, 230, 215, 0.35)';
         }
         ctx.beginPath();
-        ctx.arc(drawX, drawVpY, 2, 0, Math.PI * 2);
+        ctx.arc(drawX, drawVpY, pull > 0.05 ? 1.8 : 1.4, 0, Math.PI * 2);
         ctx.fill();
 
         if (pull > 0.1) {
-          ctx.strokeStyle = `rgba(139, 92, 246, ${pull * 0.4})`;
-          ctx.lineWidth = 1;
+          ctx.strokeStyle = `rgba(232, 124, 86, ${pull * 0.45})`;
+          ctx.lineWidth = 0.8;
           ctx.beginPath();
           ctx.moveTo(cursorX, cursorY);
           ctx.lineTo(drawX, drawVpY);

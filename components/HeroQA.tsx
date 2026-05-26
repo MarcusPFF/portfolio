@@ -70,7 +70,7 @@ export default function HeroQA() {
   const hasOutput = !!response || isLoading || !!error;
 
   return (
-    <div className="w-full max-w-xl mx-auto">
+    <div className="w-full">
       <form onSubmit={handleSubmit} className="relative">
         <label htmlFor="hero-qa-input" className="sr-only">
           Ask Marcus anything
@@ -85,15 +85,26 @@ export default function HeroQA() {
           placeholder="Ask me anything"
           autoComplete="off"
           disabled={isLoading}
-          className={`w-full pl-5 pr-14 py-3.5 rounded-full bg-white/55 border border-white/70 backdrop-blur placeholder-slate-400 text-base outline-none focus:bg-white/80 focus:border-slate-300 transition-colors shadow-sm disabled:opacity-70 ${
-            isAnswered ? 'text-slate-400 italic' : 'text-slate-800'
+          style={{
+            background: 'oklch(20.5% 0.028 280 / 0.55)',
+            borderColor: 'var(--line-strong)',
+            color: isAnswered ? 'var(--bone-mute)' : 'var(--bone)',
+          }}
+          className={`w-full pl-5 pr-14 py-3.5 rounded-full border backdrop-blur text-base outline-none focus:border-[color:var(--ember)] transition-colors shadow-sm disabled:opacity-70 placeholder:[color:var(--bone-mute)] ${
+            isAnswered ? 'italic' : ''
           }`}
         />
         <button
           type="submit"
           disabled={!input.trim() || isLoading}
           aria-label="Send question"
-          className="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-slate-700 disabled:bg-slate-300 disabled:cursor-not-allowed active:scale-[0.94] transition-[transform,background-color] duration-200 ease-out"
+          style={{
+            background: !input.trim() || isLoading
+              ? 'oklch(94% 0.022 82 / 0.10)'
+              : 'var(--ember)',
+            color: !input.trim() || isLoading ? 'var(--bone-mute)' : 'oklch(12% 0.02 30)',
+          }}
+          className="absolute right-1.5 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center hover:brightness-110 disabled:cursor-not-allowed active:scale-[0.94] transition-[transform,background-color,filter] duration-200 ease-out"
         >
           {isLoading ? (
             <span
@@ -120,35 +131,43 @@ export default function HeroQA() {
       </form>
 
       {hasOutput && (
-        <div className="mt-10 text-center">
+        <div className="mt-10 text-left">
           {isLoading && !response && (
             <span
               className="inline-flex items-center gap-2"
               aria-label="Thinking"
             >
               <span
-                className="w-2 h-2 rounded-full bg-slate-400 animate-pulse"
-                style={{ animationDelay: '0ms' }}
+                className="w-2 h-2 rounded-full animate-pulse"
+                style={{ background: 'var(--bone-mute)', animationDelay: '0ms' }}
               />
               <span
-                className="w-2 h-2 rounded-full bg-slate-400 animate-pulse"
-                style={{ animationDelay: '200ms' }}
+                className="w-2 h-2 rounded-full animate-pulse"
+                style={{ background: 'var(--bone-mute)', animationDelay: '200ms' }}
               />
               <span
-                className="w-2 h-2 rounded-full bg-slate-400 animate-pulse"
-                style={{ animationDelay: '400ms' }}
+                className="w-2 h-2 rounded-full animate-pulse"
+                style={{ background: 'var(--bone-mute)', animationDelay: '400ms' }}
               />
             </span>
           )}
 
           {response && (
-            <p className="text-base md:text-lg text-slate-700 font-light leading-[1.7] whitespace-pre-wrap max-w-lg mx-auto">
+            <p
+              className="text-base md:text-lg font-light leading-[1.7] whitespace-pre-wrap"
+              style={{ color: 'var(--bone)' }}
+            >
               {response}
             </p>
           )}
 
           {error && (
-            <p className="text-sm text-red-500 max-w-md mx-auto">{error}</p>
+            <p
+              className="text-sm"
+              style={{ color: 'oklch(70% 0.18 25)' }}
+            >
+              {error}
+            </p>
           )}
         </div>
       )}

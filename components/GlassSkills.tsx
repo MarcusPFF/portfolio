@@ -1,47 +1,80 @@
 import ScrollReveal from './ScrollReveal';
 import { skillGroups } from '../lib/data';
 
+const LABEL_OVERRIDES: Record<string, string> = {
+  'Frameworks & Libraries': 'Frameworks',
+  'Tools & Platforms': 'Tools',
+};
+
+function labelFor(category: string): string {
+  return LABEL_OVERRIDES[category] ?? category;
+}
+
+// Non-breaking space before each separator keeps the punctuation attached to
+// the preceding token on line-wrap, so dots don't orphan to the start of a
+// wrapped line.
+const NBSP = ' ';
+const EM_DASH = `${NBSP}—`;
+const MID_DOT = `${NBSP}·`;
+
 export default function GlassSkills() {
   return (
-    <section id="skills" className="py-20 px-6 md:px-24">
-      <div className="max-w-4xl mx-auto">
-        <ScrollReveal>
-          <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-xs mb-3">
-            Expertise
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
-            Skills &amp; Tools
+    <section
+      id="stack"
+      className="container-grid"
+      style={{ paddingTop: 'clamp(2.5rem, 4.5vw, 4rem)', paddingBottom: 'var(--section-py)' }}
+    >
+      <ScrollReveal>
+        <div className="flex items-baseline justify-between mb-10">
+          <h2
+            className="font-display text-4xl md:text-5xl"
+            style={{
+              color: 'var(--bone)',
+              fontWeight: 350,
+              fontVariationSettings: '"opsz" 144, "SOFT" 100',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Stack
           </h2>
-          <p className="text-slate-500 font-light text-sm mb-10">Things I work with</p>
-        </ScrollReveal>
+          <span
+            className="font-mono text-[11px] tabular-nums"
+            style={{ color: 'var(--bone-dim)' }}
+            aria-label={`${skillGroups.length} stack categories`}
+          >
+            {String(skillGroups.length).padStart(2, '0')}
+          </span>
+        </div>
+      </ScrollReveal>
 
-        <ScrollReveal>
-          <div className="glass-card overflow-hidden">
-            <ul>
-              {skillGroups.map((group, idx) => (
-                <li
-                  key={group.category}
-                  className={idx > 0 ? 'border-t border-white/40' : ''}
-                >
-                  <div className="px-5 md:px-7 py-5 flex flex-col md:flex-row md:items-baseline gap-2 md:gap-6">
-                    <div className="md:w-44 shrink-0 flex items-baseline gap-2">
-                      <span className="text-base" aria-hidden="true">
-                        {group.icon}
-                      </span>
-                      <p className="text-slate-500 font-semibold tracking-[0.15em] uppercase text-[10px]">
-                        {group.category}
-                      </p>
-                    </div>
-                    <p className="flex-1 text-sm text-slate-700 font-light leading-relaxed">
-                      {group.items.join(' · ')}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </ScrollReveal>
-      </div>
+      <ScrollReveal>
+        <div
+          className="space-y-4 font-light leading-[1.7]"
+          style={{ fontSize: 'var(--body-lg)' }}
+        >
+          {skillGroups.map((group) => (
+            <p key={group.category}>
+              <span style={{ color: 'var(--bone-dim)' }}>
+                {labelFor(group.category)}
+              </span>
+              <span style={{ color: 'var(--bone-mute)' }}>{EM_DASH}</span>{' '}
+              {group.items.map((item, i) => {
+                const isLast = i === group.items.length - 1;
+                return (
+                  <span key={item}>
+                    <span style={{ color: 'var(--bone)' }}>{item}</span>
+                    {!isLast && (
+                      <>
+                        <span style={{ color: 'var(--bone-mute)' }}>{MID_DOT}</span>{' '}
+                      </>
+                    )}
+                  </span>
+                );
+              })}
+            </p>
+          ))}
+        </div>
+      </ScrollReveal>
     </section>
   );
 }

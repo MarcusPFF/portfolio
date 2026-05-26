@@ -1,53 +1,63 @@
-import TypewriterRoles from './TypewriterRoles';
 import HeroQA from './HeroQA';
+import TypewriterRoles from './TypewriterRoles';
+import GithubCard from './GithubCard';
 
 export default function GlassHero() {
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 md:px-12 lg:px-24 pt-20 pb-6">
-      <div className="w-full max-w-3xl mx-auto">
-        <div className="hero-enter">
-          <p className="font-semibold tracking-[0.2em] uppercase mb-6 text-xs flex items-center justify-center gap-2">
-            <span className="gradient-text">I&apos;m</span>
-            <span className="text-slate-500">
-              <TypewriterRoles />
-            </span>
+    <section
+      className="container-grid pt-28 sm:pt-32 lg:pt-36"
+      style={{ paddingBottom: 'var(--section-py)' }}
+    >
+      <div className="grid grid-cols-12 gap-x-6 lg:gap-x-10 gap-y-12">
+        <div className="col-span-12 lg:col-span-8 lg:pt-1">
+          <p
+            className="hero-enter font-mono text-[12px] tracking-[0.02em] mb-5 inline-flex items-baseline"
+            style={{ color: 'var(--bone)' }}
+          >
+            <span className="mr-1.5">I&apos;m</span>
+            <TypewriterRoles />
           </p>
-        </div>
 
-        <div className="hero-enter-delay-1">
           <h1
-            className="text-5xl md:text-7xl lg:text-8xl font-bold text-slate-800 leading-[1] mb-12"
-            style={{ letterSpacing: '-0.025em' }}
+            className="hero-enter-delay-1 font-display leading-[0.92] text-left mb-10"
+            style={{
+              color: 'var(--bone)',
+              fontWeight: 350,
+              fontSize: 'clamp(2.5rem, 7.5vw, 6.25rem)',
+              fontVariationSettings: '"opsz" 144, "SOFT" 100',
+              letterSpacing: '-0.035em',
+            }}
           >
-            Marcus Forsberg<span className="text-violet-500">.</span>
+            Marcus Forsberg
+            <span aria-hidden="true" style={{ color: 'var(--accent)' }}>
+              .
+            </span>
           </h1>
-        </div>
 
-        <div className="hero-enter-delay-2">
-          <HeroQA />
-        </div>
-      </div>
-
-      <div className="hero-enter-delay-4 mt-14 flex justify-center">
-        <a
-          href="#projects"
-          aria-label="Scroll to projects"
-          className="group inline-flex flex-col items-center gap-2 text-slate-400 hover:text-slate-700 transition-colors"
-        >
-          <span className="text-[10px] uppercase tracking-[0.3em] font-medium">
-            Scroll
-          </span>
-          <svg
-            className="w-4 h-4 animate-bounce"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-            aria-hidden="true"
+          <div
+            className="hero-enter-delay-3 max-w-lg space-y-4 font-light leading-[1.6]"
+            style={{ color: 'var(--bone-dim)', fontSize: 'var(--body-lg)' }}
           >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
-        </a>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
+              do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+          </div>
+
+          <div className="hero-enter-delay-3 mt-8 max-w-md">
+            <p
+              className="eyebrow mb-2"
+              style={{ color: 'var(--bone-mute)' }}
+            >
+              Ask my AI clone
+            </p>
+            <HeroQA />
+          </div>
+        </div>
+
+        <div className="hero-enter-delay-2 col-span-12 lg:col-span-4 lg:pt-0">
+          <GithubCard user="MarcusPFF" />
+        </div>
       </div>
     </section>
   );

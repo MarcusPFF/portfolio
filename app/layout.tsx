@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Fraunces, Instrument_Sans } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import KonamiCode from '@/components/KonamiCode';
@@ -14,6 +14,19 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: '--font-geist-mono',
   subsets: ['latin'],
+});
+
+const fraunces = Fraunces({
+  variable: '--font-fraunces',
+  subsets: ['latin'],
+  axes: ['SOFT', 'WONK', 'opsz'],
+  display: 'swap',
+});
+
+const instrumentSans = Instrument_Sans({
+  variable: '--font-instrument',
+  subsets: ['latin'],
+  display: 'swap',
 });
 
 const SITE_DESCRIPTION =
@@ -71,7 +84,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${instrumentSans.variable}`}
     >
       <body
         suppressHydrationWarning

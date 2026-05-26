@@ -17,7 +17,7 @@ type Item = {
 const STATIC_ITEMS: Item[] = [
   { id: 'home', label: 'Home', href: '/', group: 'Pages' },
   { id: 'projects', label: 'Selected Projects', href: '/#projects', group: 'Pages' },
-  { id: 'skills', label: 'Skills & Tools', href: '/#skills', group: 'Pages' },
+  { id: 'stack', label: 'Stack', href: '/#stack', group: 'Pages' },
   { id: 'contact', label: 'Contact', href: '/#contact', group: 'Pages' },
   { id: 'trips', label: 'Motorcycle Trips', href: '/trips', group: 'Pages' },
   { id: 'llm', label: 'LLM Course', href: '/llm', group: 'Pages' },
