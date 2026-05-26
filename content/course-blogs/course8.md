@@ -20,7 +20,7 @@ E.G. styrer i dag alle bryllupsbookinger manuelt i et enkelt Trello-board, hvor 
 
 ### Bruger
 
-Udelukkende koordinatorerne på E.G., Johan Jensen og Lise Egeskov. Det er et rent internt adminsystem. Brudeparrene logger ikke ind, bruger ikke systemet og modtager ikke automatiske mails fra det. Al kundekontakt forbliver hos Johan og Lise via deres egne kanaler — mail, telefon og personlige møder. Det er et udtrykkeligt ønske fra E.G. at de selv styrer relationen til brudeparrene.
+Udelukkende koordinatorerne på E.G., Johan J. og Lise E. Det er et rent internt adminsystem. Brudeparrene logger ikke ind, bruger ikke systemet og modtager ikke automatiske mails fra det. Al kundekontakt forbliver hos Johan og Lise via deres egne kanaler — mail, telefon og personlige møder. Det er et udtrykkeligt ønske fra E.G. at de selv styrer relationen til brudeparrene.
 
 ### Nuværende proces
 

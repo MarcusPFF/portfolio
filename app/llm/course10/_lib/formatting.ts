@@ -85,8 +85,8 @@ export const VIELSESTYPE_LABELS: Record<Vielsestype, string> = {
 };
 
 export const KOORDINATOR_LABELS: Record<Koordinator, string> = {
-  johan: 'Johan Jensen',
-  lise: 'Lise Egeskov',
+  johan: 'Johan J.',
+  lise: 'Lise E.',
 };
 
 export const KATEGORI_LABELS: Record<OpgaveKategori, string> = {

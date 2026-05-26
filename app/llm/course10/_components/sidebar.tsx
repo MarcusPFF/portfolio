@@ -21,8 +21,8 @@ export default function Sidebar({ admin = false }: { admin?: boolean }) {
           <p className="text-[10px] font-medium tracking-[0.22em] uppercase text-[#75695b]">
             Koordinator
           </p>
-          <p className="display text-lg text-[#2a2723] mt-1">Lise Egeskov</p>
-          <p className="text-xs text-[#75695b] mt-0.5">og Johan Jensen</p>
+          <p className="display text-lg text-[#2a2723] mt-1">Lise E.</p>
+          <p className="text-xs text-[#75695b] mt-0.5">og Johan J.</p>
         </div>
         <nav className="flex-1 px-3 md:px-4 py-3 md:py-6">
           <ul className="flex md:flex-col gap-1 overflow-x-auto md:overflow-visible">
