@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo, useState, type CSSProperties } from 'react';
 import { course3Quiz, totalQuestions } from '../lib/course3Data';
 
 type Answers = Record<string, string>;
@@ -44,17 +44,25 @@ export default function Course3Quiz() {
 
   const progressPct = Math.round((answeredCount / totalQuestions) * 100);
 
+  const submitBtnClass = (enabled: boolean) =>
+    `rounded-full text-sm font-semibold border min-h-11 transition-all duration-300 ${
+      enabled
+        ? 'border-transparent text-[oklch(15%_0.02_40)] hover:brightness-110'
+        : 'ink-pill text-[color:var(--bone-mute)] cursor-not-allowed'
+    }`;
+
   return (
     <section className="py-28 px-6 md:px-24">
       <div className="max-w-3xl mx-auto">
         <header className="mb-10">
-          <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-sm mb-3">
-            Course 4
-          </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
+          <p className="eyebrow mb-3 text-[color:var(--bone-mute)]">Course 4</p>
+          <h1
+            className="font-display text-4xl md:text-5xl mb-4 text-[color:var(--bone)]"
+            style={{ letterSpacing: '-0.02em', fontWeight: 420 }}
+          >
             Meditations-quiz
           </h1>
-          <p className="text-slate-500 font-light leading-relaxed max-w-2xl">
+          <p className="font-light leading-relaxed max-w-2xl text-[color:var(--bone-dim)]">
             5 sektioner, 29 spørgsmål. Vælg ét svar per spørgsmål. Når alle er besvaret, kan du tjekke
             dine svar.
           </p>
@@ -62,20 +70,20 @@ export default function Course3Quiz() {
 
         {/* Sticky status / score card */}
         <div className="sticky top-20 z-20 mb-10">
-          <div className="glass-card p-5 md:p-6">
+          <div className="ink-card p-5 md:p-6">
             {submitted ? (
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div>
-                  <p className="text-slate-400 font-medium tracking-widest uppercase text-xs mb-1">
+                  <p className="font-mono tracking-widest uppercase text-[10px] mb-1 text-[color:var(--bone-mute)]">
                     Din score
                   </p>
-                  <p className="text-2xl md:text-3xl font-bold text-slate-800">
+                  <p className="font-display text-2xl md:text-3xl text-[color:var(--bone)]">
                     {score} / {totalQuestions} rigtige
                   </p>
                 </div>
                 <button
                   onClick={handleReset}
-                  className="px-6 py-3 glass-pill rounded-full text-sm font-semibold text-slate-700 hover:text-slate-900 border border-slate-200/50 min-h-11"
+                  className="ink-pill px-6 py-3 rounded-full text-sm font-semibold min-h-11 text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]"
                 >
                   Prøv igen
                 </button>
@@ -84,26 +92,23 @@ export default function Course3Quiz() {
               <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex items-baseline justify-between mb-2">
-                    <p className="text-slate-600 text-sm font-medium">
+                    <p className="text-sm font-medium text-[color:var(--bone-dim)]">
                       {answeredCount} af {totalQuestions} besvaret
                     </p>
-                    <p className="text-slate-400 text-xs font-medium">{progressPct}%</p>
+                    <p className="font-mono text-xs text-[color:var(--bone-mute)]">{progressPct}%</p>
                   </div>
-                  <div className="h-2 w-full bg-white/50 rounded-full overflow-hidden border border-white/60">
+                  <div className="h-2 w-full rounded-full overflow-hidden border border-[color:var(--line)]" style={{ background: 'oklch(94% 0.022 82 / 0.06)' }}>
                     <div
-                      className="h-full bg-gradient-to-r from-purple-400/70 to-pink-400/70 transition-all duration-500"
-                      style={{ width: `${progressPct}%` }}
+                      className="h-full transition-all duration-500"
+                      style={{ width: `${progressPct}%`, background: 'var(--ember)' }}
                     />
                   </div>
                 </div>
                 <button
                   onClick={handleSubmit}
                   disabled={!allAnswered}
-                  className={`px-6 py-3 rounded-full text-sm font-semibold border min-h-11 transition-all duration-300 ${
-                    allAnswered
-                      ? 'bg-slate-800 text-white border-slate-800 hover:bg-slate-900'
-                      : 'glass-pill text-slate-400 border-slate-200/50 cursor-not-allowed'
-                  }`}
+                  className={`px-6 py-3 ${submitBtnClass(allAnswered)}`}
+                  style={allAnswered ? { background: 'var(--ember)' } : undefined}
                 >
                   Tjek svar
                 </button>
@@ -116,13 +121,16 @@ export default function Course3Quiz() {
           {course3Quiz.map((section) => (
             <div key={section.id}>
               <div className="mb-6">
-                <p className="text-slate-400 font-medium tracking-widest uppercase text-xs mb-2">
+                <p className="font-mono tracking-widest uppercase text-xs mb-2 text-[color:var(--bone-mute)]">
                   Sektion {section.number}
                 </p>
-                <h2 className="text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
+                <h2
+                  className="font-display text-2xl md:text-3xl text-[color:var(--bone)]"
+                  style={{ letterSpacing: '-0.01em' }}
+                >
                   {section.title}
                 </h2>
-                <div className="mt-4 h-px bg-gradient-to-r from-slate-300/70 via-slate-200/50 to-transparent" />
+                <div className="mt-4 h-px bg-gradient-to-r from-[color:var(--line-strong)] to-transparent" />
               </div>
 
               <div className="flex flex-col gap-6">
@@ -133,21 +141,22 @@ export default function Course3Quiz() {
                   const isWrong = submitted && pickedOption !== undefined && !pickedOption.correct;
 
                   return (
-                    <div key={question.id} className="glass-card p-6 md:p-7">
+                    <div key={question.id} className="ink-card p-6 md:p-7">
                       <div className="flex items-start gap-3 mb-4">
-                        <span className="shrink-0 text-sm font-semibold text-slate-400 tracking-wider mt-0.5">
+                        <span className="shrink-0 font-mono text-sm tracking-wider mt-0.5 text-[color:var(--bone-mute)]">
                           #{question.number}
                         </span>
-                        <p className="text-base md:text-lg text-slate-800 font-medium leading-relaxed">
+                        <p className="text-base md:text-lg font-medium leading-relaxed text-[color:var(--bone)]">
                           {question.prompt}
                         </p>
                         {submitted && (
                           <span
-                            className={`shrink-0 ml-auto inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold ${
+                            className="shrink-0 ml-auto inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold border"
+                            style={
                               isCorrect
-                                ? 'bg-emerald-500/20 text-emerald-700'
-                                : 'bg-rose-500/20 text-rose-700'
-                            }`}
+                                ? { background: 'oklch(72% 0.15 150 / 0.18)', color: 'oklch(84% 0.13 150)', borderColor: 'oklch(72% 0.15 150 / 0.45)' }
+                                : { background: 'oklch(70% 0.18 25 / 0.18)', color: 'oklch(82% 0.15 25)', borderColor: 'oklch(70% 0.18 25 / 0.45)' }
+                            }
                             aria-label={isCorrect ? 'Rigtigt' : 'Forkert'}
                           >
                             {isCorrect ? '✓' : '✗'}
@@ -158,29 +167,47 @@ export default function Course3Quiz() {
                       <div className="flex flex-col gap-2">
                         {question.options.map((option) => {
                           const selected = picked === option.id;
-                          let optionClass =
-                            'border-white/60 bg-white/40 hover:bg-white/70 text-slate-700';
+                          let optionStyle: CSSProperties = {
+                            background: 'oklch(94% 0.022 82 / 0.04)',
+                            borderColor: 'var(--line)',
+                            color: 'var(--bone-dim)',
+                          };
 
                           if (submitted) {
                             if (option.correct) {
-                              optionClass =
-                                'border-emerald-400/70 bg-emerald-400/15 text-emerald-900';
+                              optionStyle = {
+                                background: 'oklch(72% 0.15 150 / 0.12)',
+                                borderColor: 'oklch(72% 0.15 150 / 0.5)',
+                                color: 'oklch(88% 0.08 150)',
+                              };
                             } else if (selected && !option.correct) {
-                              optionClass = 'border-rose-400/70 bg-rose-400/15 text-rose-900';
+                              optionStyle = {
+                                background: 'oklch(70% 0.18 25 / 0.12)',
+                                borderColor: 'oklch(70% 0.18 25 / 0.5)',
+                                color: 'oklch(86% 0.10 25)',
+                              };
                             } else {
-                              optionClass = 'border-white/40 bg-white/20 text-slate-500';
+                              optionStyle = {
+                                background: 'oklch(94% 0.022 82 / 0.03)',
+                                borderColor: 'var(--line)',
+                                color: 'var(--bone-mute)',
+                              };
                             }
                           } else if (selected) {
-                            optionClass =
-                              'border-slate-800/60 bg-white/80 text-slate-900 shadow-sm';
+                            optionStyle = {
+                              background: 'oklch(72% 0.165 38 / 0.14)',
+                              borderColor: 'var(--ember)',
+                              color: 'var(--bone)',
+                            };
                           }
 
                           return (
                             <label
                               key={option.id}
-                              className={`flex items-center gap-3 px-4 py-3 rounded-xl border cursor-pointer transition-all duration-200 min-h-11 ${optionClass} ${
-                                submitted ? 'cursor-default' : ''
+                              className={`flex items-center gap-3 px-4 py-3 rounded-xl border transition-all duration-200 min-h-11 ${
+                                submitted ? 'cursor-default' : 'cursor-pointer hover:brightness-110'
                               }`}
+                              style={optionStyle}
                             >
                               <input
                                 type="radio"
@@ -189,13 +216,13 @@ export default function Course3Quiz() {
                                 checked={selected}
                                 onChange={() => selectAnswer(question.id, option.id)}
                                 disabled={submitted}
-                                className="w-4 h-4 accent-slate-800 shrink-0"
+                                className="w-4 h-4 accent-[#dc8a4a] shrink-0"
                               />
                               <span className="text-sm md:text-base font-medium flex-1">
                                 {option.label}
                               </span>
                               {submitted && option.correct && (
-                                <span className="text-xs font-semibold text-emerald-700 shrink-0">
+                                <span className="text-xs font-semibold shrink-0" style={{ color: 'oklch(80% 0.13 150)' }}>
                                   Korrekt svar
                                 </span>
                               )}
@@ -205,7 +232,7 @@ export default function Course3Quiz() {
                       </div>
 
                       {isWrong && (
-                        <p className="mt-3 text-xs text-rose-700/80 font-medium">
+                        <p className="mt-3 text-xs font-medium" style={{ color: 'oklch(80% 0.13 25)' }}>
                           Dit svar var forkert. Det rigtige svar er markeret ovenfor.
                         </p>
                       )}
@@ -222,7 +249,7 @@ export default function Course3Quiz() {
           {submitted ? (
             <button
               onClick={handleReset}
-              className="px-8 py-3 glass-pill rounded-full text-sm font-semibold text-slate-700 hover:text-slate-900 border border-slate-200/50 min-h-11"
+              className="ink-pill px-8 py-3 rounded-full text-sm font-semibold min-h-11 text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]"
             >
               Prøv igen
             </button>
@@ -230,11 +257,8 @@ export default function Course3Quiz() {
             <button
               onClick={handleSubmit}
               disabled={!allAnswered}
-              className={`px-8 py-3 rounded-full text-sm font-semibold border min-h-11 transition-all duration-300 ${
-                allAnswered
-                  ? 'bg-slate-800 text-white border-slate-800 hover:bg-slate-900'
-                  : 'glass-pill text-slate-400 border-slate-200/50 cursor-not-allowed'
-              }`}
+              className={`px-8 py-3 ${submitBtnClass(allAnswered)}`}
+              style={allAnswered ? { background: 'var(--ember)' } : undefined}
             >
               {allAnswered ? 'Tjek svar' : `Besvar alle spørgsmål (${totalQuestions - answeredCount} tilbage)`}
             </button>
