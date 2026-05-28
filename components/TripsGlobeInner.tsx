@@ -585,7 +585,7 @@ export default function TripsGlobeInner({
                 type="checkbox"
                 checked={showBorders}
                 onChange={(e) => setShowBorders(e.target.checked)}
-                className="w-4 h-4 accent-violet-400"
+                className="w-4 h-4 accent-[#dc8a4a]"
               />
               Show borders
             </label>
@@ -594,7 +594,7 @@ export default function TripsGlobeInner({
                 type="checkbox"
                 checked={showLabels}
                 onChange={(e) => setShowLabels(e.target.checked)}
-                className="w-4 h-4 accent-violet-400"
+                className="w-4 h-4 accent-[#dc8a4a]"
               />
               Show country names
             </label>
