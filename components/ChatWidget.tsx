@@ -101,13 +101,15 @@ export default function ChatWidget() {
     }
   };
 
+  const emberBtn = { background: 'var(--ember)', color: 'oklch(15% 0.02 40)' };
 
   return (
-    <>
+    <div className="theme-night" style={{ display: 'contents' }}>
       {/* Floating toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-slate-800 text-white shadow-lg hover:bg-slate-700 hover:scale-105 transition-all duration-300 flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full shadow-lg hover:scale-105 hover:brightness-110 transition-all duration-300 flex items-center justify-center"
+        style={emberBtn}
         aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
         {isOpen ? (
@@ -128,20 +130,26 @@ export default function ChatWidget() {
           : 'opacity-0 translate-y-4 scale-95 pointer-events-none'
           }`}
       >
-        <div className="glass-card overflow-hidden flex flex-col" style={{ height: '520px' }}>
+        <div className="ink-card overflow-hidden flex flex-col" style={{ height: '520px' }}>
           {/* Header */}
-          <div className="px-5 py-4 border-b border-white/20">
+          <div className="px-5 py-4 border-b border-[color:var(--line)]">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-slate-800 text-white flex items-center justify-center text-sm font-bold">
+              <div
+                className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold"
+                style={emberBtn}
+              >
                 M
               </div>
               <div>
-                <p className="font-semibold text-slate-800 text-sm">Ask Marcus&apos;s AI</p>
-                <p className="text-xs text-slate-400">Powered by Llama</p>
+                <p className="font-semibold text-sm text-[color:var(--bone)]">Ask Marcus&apos;s AI</p>
+                <p className="text-xs text-[color:var(--bone-mute)]">Powered by Llama</p>
               </div>
               <div className="ml-auto flex items-center gap-1.5">
-                <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-                <span className="text-xs text-slate-400">Online</span>
+                <span
+                  className="w-2 h-2 rounded-full animate-pulse"
+                  style={{ background: 'oklch(72% 0.15 150)' }}
+                />
+                <span className="text-xs text-[color:var(--bone-mute)]">Online</span>
               </div>
             </div>
           </div>
@@ -155,9 +163,14 @@ export default function ChatWidget() {
               >
                 <div
                   className={`max-w-[85%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed ${msg.role === 'user'
-                    ? 'bg-slate-800 text-white rounded-br-md'
-                    : 'bg-white/50 text-slate-700 rounded-bl-md border border-white/40'
+                    ? 'rounded-br-md text-[color:var(--bone)]'
+                    : 'rounded-bl-md border border-[color:var(--line)] text-[color:var(--bone-dim)]'
                     }`}
+                  style={
+                    msg.role === 'user'
+                      ? { background: 'oklch(72% 0.165 38 / 0.20)' }
+                      : { background: 'oklch(94% 0.022 82 / 0.05)' }
+                  }
                 >
                   {msg.content}
                 </div>
@@ -166,11 +179,14 @@ export default function ChatWidget() {
 
             {isLoading && messages[messages.length - 1]?.role === 'user' && (
               <div className="flex justify-start">
-                <div className="bg-white/50 border border-white/40 px-4 py-3 rounded-2xl rounded-bl-md">
+                <div
+                  className="px-4 py-3 rounded-2xl rounded-bl-md border border-[color:var(--line)]"
+                  style={{ background: 'oklch(94% 0.022 82 / 0.05)' }}
+                >
                   <div className="flex gap-1.5">
-                    <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: 'var(--bone-mute)', animationDelay: '0ms' }} />
+                    <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: 'var(--bone-mute)', animationDelay: '150ms' }} />
+                    <span className="w-2 h-2 rounded-full animate-bounce" style={{ background: 'var(--bone-mute)', animationDelay: '300ms' }} />
                   </div>
                 </div>
               </div>
@@ -180,19 +196,21 @@ export default function ChatWidget() {
           </div>
 
           {/* Input */}
-          <form onSubmit={onSubmit} className="px-4 py-3 border-t border-white/20">
+          <form onSubmit={onSubmit} className="px-4 py-3 border-t border-[color:var(--line)]">
             <div className="flex gap-2">
               <input
                 ref={inputRef}
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 placeholder="Ask about Marcus..."
-                className="flex-1 px-4 py-2.5 rounded-xl bg-white/40 border border-white/40 text-slate-800 placeholder:text-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300/50 focus:bg-white/60 transition-all"
+                className="flex-1 px-4 py-2.5 rounded-xl border text-sm focus:outline-none transition-all text-[color:var(--bone)] placeholder:[color:var(--bone-mute)] border-[color:var(--line-strong)] focus:border-[color:var(--ember)]"
+                style={{ background: 'oklch(94% 0.022 82 / 0.06)' }}
               />
               <button
                 type="submit"
                 disabled={!inputValue.trim() || isLoading}
-                className="w-10 h-10 rounded-xl bg-slate-800 text-white flex items-center justify-center hover:bg-slate-700 disabled:opacity-40 disabled:hover:bg-slate-800 transition-all shrink-0"
+                className="w-10 h-10 rounded-xl flex items-center justify-center disabled:opacity-40 transition-all shrink-0 hover:brightness-110"
+                style={emberBtn}
               >
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M12 5l7 7-7 7" />
@@ -202,6 +220,6 @@ export default function ChatWidget() {
           </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }

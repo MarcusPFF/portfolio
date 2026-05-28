@@ -88,7 +88,7 @@ export default function RootLayout({
     >
       <body
         suppressHydrationWarning
-        className="antialiased min-h-screen font-sans selection:bg-slate-300/50 selection:text-slate-900 overflow-x-hidden"
+        className="antialiased min-h-screen font-sans selection:bg-[oklch(72%_0.165_38_/_0.30)] overflow-x-hidden"
       >
         <a
           href="#projects"

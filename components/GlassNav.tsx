@@ -320,7 +320,7 @@ export default function GlassNav({ night = false }: { night?: boolean } = {}) {
           aria-hidden="true"
           className="absolute -bottom-2 w-1.5 h-1.5 rounded-full pointer-events-none"
           style={{
-            background: '#8b5cf6',
+            background: '#dc8a4a',
             left: dotX ?? 0,
             transform: 'translateX(-50%)',
             opacity: dotVisible ? 1 : 0,
