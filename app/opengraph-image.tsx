@@ -36,10 +36,10 @@ export default async function Image() {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
             style={{
-              fontSize: 140,
+              fontSize: 108,
               fontWeight: 500,
               color: '#f4eee0',
-              letterSpacing: '-3px',
+              letterSpacing: '-2px',
               lineHeight: 1,
               display: 'flex',
               alignItems: 'baseline',
