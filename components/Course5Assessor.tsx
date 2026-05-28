@@ -25,9 +25,15 @@ type Lang = 'en' | 'dk';
 const MAX_CHARS = 15_000;
 
 const LEVEL_STYLES: Record<Criterion['level'], string> = {
-  low: 'bg-rose-400/15 text-rose-700 border-rose-400/40',
-  mid: 'bg-amber-400/15 text-amber-700 border-amber-400/40',
-  high: 'bg-emerald-400/15 text-emerald-700 border-emerald-400/40',
+  low: 'bg-[oklch(70%_0.18_25_/_0.15)] text-[oklch(82%_0.14_25)] border-[oklch(70%_0.18_25_/_0.4)]',
+  mid: 'bg-[oklch(80%_0.13_75_/_0.15)] text-[oklch(86%_0.11_75)] border-[oklch(80%_0.13_75_/_0.4)]',
+  high: 'bg-[oklch(72%_0.15_150_/_0.15)] text-[oklch(84%_0.12_150)] border-[oklch(72%_0.15_150_/_0.4)]',
+};
+
+const LEVEL_TEXT: Record<Criterion['level'], string> = {
+  low: 'oklch(80% 0.14 25)',
+  mid: 'oklch(85% 0.12 75)',
+  high: 'oklch(82% 0.13 150)',
 };
 
 const T = {
@@ -138,7 +144,7 @@ export default function Course5Assessor({
           <Link
             href="/llm"
             transitionTypes={['nav-back']}
-            className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-800 text-sm font-medium transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium transition-colors text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]"
           >
             <svg
               className="w-4 h-4"
@@ -152,7 +158,12 @@ export default function Course5Assessor({
             {pick('back', lang) as string}
           </Link>
 
-          <div role="group" aria-label="Language" className="glass-pill inline-flex p-1 rounded-full gap-1">
+          <div
+            role="group"
+            aria-label="Language"
+            className="inline-flex p-1 rounded-full gap-1 border border-[color:var(--line)]"
+            style={{ background: 'oklch(94% 0.022 82 / 0.05)' }}
+          >
             {(['dk', 'en'] as Lang[]).map((code) => {
               const active = lang === code;
               return (
@@ -162,8 +173,9 @@ export default function Course5Assessor({
                   onClick={() => setLang(code)}
                   aria-pressed={active}
                   className={`px-3 py-1 rounded-full text-xs font-semibold tracking-wider transition-colors ${
-                    active ? 'bg-slate-800 text-white' : 'text-slate-600 hover:text-slate-900'
+                    active ? 'text-[color:var(--bone)]' : 'text-[color:var(--bone-mute)] hover:text-[color:var(--bone)]'
                   }`}
+                  style={active ? { background: 'oklch(94% 0.022 82 / 0.14)' } : undefined}
                 >
                   {code.toUpperCase()}
                 </button>
@@ -173,13 +185,16 @@ export default function Course5Assessor({
         </div>
 
         <header className="mb-8">
-          <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-sm mb-3">
+          <p className="font-mono text-xs tracking-[0.2em] uppercase mb-3 text-[color:var(--bone-mute)]">
             {pick('course', lang) as string}
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-800 mb-4 tracking-tight">
+          <h1
+            className="font-display text-4xl md:text-5xl mb-4 text-[color:var(--bone)]"
+            style={{ letterSpacing: '-0.02em', fontWeight: 420 }}
+          >
             {pick('title', lang) as string}
           </h1>
-          <p className="text-slate-500 font-light leading-relaxed max-w-2xl">
+          <p className="font-light leading-relaxed max-w-2xl text-[color:var(--bone-dim)]">
             {pick('intro', lang) as string}
           </p>
         </header>
@@ -189,7 +204,7 @@ export default function Course5Assessor({
             type="button"
             onClick={() => setRubricOpen((v) => !v)}
             aria-expanded={rubricOpen}
-            className="inline-flex items-center gap-2 px-4 py-2 glass-pill rounded-full text-sm font-semibold text-slate-700 hover:text-slate-900 border border-slate-200/50"
+            className="ink-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]"
           >
             <svg
               className={`w-4 h-4 transition-transform duration-200 ${rubricOpen ? 'rotate-90' : ''}`}
@@ -204,27 +219,27 @@ export default function Course5Assessor({
           </button>
 
           {rubricOpen && (
-            <div className="glass-card p-6 md:p-8 mt-4">
-              <h2 className="text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 mb-4">
+            <div className="ink-card p-6 md:p-8 mt-4">
+              <h2 className="font-mono text-sm tracking-[0.2em] uppercase mb-4 text-[color:var(--bone-mute)]">
                 {pick('rubricHeading', lang) as string}
               </h2>
-              <ol className="flex flex-col gap-5 list-decimal list-inside">
+              <ol className="flex flex-col gap-5 list-decimal list-inside text-[color:var(--bone)] font-semibold">
                 {RUBRIC.map((c) => (
-                  <li key={c.id} className="text-slate-800 font-semibold">
+                  <li key={c.id}>
                     {c.name}
-                    <p className="font-light text-slate-600 mt-1 mb-2 ml-5">{c.description}</p>
+                    <p className="font-light mt-1 mb-2 ml-5 text-[color:var(--bone-dim)]">{c.description}</p>
                     <ul className="ml-5 flex flex-col gap-1 text-xs">
-                      <li className="text-rose-700/90">
+                      <li style={{ color: LEVEL_TEXT.low }}>
                         <span className="font-bold uppercase tracking-wider">low</span>{' '}
-                        <span className="font-light text-slate-600">{c.levels.low}</span>
+                        <span className="font-light text-[color:var(--bone-dim)]">{c.levels.low}</span>
                       </li>
-                      <li className="text-amber-700/90">
+                      <li style={{ color: LEVEL_TEXT.mid }}>
                         <span className="font-bold uppercase tracking-wider">mid</span>{' '}
-                        <span className="font-light text-slate-600">{c.levels.mid}</span>
+                        <span className="font-light text-[color:var(--bone-dim)]">{c.levels.mid}</span>
                       </li>
-                      <li className="text-emerald-700/90">
+                      <li style={{ color: LEVEL_TEXT.high }}>
                         <span className="font-bold uppercase tracking-wider">high</span>{' '}
-                        <span className="font-light text-slate-600">{c.levels.high}</span>
+                        <span className="font-light text-[color:var(--bone-dim)]">{c.levels.high}</span>
                       </li>
                     </ul>
                   </li>
@@ -234,10 +249,10 @@ export default function Course5Assessor({
           )}
         </div>
 
-        <div className="glass-card p-6 md:p-8 mb-6">
+        <div className="ink-card p-6 md:p-8 mb-6">
           {exampleSubmissions && (
             <div className="mb-4 flex flex-wrap items-center gap-2">
-              <span className="text-xs font-medium text-slate-500 mr-1">
+              <span className="text-xs font-medium mr-1 text-[color:var(--bone-dim)]">
                 {pick('exampleLabel', lang) as string}
               </span>
               {(['1', '2', '3'] as const).map((n) => (
@@ -248,7 +263,7 @@ export default function Course5Assessor({
                     setSubmissionText(exampleSubmissions[n].slice(0, MAX_CHARS))
                   }
                   disabled={loading}
-                  className="px-3 py-1.5 glass-pill rounded-full text-xs font-semibold text-slate-700 hover:text-slate-900 border border-slate-200/50 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="ink-pill px-3 py-1.5 rounded-full text-xs font-semibold text-[color:var(--bone-dim)] hover:text-[color:var(--bone)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Student {n}
                 </button>
@@ -256,7 +271,7 @@ export default function Course5Assessor({
             </div>
           )}
 
-          <label htmlFor="submission" className="block text-sm font-semibold text-slate-700 mb-3">
+          <label htmlFor="submission" className="block text-sm font-semibold mb-3 text-[color:var(--bone-dim)]">
             {pick('submissionLabel', lang) as string}
           </label>
           <textarea
@@ -267,9 +282,10 @@ export default function Course5Assessor({
             rows={10}
             disabled={loading}
             maxLength={MAX_CHARS}
-            className="w-full px-4 py-3 rounded-xl border border-white/60 bg-white/40 text-slate-800 placeholder-slate-400 font-light leading-relaxed focus:outline-none focus:ring-2 focus:ring-slate-400/50 focus:border-slate-400/50 resize-y min-h-40 disabled:opacity-60"
+            className="w-full px-4 py-3 rounded-xl border font-light leading-relaxed focus:outline-none resize-y min-h-40 disabled:opacity-60 text-[color:var(--bone)] placeholder:[color:var(--bone-mute)] border-[color:var(--line-strong)] focus:border-[color:var(--ember)]"
+            style={{ background: 'oklch(94% 0.022 82 / 0.04)' }}
           />
-          <div className="flex items-center justify-between mt-3 text-xs text-slate-400">
+          <div className="flex items-center justify-between mt-3 font-mono text-xs text-[color:var(--bone-mute)]">
             <span>
               {(pick('charCount', lang) as (n: number, max: number) => string)(
                 submissionText.length,
@@ -285,9 +301,10 @@ export default function Course5Assessor({
               disabled={loading || !submissionText.trim()}
               className={`px-6 py-3 rounded-full text-sm font-semibold border min-h-11 transition-all duration-300 ${
                 loading || !submissionText.trim()
-                  ? 'glass-pill text-slate-400 border-slate-200/50 cursor-not-allowed'
-                  : 'bg-slate-800 text-white border-slate-800 hover:bg-slate-900'
+                  ? 'ink-pill text-[color:var(--bone-mute)] cursor-not-allowed'
+                  : 'border-transparent text-[oklch(15%_0.02_40)] hover:brightness-110'
               }`}
+              style={loading || !submissionText.trim() ? undefined : { background: 'var(--ember)' }}
             >
               {loading ? (pick('assessing', lang) as string) : (pick('assess', lang) as string)}
             </button>
@@ -295,7 +312,7 @@ export default function Course5Assessor({
               <button
                 type="button"
                 onClick={handleReset}
-                className="px-6 py-3 glass-pill rounded-full text-sm font-semibold text-slate-700 hover:text-slate-900 border border-slate-200/50 min-h-11"
+                className="ink-pill px-6 py-3 rounded-full text-sm font-semibold min-h-11 text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]"
               >
                 {pick('clear', lang) as string}
               </button>
@@ -305,44 +322,49 @@ export default function Course5Assessor({
           {/* Indeterminate loading bar — visible only while assessing */}
           {loading && (
             <div
-              className="mt-5 h-1 w-full bg-slate-200/60 rounded-full overflow-hidden"
+              className="mt-5 h-1 w-full rounded-full overflow-hidden"
+              style={{ background: 'oklch(94% 0.022 82 / 0.08)' }}
               role="progressbar"
               aria-label={pick('assessing', lang) as string}
             >
               <div
-                className="h-full w-1/4 rounded-full bg-gradient-to-r from-slate-400 via-slate-700 to-slate-400"
-                style={{ animation: 'indeterminateBar 1.4s ease-in-out infinite' }}
+                className="h-full w-1/4 rounded-full"
+                style={{ background: 'var(--ember)', animation: 'indeterminateBar 1.4s ease-in-out infinite' }}
               />
             </div>
           )}
         </div>
 
         {error && (
-          <div className="glass-card p-5 md:p-6 mb-6 border border-rose-400/40 bg-rose-50/50">
-            <p className="text-rose-700 font-medium text-sm">{error}</p>
+          <div
+            className="ink-card p-5 md:p-6 mb-6"
+            style={{ borderColor: 'oklch(70% 0.18 25 / 0.45)', background: 'oklch(70% 0.18 25 / 0.10)' }}
+          >
+            <p className="font-medium text-sm" style={{ color: 'oklch(82% 0.14 25)' }}>{error}</p>
           </div>
         )}
 
         {result && (
           <div className="flex flex-col gap-6">
-            <section className="glass-card p-6 md:p-8">
-              <h2 className="text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 mb-3">
+            <section className="ink-card p-6 md:p-8">
+              <h2 className="font-mono text-sm tracking-[0.2em] uppercase mb-3 text-[color:var(--bone-mute)]">
                 {pick('overall', lang) as string}
               </h2>
-              <p className="text-slate-700 font-light leading-relaxed">
+              <p className="font-light leading-relaxed text-[color:var(--bone-dim)]">
                 {result.overallAssessment}
               </p>
             </section>
 
-            <section className="glass-card p-6 md:p-8">
-              <h2 className="text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 mb-4">
+            <section className="ink-card p-6 md:p-8">
+              <h2 className="font-mono text-sm tracking-[0.2em] uppercase mb-4 text-[color:var(--bone-mute)]">
                 {pick('criteria', lang) as string}
               </h2>
               <div className="flex flex-col gap-3">
                 {result.criteria.map((c, i) => (
                   <div
                     key={i}
-                    className="flex flex-col sm:flex-row sm:items-start gap-3 p-4 rounded-xl bg-white/30 border border-white/50"
+                    className="flex flex-col sm:flex-row sm:items-start gap-3 p-4 rounded-xl border border-[color:var(--line)]"
+                    style={{ background: 'oklch(94% 0.022 82 / 0.04)' }}
                   >
                     <div className="flex items-center gap-3 sm:w-64 sm:shrink-0">
                       <span
@@ -350,9 +372,9 @@ export default function Course5Assessor({
                       >
                         {c.level}
                       </span>
-                      <span className="text-slate-800 font-semibold text-sm">{c.name}</span>
+                      <span className="font-semibold text-sm text-[color:var(--bone)]">{c.name}</span>
                     </div>
-                    <p className="text-slate-600 text-sm font-light leading-relaxed flex-1">
+                    <p className="text-sm font-light leading-relaxed flex-1 text-[color:var(--bone-dim)]">
                       {c.comment}
                     </p>
                   </div>
@@ -361,20 +383,21 @@ export default function Course5Assessor({
             </section>
 
             {result.dare_share_care && (
-              <section className="glass-card p-6 md:p-8">
-                <h2 className="text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 mb-4">
+              <section className="ink-card p-6 md:p-8">
+                <h2 className="font-mono text-sm tracking-[0.2em] uppercase mb-4 text-[color:var(--bone-mute)]">
                   {pick('dareShareCare', lang) as string}
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {(['dare', 'share', 'care'] as const).map((key) => (
                     <div
                       key={key}
-                      className="p-4 rounded-xl bg-white/30 border border-white/50"
+                      className="p-4 rounded-xl border border-[color:var(--line)]"
+                      style={{ background: 'oklch(94% 0.022 82 / 0.04)' }}
                     >
-                      <p className="text-xs font-bold tracking-[0.2em] uppercase text-slate-500 mb-2">
+                      <p className="font-mono text-xs font-bold tracking-[0.2em] uppercase mb-2 text-[color:var(--bone-mute)]">
                         {key}
                       </p>
-                      <p className="text-slate-700 text-sm font-light leading-relaxed">
+                      <p className="text-sm font-light leading-relaxed text-[color:var(--bone-dim)]">
                         {result.dare_share_care[key]}
                       </p>
                     </div>
@@ -388,13 +411,13 @@ export default function Course5Assessor({
               <ListCard title={pick('weaknesses', lang) as string} items={result.weaknesses} accent="rose" />
             </div>
 
-            <ListCard title={pick('suggestions', lang) as string} items={result.suggestions} accent="slate" />
+            <ListCard title={pick('suggestions', lang) as string} items={result.suggestions} accent="ember" />
 
-            <section className="glass-card p-6 md:p-8">
-              <h2 className="text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 mb-4">
+            <section className="ink-card p-6 md:p-8">
+              <h2 className="font-mono text-sm tracking-[0.2em] uppercase mb-4 text-[color:var(--bone-mute)]">
                 {pick('dialogue', lang) as string}
               </h2>
-              <ol className="flex flex-col gap-3 list-decimal list-inside text-slate-700 font-light leading-relaxed">
+              <ol className="flex flex-col gap-3 list-decimal list-inside font-light leading-relaxed text-[color:var(--bone-dim)]">
                 {result.dialogueQuestions.map((q, i) => (
                   <li key={i}>{q}</li>
                 ))}
@@ -414,19 +437,19 @@ function ListCard({
 }: {
   title: string;
   items: string[];
-  accent: 'emerald' | 'rose' | 'slate';
+  accent: 'emerald' | 'rose' | 'ember';
 }) {
   const dot =
-    accent === 'emerald' ? 'bg-emerald-500' : accent === 'rose' ? 'bg-rose-500' : 'bg-slate-500';
+    accent === 'emerald' ? 'oklch(72% 0.15 150)' : accent === 'rose' ? 'oklch(70% 0.18 25)' : 'var(--ember)';
   return (
-    <section className="glass-card p-6 md:p-8">
-      <h2 className="text-sm font-semibold tracking-[0.2em] uppercase text-slate-400 mb-4">
+    <section className="ink-card p-6 md:p-8">
+      <h2 className="font-mono text-sm tracking-[0.2em] uppercase mb-4 text-[color:var(--bone-mute)]">
         {title}
       </h2>
       <ul className="flex flex-col gap-2">
         {items.map((item, i) => (
-          <li key={i} className="flex items-start gap-3 text-slate-700">
-            <span className={`mt-2 inline-block w-1.5 h-1.5 rounded-full ${dot} shrink-0`} />
+          <li key={i} className="flex items-start gap-3 text-[color:var(--bone-dim)]">
+            <span className="mt-2 inline-block w-1.5 h-1.5 rounded-full shrink-0" style={{ background: dot }} />
             <span className="font-light leading-relaxed">{item}</span>
           </li>
         ))}
