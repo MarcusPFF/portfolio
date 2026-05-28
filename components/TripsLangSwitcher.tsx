@@ -80,7 +80,7 @@ export default function TripsLangSwitcher({
         aria-expanded={open}
         aria-label="Select language"
         onClick={() => setOpen((v) => !v)}
-        className="glass-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold text-slate-700 hover:text-slate-900 min-h-9"
+        className="ink-pill inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold min-h-9 text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]"
       >
         <span className="text-base leading-none" aria-hidden="true">
           {current.flag}
@@ -108,11 +108,13 @@ export default function TripsLangSwitcher({
               top: pos.top,
               left: pos.left,
               zIndex: 9999,
-              background: '#ffffff',
+              background: 'oklch(15.5% 0.020 280 / 0.97)',
+              backdropFilter: 'blur(20px) saturate(140%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(140%)',
               borderRadius: '1rem',
-              boxShadow: '0 12px 40px rgba(15, 23, 42, 0.18), 0 2px 6px rgba(15, 23, 42, 0.08)',
+              boxShadow: '0 18px 50px oklch(0% 0 0 / 0.55), 0 2px 6px oklch(0% 0 0 / 0.35)',
             }}
-            className="w-48 py-2 overflow-hidden border border-slate-200"
+            className="theme-night w-48 py-2 overflow-hidden border border-[color:var(--line-strong)]"
           >
             {OPTIONS.map((o) => {
               const active = o.code === lang;
@@ -125,15 +127,15 @@ export default function TripsLangSwitcher({
                     onClick={() => handleSelect(o.code)}
                     className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm font-medium transition-colors ${
                       active
-                        ? 'bg-slate-100 text-slate-900'
-                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                        ? 'bg-[oklch(94%_0.022_82_/_0.08)] text-[color:var(--bone)]'
+                        : 'text-[color:var(--bone-dim)] hover:bg-[oklch(94%_0.022_82_/_0.05)] hover:text-[color:var(--bone)]'
                     }`}
                   >
                     <span className="text-base leading-none" aria-hidden="true">
                       {o.flag}
                     </span>
                     <span className="flex-1 text-left">{o.name}</span>
-                    <span className="text-xs text-slate-400 tracking-wider">{o.label}</span>
+                    <span className="text-xs text-[color:var(--bone-mute)] tracking-wider">{o.label}</span>
                   </button>
                 </li>
               );

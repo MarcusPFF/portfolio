@@ -1,6 +1,6 @@
 'use client';
 
-import { ViewTransition, useMemo, useState } from 'react';
+import { ViewTransition, useMemo, useState, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { trips, pick, formatKm, formatDate } from '@/lib/trips';
 import { UI } from '@/lib/tripsI18n';
@@ -11,6 +11,14 @@ import TripsGlobe from './TripsGlobe';
 type SortKey = 'latest' | 'oldest' | 'longest';
 
 const SORT_KEYS: SortKey[] = ['latest', 'oldest', 'longest'];
+
+const pillBase =
+  'rounded-full text-xs font-semibold tracking-wider transition-all min-h-11 active:scale-[0.97]';
+
+const activePillStyle = {
+  background: 'oklch(94% 0.022 82 / 0.12)',
+  borderColor: 'var(--line-strong)',
+};
 
 export default function TripsListClient() {
   const [lang, setLang] = useTripsLang();
@@ -30,13 +38,16 @@ export default function TripsListClient() {
   return (
     <section className="py-20 px-6 md:px-24">
       <div className="max-w-5xl mx-auto">
-        <p className="reveal-top text-slate-400 font-medium tracking-[0.2em] uppercase text-xs mb-3">
+        <p className="reveal-top eyebrow mb-3 text-[color:var(--bone-mute)]">
           {t('adventurer')}
         </p>
-        <h1 className="reveal-top reveal-top-1 text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
+        <h1
+          className="reveal-top reveal-top-1 font-display text-4xl md:text-5xl mb-2 text-[color:var(--bone)]"
+          style={{ letterSpacing: '-0.02em', fontWeight: 420 }}
+        >
           {t('motorcycle_trips')}
         </h1>
-        <p className="reveal-top reveal-top-2 text-slate-500 font-light text-sm leading-relaxed max-w-xl mb-8">
+        <p className="reveal-top reveal-top-2 font-light text-sm leading-relaxed max-w-xl mb-8 text-[color:var(--bone-dim)]">
           {t('intro')}
         </p>
 
@@ -45,11 +56,12 @@ export default function TripsListClient() {
             type="button"
             onClick={() => setShowGlobe((v) => !v)}
             aria-pressed={showGlobe}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold transition-colors border min-h-11 sm:min-h-9 active:scale-[0.97] ${
+            className={`inline-flex items-center gap-2 px-4 py-2 sm:min-h-9 ${pillBase} ${
               showGlobe
-                ? 'bg-slate-800 text-white border-slate-800'
-                : 'glass-pill text-slate-700 hover:text-slate-900 border-transparent'
+                ? 'border text-[color:var(--bone)]'
+                : 'ink-pill text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]'
             }`}
+            style={showGlobe ? activePillStyle : undefined}
           >
             <svg
               className="w-4 h-4"
@@ -84,11 +96,12 @@ export default function TripsListClient() {
                   type="button"
                   onClick={() => setSort(k)}
                   aria-pressed={active}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider transition-colors min-h-11 sm:min-h-8 border active:scale-[0.97] ${
+                  className={`px-3.5 py-1.5 sm:min-h-8 ${pillBase} ${
                     active
-                      ? 'bg-slate-800 text-white border-slate-800'
-                      : 'glass-pill text-slate-600 hover:text-slate-900 border-transparent'
+                      ? 'border text-[color:var(--bone)]'
+                      : 'ink-pill text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]'
                   }`}
+                  style={active ? activePillStyle : undefined}
                 >
                   {t(`sort_${k}` as keyof typeof UI)}
                 </button>
@@ -107,33 +120,46 @@ export default function TripsListClient() {
               className={`block group reveal-top reveal-top-${Math.min(idx + 3, 6)}`}
             >
               <ViewTransition name={`trip-card-${trip.slug}`}>
-                <article className="glass-card-hover p-6 md:p-8 overflow-hidden relative h-full">
+                <article
+                  className="ink-card relative h-full p-6 md:p-8 overflow-hidden transition-transform duration-500 group-hover:-translate-y-1"
+                  style={
+                    {
+                      '--trip': trip.hexColor,
+                      '--trip-soft': 'color-mix(in oklab, var(--trip) 58%, var(--bone))',
+                      '--trip-wash': 'color-mix(in oklab, var(--trip) 18%, transparent)',
+                    } as CSSProperties
+                  }
+                >
                   <div
-                    className={`absolute inset-0 bg-gradient-to-br ${trip.color} opacity-40 group-hover:opacity-100 transition-opacity duration-500 rounded-[1.25rem]`}
+                    className="absolute inset-0 opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: 'linear-gradient(135deg, var(--trip-wash), transparent 62%)' }}
                   />
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="flex items-baseline justify-between mb-2">
-                      <p className="text-slate-400 font-medium tracking-widest uppercase text-[10px]">
+                      <p className="font-mono text-[10px] tracking-[0.12em] text-[color:var(--bone-mute)]">
                         {formatDate(trip.dateSort, lang)}
                       </p>
-                      <p className="text-slate-500 text-[11px] font-medium">
+                      <p className="font-mono text-[11px] text-[color:var(--bone-mute)]">
                         {formatKm(trip.distanceKm, lang)}
                       </p>
                     </div>
-                    <h2 className="text-xl md:text-2xl font-bold text-slate-800 tracking-tight mb-1.5">
+                    <h2
+                      className="font-display text-xl md:text-2xl mb-1.5 text-[color:var(--bone)]"
+                      style={{ letterSpacing: '-0.01em' }}
+                    >
                       {pick(trip.title, lang)}
                     </h2>
-                    <p className="text-slate-500 text-xs font-light mb-4">
+                    <p className="text-xs font-light mb-4 text-[color:var(--bone-dim)]">
                       {pick(trip.subtitle, lang)}
                     </p>
-                    <p className="text-slate-600 font-light text-sm leading-relaxed mb-5 flex-1">
+                    <p className="text-sm font-light leading-relaxed mb-5 flex-1 text-[color:var(--bone-dim)]">
                       {pick(trip.summary, lang)}
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex flex-col gap-0.5">
-                        <span className="text-slate-500 text-xs">{pick(trip.location, lang)}</span>
+                        <span className="text-xs text-[color:var(--bone-mute)]">{pick(trip.location, lang)}</span>
                         {trip.bike && (
-                          <span className="inline-flex items-center gap-1.5 text-slate-500 text-[11px] font-medium">
+                          <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-[color:var(--bone-mute)]">
                             <svg
                               className="w-3 h-3"
                               fill="none"
@@ -150,7 +176,10 @@ export default function TripsListClient() {
                           </span>
                         )}
                       </div>
-                      <span className="inline-flex items-center gap-2 text-slate-700 font-medium text-xs group-hover:gap-3 transition-all">
+                      <span
+                        className="inline-flex items-center gap-2 font-medium text-xs group-hover:gap-3 transition-all"
+                        style={{ color: 'var(--trip-soft)' }}
+                      >
                         {t('read_more')}
                         <svg
                           className="w-3.5 h-3.5"
