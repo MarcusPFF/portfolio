@@ -14,7 +14,7 @@ const navLinks = [
 
 const SECTION_IDS = ['projects', 'stack', 'contact'] as const;
 
-export default function GlassNav() {
+export default function GlassNav({ night = false }: { night?: boolean } = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -112,7 +112,7 @@ export default function GlassNav() {
     return pathname.startsWith(href) ? 'nav-back' : 'nav-forward';
   }
 
-  const isNight = pathname === '/';
+  const isNight = night || pathname === '/';
 
   const wordmarkClass = isNight
     ? 'font-display tracking-tight transition-opacity hover:opacity-70 text-[color:var(--bone)]'
