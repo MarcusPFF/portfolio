@@ -84,13 +84,11 @@ export async function POST(req: Request) {
     // 1. Perform RAG Retrieval if services are configured
     if (supabase && google && lastMessage?.content) {
       try {
-        console.log('[Chat API] Generating embedding for user query...');
         const { embedding } = await embed({
           model: google.textEmbeddingModel('gemini-embedding-001'),
           value: lastMessage.content
         });
 
-        console.log('[Chat API] Querying Supabase for matches...');
         const { data, error } = await supabase.rpc('match_document_chunks', {
           query_embedding: embedding,
           match_threshold: 0.2,
@@ -102,7 +100,6 @@ export async function POST(req: Request) {
         } else if (data && data.length > 0) {
           const chunks = data as Array<{ content: string }>;
           retrievedContext = chunks.map((c) => c.content).join('\n\n');
-          console.log(`[Chat API] RAG retrieved ${data.length} relevant chunks`);
         }
       } catch (e) {
         console.error('[Chat API] Embedding/Retrieval error:', e);
@@ -111,7 +108,6 @@ export async function POST(req: Request) {
 
     // 2. Fallback to full document if retrieval failed or missed
     if (!retrievedContext) {
-      console.log('[Chat API] RAG unavailable or yielded no results. Using fallback context.');
       retrievedContext = marcusContextFallback;
     }
 
