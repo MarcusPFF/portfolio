@@ -43,7 +43,6 @@ export type Trip = {
   slug: string;
   dateSort: string; // YYYY-MM
   distanceKm: number;
-  color: string;
   hexColor: string;
   waypoints: Waypoint[];
   title: Localized;
@@ -62,7 +61,6 @@ export const trips: Trip[] = [
     slug: 'immeln-tur',
     dateSort: '2026-05',
     distanceKm: 350,
-    color: 'from-emerald-400/20 to-teal-400/20',
     hexColor: '#10b981',
     bike: 'Honda Africa Twin XRV 750 (RD07)',
     waypoints: [
@@ -128,7 +126,6 @@ export const trips: Trip[] = [
     slug: 'europa-grand-tour',
     dateSort: '2025-07',
     distanceKm: 10000,
-    color: 'from-violet-400/20 to-purple-400/20',
     hexColor: '#8b5cf6',
     bike: 'Honda Africa Twin XRV 750 (RD07)',
     waypoints: [
@@ -304,7 +301,6 @@ export const trips: Trip[] = [
     slug: 'sverige-tur',
     dateSort: '2024-08',
     distanceKm: 1155,
-    color: 'from-blue-400/20 to-indigo-400/20',
     hexColor: '#3b82f6',
     bike: 'Yamaha R7 (2022)',
     waypoints: [
@@ -377,7 +373,6 @@ export const trips: Trip[] = [
     slug: 'norge-tur',
     dateSort: '2024-10',
     distanceKm: 2950,
-    color: 'from-red-400/20 to-rose-400/20',
     hexColor: '#ef4444',
     bike: 'Yamaha R7 (2022)',
     waypoints: [
