@@ -12,117 +12,148 @@ export default function GlassProjects() {
   const filteredProjects = projects.filter((p) => !p.hidden);
 
   return (
-    <section id="projects" className="pt-6 pb-20 px-6 md:px-24">
-      <div className="max-w-4xl mx-auto">
-        <ScrollReveal>
-          <p className="text-slate-400 font-medium tracking-[0.2em] uppercase text-xs mb-3">
-            Portfolio
-          </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-800 mb-2 tracking-tight">
-            Selected Projects
+    <section
+      id="projects"
+      className="container-grid"
+      style={{ paddingTop: 'var(--section-py)', paddingBottom: 'var(--section-py)' }}
+    >
+      <ScrollReveal>
+        <div className="flex items-baseline justify-between mb-10">
+          <h2
+            className="font-display text-4xl md:text-5xl"
+            style={{
+              color: 'var(--bone)',
+              fontWeight: 350,
+              fontVariationSettings: '"opsz" 144, "SOFT" 100',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Projects
           </h2>
-          <p className="text-slate-500 font-light text-sm mb-10">More coming soon</p>
-        </ScrollReveal>
+          <span
+            className="font-mono text-[11px] tabular-nums"
+            style={{ color: 'var(--bone-dim)' }}
+            aria-label={`${filteredProjects.length} projects`}
+          >
+            {String(filteredProjects.length).padStart(2, '0')}
+          </span>
+        </div>
+      </ScrollReveal>
 
-        <ScrollReveal>
-          <div className="glass-card overflow-hidden">
-            <ul>
-              {filteredProjects.map((proj, idx) => {
-                const isExtra = idx >= INITIAL_PROJECTS_COUNT;
-                const collapsed = isExtra && !showAll;
-                return (
-                  <li
-                    key={idx}
-                    className="grid"
-                    style={{
-                      gridTemplateRows: collapsed ? '0fr' : '1fr',
-                      opacity: collapsed ? 0 : 1,
-                      transition:
-                        'grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1), opacity 350ms ease-out',
-                    }}
-                  >
-                    <div
-                      className="overflow-hidden"
-                      inert={collapsed}
-                    >
-                      <a
-                        href={proj.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`group block px-5 md:px-7 py-5 hover:bg-white/30 transition-colors ${
-                          idx > 0 ? 'border-t border-white/40' : ''
-                        }`}
-                      >
-                        <div className="flex items-center gap-4">
-                          <span className="text-xs text-slate-400 font-mono tabular-nums shrink-0 w-7 text-center">
-                            {String(idx + 1).padStart(2, '0')}
-                          </span>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-baseline justify-between gap-3 mb-0.5">
-                              <h3 className="text-base md:text-lg font-bold text-slate-800 tracking-tight truncate">
-                                {proj.title}
-                              </h3>
-                              <span className="text-slate-400 font-medium text-[10px] uppercase tracking-[0.15em] shrink-0 hidden sm:inline">
-                                {proj.subtitle}
-                              </span>
-                            </div>
-                            <p className="text-slate-500 font-light text-sm leading-snug line-clamp-1 mb-1.5">
-                              {proj.desc}
-                            </p>
-                            <p className="text-[10px] font-medium text-slate-400 uppercase tracking-[0.15em] truncate">
-                              {proj.tags.join(' · ')}
-                            </p>
-                          </div>
-
-                          <svg
-                            className="w-4 h-4 text-slate-400 group-hover:text-slate-800 group-hover:translate-x-1 transition-all shrink-0"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                            strokeWidth={2}
-                            aria-hidden="true"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M17 8l4 4m0 0l-4 4m4-4H3"
-                            />
-                          </svg>
-                        </div>
-                      </a>
-                    </div>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </ScrollReveal>
-
-        {filteredProjects.length > INITIAL_PROJECTS_COUNT && (
-          <div className="mt-8 flex justify-center">
-            <button
-              onClick={() => setShowAll(!showAll)}
-              className="px-5 py-2 min-h-11 sm:min-h-9 glass-pill rounded-full text-xs font-semibold text-slate-600 hover:text-slate-900 active:scale-[0.97] transition-all duration-300 flex items-center gap-2 group border border-slate-200/50"
-            >
-              <span>
-                {showAll
-                  ? 'Show fewer'
-                  : `Show all ${filteredProjects.length} projects`}
-              </span>
-              <svg
-                className={`w-3.5 h-3.5 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
+      <ScrollReveal>
+        <ul style={{ borderTop: '1px solid var(--line)' }}>
+          {filteredProjects.map((proj, idx) => {
+            const isExtra = idx >= INITIAL_PROJECTS_COUNT;
+            const collapsed = isExtra && !showAll;
+            return (
+              <li
+                key={idx}
+                className="grid"
+                style={{
+                  gridTemplateRows: collapsed ? '0fr' : '1fr',
+                  opacity: collapsed ? 0 : 1,
+                  transition:
+                    'grid-template-rows 450ms cubic-bezier(0.22, 1, 0.36, 1), opacity 350ms ease-out',
+                }}
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-          </div>
-        )}
-      </div>
+                <div className="overflow-hidden" inert={collapsed}>
+                  <a
+                    href={proj.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ borderBottom: '1px solid var(--line)' }}
+                    className="group block py-5 transition-colors hover:bg-[oklch(94%_0.022_82_/_0.03)]"
+                  >
+                    <div className="flex items-center gap-4">
+                      <span
+                        className="font-mono text-[11px] tabular-nums shrink-0 w-8 text-left"
+                        style={{ color: 'var(--accent)' }}
+                      >
+                        {String(idx + 1).padStart(2, '0')}
+                      </span>
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-baseline justify-between gap-3 mb-1">
+                          <h3
+                            className="font-display text-lg md:text-xl truncate"
+                            style={{
+                              color: 'var(--bone)',
+                              fontWeight: 400,
+                              fontVariationSettings: '"opsz" 36, "SOFT" 100',
+                              letterSpacing: '-0.015em',
+                            }}
+                          >
+                            {proj.title}
+                          </h3>
+                          <span
+                            className="font-body text-[11px] font-normal shrink-0 hidden sm:inline"
+                            style={{ color: 'var(--bone-mute)' }}
+                          >
+                            {proj.subtitle}
+                          </span>
+                        </div>
+                        <p
+                          className="font-body font-light text-sm leading-snug truncate mb-1.5"
+                          style={{ color: 'var(--bone-dim)' }}
+                        >
+                          {proj.desc}
+                        </p>
+                        <p
+                          className="font-mono text-[10px] tabular-nums truncate"
+                          style={{ color: 'var(--bone-mute)' }}
+                        >
+                          {proj.tags.join(' · ')}
+                        </p>
+                      </div>
+
+                      <svg
+                        className="w-4 h-4 group-hover:translate-x-1 transition-all shrink-0"
+                        style={{ color: 'var(--bone-mute)' }}
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={1.5}
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M17 8l4 4m0 0l-4 4m4-4H3"
+                        />
+                      </svg>
+                    </div>
+                  </a>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </ScrollReveal>
+
+      {filteredProjects.length > INITIAL_PROJECTS_COUNT && (
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={() => setShowAll(!showAll)}
+            style={{ color: 'var(--bone-dim)' }}
+            className="ink-pill px-5 py-2 min-h-11 sm:min-h-9 rounded-full text-xs font-semibold hover:[color:var(--bone)] active:scale-[0.97] transition-all duration-300 flex items-center gap-2 group"
+          >
+            <span>
+              {showAll
+                ? 'Show fewer'
+                : `Show all ${filteredProjects.length} projects`}
+            </span>
+            <svg
+              className={`w-3.5 h-3.5 transition-transform duration-300 ${showAll ? 'rotate-180' : ''}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1.5}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+        </div>
+      )}
     </section>
   );
 }

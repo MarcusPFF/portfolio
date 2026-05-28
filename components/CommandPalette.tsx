@@ -17,7 +17,7 @@ type Item = {
 const STATIC_ITEMS: Item[] = [
   { id: 'home', label: 'Home', href: '/', group: 'Pages' },
   { id: 'projects', label: 'Selected Projects', href: '/#projects', group: 'Pages' },
-  { id: 'skills', label: 'Skills & Tools', href: '/#skills', group: 'Pages' },
+  { id: 'stack', label: 'Stack', href: '/#stack', group: 'Pages' },
   { id: 'contact', label: 'Contact', href: '/#contact', group: 'Pages' },
   { id: 'trips', label: 'Motorcycle Trips', href: '/trips', group: 'Pages' },
   { id: 'llm', label: 'LLM Course', href: '/llm', group: 'Pages' },
@@ -158,23 +158,27 @@ export default function CommandPalette() {
 
   return (
     <div
-      className="fixed inset-0 z-[150] flex items-start justify-center pt-[15vh] px-4"
+      className="theme-night fixed inset-0 z-[150] flex items-start justify-center pt-[15vh] px-4"
       role="dialog"
       aria-modal="true"
       aria-label="Command palette"
       onClick={() => setOpen(false)}
     >
-      <div className="absolute inset-0 bg-slate-900/30 backdrop-blur-sm" />
+      <div className="absolute inset-0 backdrop-blur-sm" style={{ background: 'oklch(8% 0.02 280 / 0.55)' }} />
 
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative w-full max-w-xl bg-white/95 backdrop-blur-xl border border-white/80 rounded-2xl shadow-2xl overflow-hidden"
-        style={{ animation: 'cmdkPop 180ms cubic-bezier(0.22, 1, 0.36, 1) forwards' }}
+        className="relative w-full max-w-xl backdrop-blur-xl border rounded-2xl shadow-2xl overflow-hidden"
+        style={{
+          background: 'oklch(18% 0.022 280 / 0.96)',
+          borderColor: 'var(--line-strong)',
+          animation: 'cmdkPop 180ms cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        }}
       >
         {/* Search input */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-slate-200/60">
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-[color:var(--line)]">
           <svg
-            className="w-4 h-4 text-slate-400 shrink-0"
+            className="w-4 h-4 text-[color:var(--bone-mute)] shrink-0"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -190,10 +194,10 @@ export default function CommandPalette() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Jump to or search…"
-            className="flex-1 bg-transparent border-0 outline-none text-slate-800 text-sm placeholder-slate-400"
+            className="flex-1 bg-transparent border-0 outline-none text-sm text-[color:var(--bone)] placeholder:[color:var(--bone-mute)]"
             aria-label="Search"
           />
-          <kbd className="text-[10px] font-mono uppercase tracking-wider text-slate-400 border border-slate-200 rounded px-1.5 py-0.5 hidden sm:inline">
+          <kbd className="text-[10px] font-mono uppercase tracking-wider text-[color:var(--bone-mute)] border border-[color:var(--line-strong)] rounded px-1.5 py-0.5 hidden sm:inline">
             esc
           </kbd>
         </div>
@@ -201,13 +205,13 @@ export default function CommandPalette() {
         {/* Results */}
         <div ref={listRef} className="max-h-[50vh] overflow-y-auto py-2">
           {filtered.length === 0 ? (
-            <p className="px-5 py-10 text-center text-sm text-slate-400">
+            <p className="px-5 py-10 text-center text-sm text-[color:var(--bone-mute)]">
               No matches.
             </p>
           ) : (
             groups.map(([group, items]) => (
               <div key={group} className="mb-1">
-                <p className="px-5 py-1.5 text-[10px] uppercase tracking-[0.2em] font-semibold text-slate-400">
+                <p className="px-5 py-1.5 text-[10px] uppercase tracking-[0.2em] font-semibold text-[color:var(--bone-mute)]">
                   {group}
                 </p>
                 {items.map(({ item, globalIdx }) => {
@@ -220,22 +224,24 @@ export default function CommandPalette() {
                       onMouseEnter={() => setActiveIndex(globalIdx)}
                       onClick={() => navigate(item)}
                       className={`w-full text-left px-5 py-2.5 flex items-center gap-3 transition-colors ${
-                        isActive ? 'bg-slate-100' : 'hover:bg-slate-50'
+                        isActive
+                          ? 'bg-[oklch(72%_0.165_38_/_0.16)]'
+                          : 'hover:bg-[oklch(94%_0.022_82_/_0.05)]'
                       }`}
                     >
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-slate-800 truncate">
+                        <p className="text-sm font-medium truncate text-[color:var(--bone)]">
                           {item.label}
                         </p>
                         {item.detail && (
-                          <p className="text-xs text-slate-500 truncate">
+                          <p className="text-xs truncate text-[color:var(--bone-mute)]">
                             {item.detail}
                           </p>
                         )}
                       </div>
                       {item.external && (
                         <svg
-                          className="w-3.5 h-3.5 text-slate-400 shrink-0"
+                          className="w-3.5 h-3.5 shrink-0 text-[color:var(--bone-mute)]"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -258,23 +264,23 @@ export default function CommandPalette() {
         </div>
 
         {/* Footer hints */}
-        <div className="px-5 py-3 border-t border-slate-200/60 flex items-center justify-between text-[10px] text-slate-400 uppercase tracking-wider">
+        <div className="px-5 py-3 border-t border-[color:var(--line)] flex items-center justify-between text-[10px] text-[color:var(--bone-mute)] uppercase tracking-wider">
           <div className="flex items-center gap-3">
             <span className="flex items-center gap-1.5">
-              <kbd className="font-mono border border-slate-200 rounded px-1.5 py-0.5">
+              <kbd className="font-mono border border-[color:var(--line-strong)] rounded px-1.5 py-0.5">
                 ↑↓
               </kbd>
               navigate
             </span>
             <span className="flex items-center gap-1.5">
-              <kbd className="font-mono border border-slate-200 rounded px-1.5 py-0.5">
+              <kbd className="font-mono border border-[color:var(--line-strong)] rounded px-1.5 py-0.5">
                 ↵
               </kbd>
               open
             </span>
           </div>
           <span className="flex items-center gap-1.5">
-            <kbd className="font-mono border border-slate-200 rounded px-1.5 py-0.5">
+            <kbd className="font-mono border border-[color:var(--line-strong)] rounded px-1.5 py-0.5">
               ⌘K
             </kbd>
             toggle

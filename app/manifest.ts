@@ -7,10 +7,10 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'Marcus Forsberg — Fullstack Developer & Adventurer',
     start_url: '/',
     display: 'standalone',
-    background_color: '#f0e6e4',
-    theme_color: '#0f172a',
+    background_color: '#1a1822',
+    theme_color: '#dc8a4a',
     icons: [
-      { src: '/icon', sizes: '32x32', type: 'image/png' },
+      { src: '/icon.svg', sizes: 'any', type: 'image/svg+xml' },
       { src: '/apple-icon', sizes: '180x180', type: 'image/png' },
     ],
   };

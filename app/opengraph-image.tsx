@@ -10,7 +10,7 @@ export default async function Image() {
       <div
         style={{
           background:
-            'linear-gradient(135deg, #f0e6e4 0%, #ddd0e8 50%, #f5e0d8 100%)',
+            'linear-gradient(135deg, #17151f 0%, #1f1b2a 58%, #281d27 100%)',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -23,7 +23,7 @@ export default async function Image() {
         <div
           style={{
             fontSize: 28,
-            color: '#94a3b8',
+            color: '#7c7568',
             letterSpacing: '6px',
             textTransform: 'uppercase',
             display: 'flex',
@@ -36,22 +36,23 @@ export default async function Image() {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div
             style={{
-              fontSize: 140,
-              fontWeight: 700,
-              color: '#0f172a',
-              letterSpacing: '-3px',
+              fontSize: 108,
+              fontWeight: 500,
+              color: '#f4eee0',
+              letterSpacing: '-2px',
               lineHeight: 1,
               display: 'flex',
               alignItems: 'baseline',
+              fontFamily: 'serif',
             }}
           >
             Marcus Forsberg
-            <span style={{ color: '#8b5cf6' }}>.</span>
+            <span style={{ color: '#dc8a4a' }}>.</span>
           </div>
           <div
             style={{
               fontSize: 36,
-              color: '#64748b',
+              color: '#b3ab9b',
               marginTop: 32,
               fontWeight: 400,
               display: 'flex',
@@ -64,7 +65,7 @@ export default async function Image() {
         <div
           style={{
             fontSize: 22,
-            color: '#94a3b8',
+            color: '#7c7568',
             display: 'flex',
             letterSpacing: '4px',
             textTransform: 'uppercase',

@@ -10,7 +10,7 @@ const ROLES = [
 ];
 const TYPE_MS = 55;
 const DELETE_MS = 30;
-const HOLD_MS = 1400;
+const HOLD_MS = 1700;
 
 export default function TypewriterRoles() {
   const [display, setDisplay] = useState("");
@@ -55,7 +55,8 @@ export default function TypewriterRoles() {
     <span className="inline-flex items-baseline">
       <span>{display}</span>
       <span
-        className="ml-0.5 w-[2px] h-[0.9em] bg-current inline-block animate-pulse"
+        className="ml-0.5 w-[2px] h-[0.9em] bg-current inline-block caret-blink"
+        style={{ color: 'var(--bone)' }}
         aria-hidden="true"
       />
     </span>

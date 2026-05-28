@@ -13,15 +13,16 @@ export default function AppleIcon() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: '#f0e6e4',
-          color: '#0f172a',
+          background: '#1a1822',
+          color: '#f4eee0',
           fontSize: 130,
-          fontWeight: 700,
-          letterSpacing: '-8px',
-          fontFamily: 'sans-serif',
+          fontWeight: 500,
+          letterSpacing: '-4px',
+          fontFamily: 'serif',
+          fontStyle: 'normal',
         }}
       >
-        M<span style={{ color: '#8b5cf6' }}>.</span>
+        M<span style={{ color: '#dc8a4a' }}>.</span>
       </div>
     ),
     { ...size },

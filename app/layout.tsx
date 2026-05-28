@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Fraunces, Instrument_Sans } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import KonamiCode from '@/components/KonamiCode';
@@ -16,8 +16,21 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
 });
 
+const fraunces = Fraunces({
+  variable: '--font-fraunces',
+  subsets: ['latin'],
+  axes: ['SOFT', 'WONK', 'opsz'],
+  display: 'swap',
+});
+
+const instrumentSans = Instrument_Sans({
+  variable: '--font-instrument',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 const SITE_DESCRIPTION =
-  'Marcus Forsberg is a fullstack developer based in Copenhagen, building web apps with Next.js, Java, and Python. Selected projects, motorcycle trips across Europe, and an LLM-powered course showcase.';
+  'Marcus Forsberg is a fullstack developer based in North Zealand, Denmark, building web apps with Next.js, Java, and Python. Selected projects, motorcycle trips across Europe, and an LLM-powered course showcase.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://marcuspff.com'),
@@ -71,11 +84,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable}`}
+      className={`${geistSans.variable} ${geistMono.variable} ${fraunces.variable} ${instrumentSans.variable}`}
     >
       <body
         suppressHydrationWarning
-        className="antialiased min-h-screen font-sans selection:bg-slate-300/50 selection:text-slate-900 overflow-x-hidden"
+        className="antialiased min-h-screen font-sans selection:bg-[oklch(72%_0.165_38_/_0.30)] overflow-x-hidden"
       >
         <a
           href="#projects"

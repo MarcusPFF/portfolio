@@ -34,49 +34,73 @@ const socials = [
 
 export default function GlassContact() {
   return (
-    <section id="contact" className="py-20 px-6 md:px-24">
-      <div className="max-w-3xl mx-auto">
-        <ScrollReveal>
-          <div className="glass-card p-8 md:p-12">
-            <div className="text-center mb-8">
-              <p className="text-slate-500 font-semibold tracking-[0.2em] uppercase text-base mb-3">Get in Touch</p>
-              <p className="text-slate-500 font-light text-base max-w-lg mx-auto leading-relaxed">
-                Have a project in mind, or just want to say hello? I&apos;m always open to
-                new ideas and collaborations.
-              </p>
-            </div>
+    <section
+      id="contact"
+      className="container-grid"
+      style={{ paddingTop: 'var(--section-py)', paddingBottom: 'var(--section-py)' }}
+    >
+      <ScrollReveal>
+        <div className="mb-10 max-w-2xl">
+          <h2
+            className="font-display text-4xl md:text-5xl mb-3"
+            style={{
+              color: 'var(--bone)',
+              fontWeight: 350,
+              fontVariationSettings: '"opsz" 144, "SOFT" 100',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Get in touch
+          </h2>
+          <p
+            className="font-light leading-relaxed"
+            style={{ color: 'var(--bone-dim)', fontSize: 'var(--body-base)' }}
+          >
+            Have a project in mind, or just want to say hi? I&apos;ll reply when I get a moment.
+          </p>
+        </div>
+      </ScrollReveal>
 
-            <ContactForm />
+      <ScrollReveal>
+        <div className="max-w-2xl">
+          <ContactForm />
+        </div>
+      </ScrollReveal>
 
-            <div className="my-8 flex items-center gap-4">
-              <div className="h-px flex-1 bg-white/40" />
-              <span className="text-[10px] uppercase tracking-[0.25em] text-slate-400 font-medium">
-                Or find me on
-              </span>
-              <div className="h-px flex-1 bg-white/40" />
-            </div>
-
-            <div className="flex justify-center gap-3 flex-wrap">
-              {socials.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link glass-pill flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm text-slate-600 hover:text-slate-800 font-medium active:scale-[0.97] transition-transform"
-                >
-                  {social.icon}
-                  {social.label}
-                </a>
-              ))}
-            </div>
-
-            <div className="mt-6 flex justify-center">
-              <CopyEmail email="hello@marcuspff.com" />
-            </div>
+      <ScrollReveal>
+        <div
+          className="mt-14 pt-8 max-w-2xl"
+          style={{ borderTop: '1px solid var(--line)' }}
+        >
+          <p
+            className="eyebrow mb-5"
+            style={{ color: 'var(--bone-mute)' }}
+          >
+            Elsewhere
+          </p>
+          <div className="flex flex-wrap items-center gap-3">
+            {socials.map((social) => (
+              <a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'var(--bone-dim)' }}
+                className="social-link ink-pill flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium hover:[color:var(--bone)] active:scale-[0.97] transition-transform"
+              >
+                {social.icon}
+                {social.label}
+              </a>
+            ))}
+            <span
+              aria-hidden="true"
+              className="hidden sm:inline-block w-px h-5 mx-1"
+              style={{ background: 'var(--line-strong)' }}
+            />
+            <CopyEmail email="hello@marcuspff.com" />
           </div>
-        </ScrollReveal>
-      </div>
+        </div>
+      </ScrollReveal>
     </section>
   );
 }
