@@ -39,7 +39,7 @@ export default async function GithubCard({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`Open GitHub profile of ${user}`}
-      className="group block w-full max-w-sm lg:max-w-none lg:h-full flex flex-col"
+      className="group block w-full max-w-sm lg:max-w-none"
     >
       <div
         className="rounded-md transition-transform duration-300 group-hover:-translate-y-0.5"
@@ -56,7 +56,7 @@ export default async function GithubCard({
         }}
       />
 
-      <div className="mt-auto pt-4">
+      <div className="pt-4">
         <div className="flex items-baseline justify-between gap-3">
           <span className="inline-flex items-center gap-1.5">
             <svg

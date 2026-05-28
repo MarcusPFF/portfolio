@@ -8,7 +8,7 @@ export default function GlassHero() {
       className="container-grid pt-28 sm:pt-32 lg:pt-36"
       style={{ paddingBottom: 'var(--section-py)' }}
     >
-      <div className="grid grid-cols-12 gap-x-6 lg:gap-x-10 gap-y-12">
+      <div className="grid grid-cols-12 gap-x-6 lg:gap-x-10 gap-y-12 lg:items-start">
         <div className="col-span-12 lg:col-span-8 lg:pt-1">
           <p
             className="hero-enter font-mono text-[12px] tracking-[0.02em] mb-5 inline-flex items-baseline"
