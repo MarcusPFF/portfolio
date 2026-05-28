@@ -30,7 +30,7 @@ const instrumentSans = Instrument_Sans({
 });
 
 const SITE_DESCRIPTION =
-  'Marcus Forsberg is a fullstack developer based in Copenhagen, building web apps with Next.js, Java, and Python. Selected projects, motorcycle trips across Europe, and an LLM-powered course showcase.';
+  'Marcus Forsberg is a fullstack developer based in North Zealand, Denmark, building web apps with Next.js, Java, and Python. Selected projects, motorcycle trips across Europe, and an LLM-powered course showcase.';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://marcuspff.com'),

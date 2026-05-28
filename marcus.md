@@ -9,6 +9,15 @@
     }
   },
   {
+    "id": "location",
+    "text": "Bor i Nordsjælland, nord for København.",
+    "metadata": {
+      "category": "personal",
+      "tags": ["bopæl", "lokation", "nordsjælland"],
+      "synonyms": ["hvor bor marcus", "where are you based", "location", "hometown"]
+    }
+  },
+  {
     "id": "training",
     "text": "Styrketræning og vægtløftning med fokus på struktur, progression og disciplin. Træning er central for fysisk og mental udvikling.",
     "metadata": {

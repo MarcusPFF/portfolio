@@ -42,7 +42,7 @@ export default function Home() {
               className="font-mono text-[11px]"
               style={{ color: 'var(--bone-mute)' }}
             >
-              © {new Date().getFullYear()} Marcus Forsberg · Copenhagen
+              © {new Date().getFullYear()} Marcus Forsberg · North Zealand
             </p>
           </footer>
         </main>

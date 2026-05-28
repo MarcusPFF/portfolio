@@ -33,7 +33,7 @@ export default function CVPage() {
               {personalDetails.roles.join(' · ')}
             </p>
             <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-slate-500">
-              <span>Copenhagen, DK</span>
+              <span>North Zealand, DK</span>
               <span>·</span>
               <a
                 href="https://marcuspff.com"

@@ -23,7 +23,7 @@ const googleKey = process.env.GOOGLE_GENERATIVE_AI_API_KEY || '';
 const google = googleKey ? createGoogleGenerativeAI({ apiKey: googleKey }) : null;
 
 // --- Knowledge base (Fallback) ---
-const marcusContextFallback = "Marcus is a developer from Copenhagen, Denmark. His database is currently unavailable.";
+const marcusContextFallback = "Marcus is a developer from North Zealand, Denmark. His database is currently unavailable.";
 
 export async function POST(req: Request) {
   if (!isAllowedOrigin(req)) {
