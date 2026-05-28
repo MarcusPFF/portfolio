@@ -62,7 +62,7 @@ export default async function TripDetailPage({
           <TripDetailClient trip={trip} allTrips={trips} />
 
           <footer className="py-12 mt-16 text-center font-mono text-[11px] text-[color:var(--bone-mute)]">
-            <p>© 2026 Marcus Forsberg</p>
+            <p>© {new Date().getFullYear()} Marcus Forsberg</p>
           </footer>
         </main>
       </ViewTransition>

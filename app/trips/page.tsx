@@ -33,7 +33,7 @@ export default function TripsPage() {
           <TripsListClient />
 
           <footer className="py-12 text-center font-mono text-[11px] text-[color:var(--bone-mute)]">
-            <p>© 2026 Marcus Forsberg</p>
+            <p>© {new Date().getFullYear()} Marcus Forsberg</p>
           </footer>
         </main>
       </ViewTransition>
