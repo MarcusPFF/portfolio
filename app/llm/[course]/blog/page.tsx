@@ -50,14 +50,18 @@ export default async function CourseBlogPage({ params }: { params: Promise<Param
   const empty = isEmpty(markdown);
 
   return (
-    <>
-      <GlassNav />
+    <div className="theme-night">
+      <GlassNav night />
 
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
-        <div className="absolute top-[10%] left-[5%] w-[400px] h-[400px] bg-purple-300/20 rounded-full blur-3xl float-slow" />
-        <div className="absolute top-[60%] right-[10%] w-[350px] h-[350px] bg-pink-300/20 rounded-full blur-3xl float-medium" />
-        <div className="absolute top-[30%] right-[30%] w-[300px] h-[300px] bg-blue-300/15 rounded-full blur-3xl float-fast" />
-        <div className="absolute bottom-[10%] left-[20%] w-[250px] h-[250px] bg-orange-200/15 rounded-full blur-3xl float-slow" />
+        <div
+          className="absolute top-[10%] -left-[6%] w-[520px] h-[520px] rounded-full blur-3xl float-slow"
+          style={{ background: 'oklch(48% 0.008 280 / 0.22)' }}
+        />
+        <div
+          className="absolute bottom-[4%] -right-[6%] w-[460px] h-[460px] rounded-full blur-3xl float-medium"
+          style={{ background: 'oklch(42% 0.12 280 / 0.16)' }}
+        />
       </div>
 
       <ViewTransition
@@ -71,7 +75,7 @@ export default async function CourseBlogPage({ params }: { params: Promise<Param
               <Link
                 href="/llm"
                 transitionTypes={['nav-back']}
-                className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-800 text-sm font-medium transition-colors"
+                className="inline-flex items-center gap-2 text-sm font-medium transition-colors text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]"
               >
                 <svg
                   className="w-4 h-4"
@@ -92,11 +96,9 @@ export default async function CourseBlogPage({ params }: { params: Promise<Param
                 className="md:w-48 md:shrink-0"
               >
                 <div className="md:sticky md:top-24">
-                  <p className="text-slate-400 font-semibold tracking-[0.2em] uppercase text-[10px] mb-4">
-                    Course blogs
-                  </p>
+                  <p className="eyebrow mb-4 text-[color:var(--bone-mute)]">Course blogs</p>
                   <nav>
-                    <ul className="flex flex-col gap-2.5 border-l border-slate-300/50 pl-3">
+                    <ul className="flex flex-col gap-2.5 border-l border-[color:var(--line)] pl-3">
                       {blogPosts.map((c) => {
                         const isActive = c.blogSlug === course;
                         return (
@@ -104,16 +106,19 @@ export default async function CourseBlogPage({ params }: { params: Promise<Param
                             {isActive ? (
                               <span
                                 aria-current="page"
-                                className="text-slate-900 font-semibold text-xs flex items-center gap-2"
+                                className="font-semibold text-xs flex items-center gap-2 text-[color:var(--bone)]"
                               >
-                                <span className="w-1.5 h-1.5 rounded-full bg-slate-800 shrink-0" />
+                                <span
+                                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                                  style={{ background: 'var(--accent)' }}
+                                />
                                 {c.title}
                               </span>
                             ) : (
                               <Link
                                 href={`/llm/${c.blogSlug}/blog`}
                                 transitionTypes={['quick']}
-                                className="text-slate-600 hover:text-slate-900 font-medium transition-colors text-xs"
+                                className="font-medium transition-colors text-xs text-[color:var(--bone-dim)] hover:text-[color:var(--bone)]"
                               >
                                 {c.title}
                               </Link>
@@ -127,21 +132,26 @@ export default async function CourseBlogPage({ params }: { params: Promise<Param
               </aside>
 
               <article className="flex-1 min-w-0 max-w-2xl">
-                <header
-                  className={`glass-card p-6 md:p-10 overflow-hidden relative bg-gradient-to-br ${post.color}`}
-                >
-                  <p className="text-slate-500 font-medium tracking-widest uppercase text-[10px] mb-2">
+                <header className="ink-card relative overflow-hidden p-6 md:p-10">
+                  <p className="font-mono text-[10px] tracking-[0.12em] mb-2 text-[color:var(--bone-mute)]">
                     Blog
                   </p>
-                  <h1 className="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight mb-2">
+                  <h1
+                    className="font-display text-3xl md:text-4xl mb-2 text-[color:var(--bone)]"
+                    style={{ letterSpacing: '-0.02em', fontWeight: 420 }}
+                  >
                     {post.title}
+                    <span style={{ color: 'var(--accent)' }}>.</span>
                   </h1>
-                  <p className="text-slate-600 font-light text-base mb-5">{post.subtitle}</p>
+                  <p className="font-light text-base mb-5 text-[color:var(--bone-dim)]">
+                    {post.subtitle}
+                  </p>
                   <div className="flex flex-wrap gap-2">
                     {post.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2.5 py-1 glass-pill rounded-full text-[11px] text-slate-700 font-medium"
+                        className="px-2.5 py-1 rounded-full text-[11px] font-medium border text-[color:var(--bone-dim)]"
+                        style={{ background: 'oklch(94% 0.022 82 / 0.05)', borderColor: 'var(--line)' }}
                       >
                         {tag}
                       </span>
@@ -151,28 +161,35 @@ export default async function CourseBlogPage({ params }: { params: Promise<Param
 
                 {empty ? (
                   <section className="mt-10">
-                    <div className="rounded-[1.25rem] border-2 border-dashed border-slate-300/70 bg-white/20 p-8 text-center text-slate-400 text-sm font-medium">
+                    <div
+                      className="rounded-[1.25rem] border-2 border-dashed p-8 text-center text-sm font-medium text-[color:var(--bone-mute)]"
+                      style={{ borderColor: 'var(--line-strong)' }}
+                    >
                       Endnu intet blogindlæg. Skriv dit indhold i{' '}
-                      <code className="text-slate-600">content/course-blogs/{course}.md</code> — det
-                      rendres automatisk her ved næste build.
+                      <code className="px-1 rounded text-[color:var(--bone)] bg-[oklch(94%_0.022_82_/_0.10)]">
+                        content/course-blogs/{course}.md
+                      </code>{' '}
+                      — det rendres automatisk her ved næste build.
                     </div>
                   </section>
                 ) : (
                   <section
-                    className="mt-10 prose-slate text-slate-700 font-light leading-relaxed
-                               [&_h1]:text-2xl [&_h1]:md:text-3xl [&_h1]:font-bold [&_h1]:text-slate-800 [&_h1]:tracking-tight [&_h1]:mt-10 [&_h1]:mb-3
-                               [&_h2]:text-xl [&_h2]:md:text-2xl [&_h2]:font-bold [&_h2]:text-slate-800 [&_h2]:tracking-tight [&_h2]:mt-8 [&_h2]:mb-3
-                               [&_h3]:text-lg [&_h3]:md:text-xl [&_h3]:font-semibold [&_h3]:text-slate-800 [&_h3]:tracking-tight [&_h3]:mt-6 [&_h3]:mb-2
-                               [&_p]:my-3 [&_p]:text-sm
-                               [&_ul]:my-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ul_li]:mb-1 [&_ul_li]:text-sm
-                               [&_ol]:my-3 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol_li]:mb-1 [&_ol_li]:text-sm
-                               [&_a]:text-slate-900 [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:opacity-70
-                               [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:bg-slate-200/70 [&_code]:text-slate-800 [&_code]:text-xs [&_code]:font-mono
-                               [&_pre]:my-4 [&_pre]:p-4 [&_pre]:rounded-xl [&_pre]:bg-slate-900 [&_pre]:text-slate-100 [&_pre]:overflow-x-auto [&_pre_code]:bg-transparent [&_pre_code]:text-slate-100 [&_pre_code]:p-0 [&_pre_code]:text-xs
-                               [&_blockquote]:border-l-4 [&_blockquote]:border-slate-300 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-slate-600 [&_blockquote]:my-4 [&_blockquote]:text-sm
-                               [&_strong]:font-semibold [&_strong]:text-slate-800
-                               [&_hr]:my-6 [&_hr]:border-slate-200/80
-                               [&_table]:my-4 [&_table]:w-full [&_table]:text-sm [&_th]:text-left [&_th]:font-semibold [&_th]:px-3 [&_th]:py-2 [&_th]:border-b [&_th]:border-slate-300 [&_td]:px-3 [&_td]:py-2 [&_td]:border-b [&_td]:border-slate-200/60"
+                    className="mt-10 max-w-[65ch] text-[color:var(--bone)] font-light leading-[1.8]
+                               [&_h1]:font-display [&_h1]:font-medium [&_h1]:text-2xl [&_h1]:md:text-3xl [&_h1]:tracking-tight [&_h1]:text-[color:var(--bone)] [&_h1]:mt-10 [&_h1]:mb-3
+                               [&_h2]:font-display [&_h2]:font-medium [&_h2]:text-xl [&_h2]:md:text-2xl [&_h2]:tracking-tight [&_h2]:text-[color:var(--bone)] [&_h2]:mt-9 [&_h2]:mb-3
+                               [&_h3]:font-display [&_h3]:text-lg [&_h3]:md:text-xl [&_h3]:tracking-tight [&_h3]:text-[color:var(--bone)] [&_h3]:mt-6 [&_h3]:mb-2
+                               [&_p]:my-4 [&_p]:text-base [&_p]:leading-[1.8]
+                               [&_ul]:my-4 [&_ul]:list-disc [&_ul]:pl-5 [&_ul_li]:mb-1.5 [&_ul_li]:text-base
+                               [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:pl-5 [&_ol_li]:mb-1.5 [&_ol_li]:text-base
+                               [&_a]:text-[color:var(--accent)] [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:opacity-70
+                               [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[0.85em] [&_code]:font-mono [&_code]:text-[color:var(--bone)] [&_code]:bg-[oklch(94%_0.022_82_/_0.10)]
+                               [&_pre]:my-5 [&_pre]:p-4 [&_pre]:rounded-xl [&_pre]:overflow-x-auto [&_pre]:border [&_pre]:border-[color:var(--line)] [&_pre]:bg-[oklch(27%_0.034_280)] [&_pre]:text-[color:var(--bone)]
+                               [&_pre_code]:bg-transparent [&_pre_code]:text-[color:var(--bone)] [&_pre_code]:p-0 [&_pre_code]:text-[0.85em]
+                               [&_blockquote]:border-l-2 [&_blockquote]:border-[color:var(--line-strong)] [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-[color:var(--bone-dim)] [&_blockquote]:my-5
+                               [&_strong]:font-semibold [&_strong]:text-[color:var(--bone)]
+                               [&_hr]:my-8 [&_hr]:border-[color:var(--line)]
+                               [&_img]:my-5 [&_img]:rounded-[1rem] [&_img]:border [&_img]:border-[color:var(--line)]
+                               [&_table]:my-4 [&_table]:w-full [&_table]:text-sm [&_th]:text-left [&_th]:font-semibold [&_th]:text-[color:var(--bone)] [&_th]:px-3 [&_th]:py-2 [&_th]:border-b [&_th]:border-[color:var(--line-strong)] [&_td]:text-[color:var(--bone-dim)] [&_td]:px-3 [&_td]:py-2 [&_td]:border-b [&_td]:border-[color:var(--line)]"
                   >
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
                   </section>
@@ -181,13 +198,13 @@ export default async function CourseBlogPage({ params }: { params: Promise<Param
             </div>
           </div>
 
-          <footer className="py-12 mt-16 text-center text-slate-400 font-light text-sm">
-            <p>© 2026 Marcus Forsberg</p>
+          <footer className="py-12 mt-16 text-center font-mono text-[11px] text-[color:var(--bone-mute)]">
+            <p>© {new Date().getFullYear()} Marcus Forsberg</p>
           </footer>
         </main>
       </ViewTransition>
 
       <ChatWidgetLazy />
-    </>
+    </div>
   );
 }
