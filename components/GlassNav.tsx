@@ -9,7 +9,6 @@ const navLinks = [
   { label: 'Stack', href: '/#stack' },
   { label: 'Contact', href: '/#contact' },
   { label: 'Motorcycle Trips', href: '/trips' },
-  { label: 'LLM Course (Exam)', href: '/llm' },
 ];
 
 const SECTION_IDS = ['projects', 'stack', 'contact'] as const;
