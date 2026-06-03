@@ -67,72 +67,40 @@ export const skillGroups = [
   },
 ];
 
-export const projects = [
+type Project = {
+  title: string;
+  subtitle: string;
+  desc: string;
+  tags: string[];
+  link?: string;
+  hidden: boolean;
+  pinLast?: boolean;
+};
+
+const projectList: Project[] = [
   {
-    title: 'Football ML Exam',
-    subtitle: 'Machine Learning',
-    desc: 'Predicting football match outcomes using ML models for regression, clustering, and classification.',
-    tags: ['Python', 'Jupyter', 'Scikit-learn'],
-    link: 'https://github.com/MarcusPFF/Football_MachineLearning_exam',
+    title: 'Atlas',
+    subtitle: 'Coming soon',
+    desc: 'A logbook for adventure rides.',
+    tags: ['Adventure', 'Logbook', 'Maps'],
     hidden: false,
   },
   {
-    title: 'Carport Fog',
-    subtitle: 'Full-Stack Web App',
-    desc: 'E-commerce platform for custom carport orders with SVG blueprint generation and admin dashboard.',
-    tags: ['Java', 'MySQL', 'JSP', 'CSS'],
-    link: 'https://github.com/MarcusPFF/Carport-Fog',
+    title: 'More on github',
+    subtitle: 'All repositories',
+    desc: 'Everything I\'ve built and shared publicly.',
+    tags: ['Java', 'Python', 'JavaScript'],
+    link: 'https://github.com/MarcusPFF',
     hidden: false,
-  },
-  {
-    title: 'Calculator',
-    subtitle: 'Full-Stack App',
-    desc: 'Full-stack calculator with a Java REST API backend and a JavaScript frontend consuming it.',
-    tags: ['Java', 'JavaScript', 'REST API', 'HTML/CSS'],
-    link: 'https://github.com/MarcusPFF/calcAPI',
-    hidden: false,
-  },
-  {
-    title: 'Car Price Predictor',
-    subtitle: 'Data Science',
-    desc: 'ML pipeline predicting used car prices using regression, clustering, and classification models.',
-    tags: ['Python', 'Jupyter', 'Pandas'],
-    link: 'https://github.com/MarcusPFF/car-price-prediction-machine-learning',
-    hidden: false,
-  },
-  {
-    title: 'Exam Fall API',
-    subtitle: 'Backend API',
-    desc: 'RESTful API with JWT authentication, role-based access control, and full CRUD operations.',
-    tags: ['Java', 'Javalin', 'JPA', 'PostgreSQL'],
-    link: 'https://github.com/MarcusPFF/Exam_fallE24_API',
-    hidden: false,
-  },
-  {
-    title: 'Movie Repository',
-    subtitle: 'API Integration',
-    desc: 'Fetches movie data from an external API and persists it into a local database using JPA.',
-    tags: ['Java', 'JPA', 'REST API', 'PostgreSQL'],
-    link: 'https://github.com/MarcusPFF/sp1_movierepository',
-    hidden: false,
-  },
-  {
-    title: 'Streaming Service',
-    subtitle: 'Terminal App',
-    desc: 'Local streaming service with terminal-based navigation for browsing movies and series.',
-    tags: ['Java', 'OOP', 'File I/O'],
-    link: 'https://github.com/MarcusPFF/SP3-StreamingServiceProject',
-    hidden: false,
-  },
-  {
-    title: 'Discord On A Budget',
-    subtitle: 'Networking',
-    desc: 'Local chat server using TCP sockets and multithreading for real-time client communication.',
-    tags: ['Java', 'TCP', 'Multithreading'],
-    link: 'https://github.com/MarcusPFF/Discord-On-A-Budget',
-    hidden: false,
+    pinLast: true,
   },
 ];
+
+// "More on github" is the catch-all link, so it always sorts to the end.
+// (Stable sort keeps the other projects in the order written above.)
+export const projects: Project[] = projectList.sort(
+  (a, b) => (a.pinLast ? 1 : 0) - (b.pinLast ? 1 : 0),
+);
 
 type ClassItem = {
   title: string;

@@ -109,7 +109,7 @@ function projectsChunks(): Chunk[] {
   return projects
     .filter((p) => !p.hidden)
     .map((p) => ({
-      content: `Projekt: ${p.title} — ${p.subtitle}. ${p.desc} Teknologier: ${p.tags.join(', ')}. Kildekode: ${p.link}.`,
+      content: `Projekt: ${p.title} — ${p.subtitle}. ${p.desc} Teknologier: ${p.tags.join(', ')}.${p.link ? ` Kildekode: ${p.link}.` : ''}`,
       metadata: {
         source: 'data.ts',
         category: 'project',

@@ -5,8 +5,11 @@ import GlassProjects from '@/components/GlassProjects';
 import GlassSkills from '@/components/GlassSkills';
 import GlassContact from '@/components/GlassContact';
 import ParticleField from '@/components/ParticleField';
+import { getRepoCount } from '@/lib/github';
 
-export default function Home() {
+export default async function Home() {
+  const repoCount = await getRepoCount('MarcusPFF');
+
   return (
     <div className="theme-night">
       <GlassNav />
@@ -33,7 +36,7 @@ export default function Home() {
       >
         <main className="relative z-10">
           <GlassHero />
-          <GlassProjects />
+          <GlassProjects repoCount={repoCount} />
           <GlassSkills />
           <GlassContact />
 

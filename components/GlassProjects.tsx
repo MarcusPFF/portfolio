@@ -5,7 +5,11 @@ import ScrollReveal from './ScrollReveal';
 import { projects } from '../lib/data';
 
 
-export default function GlassProjects() {
+export default function GlassProjects({
+  repoCount,
+}: {
+  repoCount?: number | null;
+}) {
   const [showAll, setShowAll] = useState(false);
   const INITIAL_PROJECTS_COUNT = 4;
 
@@ -45,6 +49,76 @@ export default function GlassProjects() {
           {filteredProjects.map((proj, idx) => {
             const isExtra = idx >= INITIAL_PROJECTS_COUNT;
             const collapsed = isExtra && !showAll;
+            const isComingSoon = !proj.link;
+            // The catch-all card shows the live repo count when available.
+            const subtitle =
+              proj.pinLast && repoCount != null
+                ? `${repoCount} repositories`
+                : proj.subtitle;
+
+            // Shared row body. The subtitle and arrow sit together on the right;
+            // only real links animate the arrow and navigate on click.
+            const row = (
+              <div className="flex items-center gap-4 pr-1.5">
+                <span
+                  className="font-mono text-[11px] tabular-nums shrink-0 w-8 text-left"
+                  style={{ color: 'var(--accent)' }}
+                >
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
+
+                <div className="flex-1 min-w-0">
+                  <h3
+                    className="font-display text-lg md:text-xl truncate mb-1"
+                    style={{
+                      color: 'var(--bone)',
+                      fontWeight: 400,
+                      fontVariationSettings: '"opsz" 36, "SOFT" 100',
+                      letterSpacing: '-0.015em',
+                    }}
+                  >
+                    {proj.title}
+                  </h3>
+                  <p
+                    className="font-body font-light text-sm leading-snug truncate mb-1.5"
+                    style={{ color: 'var(--bone-dim)' }}
+                  >
+                    {proj.desc}
+                  </p>
+                  <p
+                    className="font-mono text-[10px] tabular-nums truncate"
+                    style={{ color: 'var(--bone-mute)' }}
+                  >
+                    {proj.tags.join(' · ')}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <span
+                    className="font-body text-[11px] font-normal whitespace-nowrap"
+                    style={{ color: 'var(--bone-mute)' }}
+                  >
+                    {subtitle}
+                  </span>
+                  <svg
+                    className="w-4 h-4 group-hover:translate-x-1 transition-all shrink-0"
+                    style={{ color: 'var(--bone-mute)' }}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"
+                    />
+                  </svg>
+                </div>
+              </div>
+            );
+
             return (
               <li
                 key={idx}
@@ -57,72 +131,24 @@ export default function GlassProjects() {
                 }}
               >
                 <div className="overflow-hidden" inert={collapsed}>
-                  <a
-                    href={proj.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ borderBottom: '1px solid var(--line)' }}
-                    className="group block py-5 transition-colors hover:bg-[oklch(94%_0.022_82_/_0.03)]"
-                  >
-                    <div className="flex items-center gap-4">
-                      <span
-                        className="font-mono text-[11px] tabular-nums shrink-0 w-8 text-left"
-                        style={{ color: 'var(--accent)' }}
-                      >
-                        {String(idx + 1).padStart(2, '0')}
-                      </span>
-
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-baseline justify-between gap-3 mb-1">
-                          <h3
-                            className="font-display text-lg md:text-xl truncate"
-                            style={{
-                              color: 'var(--bone)',
-                              fontWeight: 400,
-                              fontVariationSettings: '"opsz" 36, "SOFT" 100',
-                              letterSpacing: '-0.015em',
-                            }}
-                          >
-                            {proj.title}
-                          </h3>
-                          <span
-                            className="font-body text-[11px] font-normal shrink-0 hidden sm:inline"
-                            style={{ color: 'var(--bone-mute)' }}
-                          >
-                            {proj.subtitle}
-                          </span>
-                        </div>
-                        <p
-                          className="font-body font-light text-sm leading-snug truncate mb-1.5"
-                          style={{ color: 'var(--bone-dim)' }}
-                        >
-                          {proj.desc}
-                        </p>
-                        <p
-                          className="font-mono text-[10px] tabular-nums truncate"
-                          style={{ color: 'var(--bone-mute)' }}
-                        >
-                          {proj.tags.join(' · ')}
-                        </p>
-                      </div>
-
-                      <svg
-                        className="w-4 h-4 group-hover:translate-x-1 transition-all shrink-0"
-                        style={{ color: 'var(--bone-mute)' }}
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        strokeWidth={1.5}
-                        aria-hidden="true"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M17 8l4 4m0 0l-4 4m4-4H3"
-                        />
-                      </svg>
+                  {isComingSoon ? (
+                    <div
+                      style={{ borderBottom: '1px solid var(--line)' }}
+                      className="block py-5"
+                    >
+                      {row}
                     </div>
-                  </a>
+                  ) : (
+                    <a
+                      href={proj.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ borderBottom: '1px solid var(--line)' }}
+                      className="group block py-5 transition-colors hover:bg-[oklch(94%_0.022_82_/_0.03)]"
+                    >
+                      {row}
+                    </a>
+                  )}
                 </div>
               </li>
             );
