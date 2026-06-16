@@ -48,18 +48,39 @@ export default function GlassNav({ night = false }: { night?: boolean } = {}) {
       .filter((e): e is HTMLElement => !!e);
     if (els.length === 0) return;
 
+    const lastId = SECTION_IDS[SECTION_IDS.length - 1];
+    const update = () => {
+      // The last section ("contact") sits too low to scroll into the observer
+      // band on tall viewports, so it never wins on its own. Once the page is
+      // scrolled to the bottom, pin it active.
+      const atBottom =
+        window.scrollY > 0 &&
+        window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 2;
+      if (atBottom) {
+        setActiveSection(lastId);
+        return;
+      }
+      const firstVisible = SECTION_IDS.find((id) => visibility.get(id));
+      setActiveSection(firstVisible ?? null);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           visibility.set(entry.target.id, entry.isIntersecting);
         }
-        const firstVisible = SECTION_IDS.find((id) => visibility.get(id));
-        setActiveSection(firstVisible ?? null);
+        update();
       },
       { rootMargin: '-100px 0px -50% 0px' },
     );
     els.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
+
+    window.addEventListener('scroll', update, { passive: true });
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', update);
+    };
   }, [pathname]);
 
   useEffect(() => {
