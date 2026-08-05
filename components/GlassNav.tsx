@@ -8,7 +8,6 @@ const navLinks = [
   { label: 'Projects', href: '/#projects' },
   { label: 'Stack', href: '/#stack' },
   { label: 'Contact', href: '/#contact' },
-  { label: 'Motorcycle Trips', href: '/trips' },
 ];
 
 const SECTION_IDS = ['projects', 'stack', 'contact'] as const;
