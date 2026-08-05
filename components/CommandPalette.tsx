@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { projects, classes } from '@/lib/data';
-import { trips } from '@/lib/trips';
 
 type Item = {
   id: string;
@@ -19,7 +18,6 @@ const STATIC_ITEMS: Item[] = [
   { id: 'projects', label: 'Selected Projects', href: '/#projects', group: 'Pages' },
   { id: 'stack', label: 'Stack', href: '/#stack', group: 'Pages' },
   { id: 'contact', label: 'Contact', href: '/#contact', group: 'Pages' },
-  { id: 'trips', label: 'Motorcycle Trips', href: '/trips', group: 'Pages' },
   { id: 'llm', label: 'LLM Course', href: '/llm', group: 'Pages' },
   { id: 'cv', label: 'CV', href: '/cv', group: 'Pages' },
 ];
@@ -45,14 +43,6 @@ export default function CommandPalette() {
         group: 'Projects',
       }));
 
-    const tripItems: Item[] = trips.map((t) => ({
-      id: `trip-${t.slug}`,
-      label: t.title.en,
-      detail: `${t.distanceKm.toLocaleString('en-US')} km${t.bike ? ` · ${t.bike}` : ''}`,
-      href: `/trips/${t.slug}`,
-      group: 'Trips',
-    }));
-
     const blogItems: Item[] = classes
       .filter((c) => c.blogSlug && !c.hidden)
       .map((c) => ({
@@ -63,7 +53,7 @@ export default function CommandPalette() {
         group: 'Course blogs',
       }));
 
-    return [...STATIC_ITEMS, ...projectItems, ...tripItems, ...blogItems];
+    return [...STATIC_ITEMS, ...projectItems, ...blogItems];
   }, []);
 
   // Filter by query.

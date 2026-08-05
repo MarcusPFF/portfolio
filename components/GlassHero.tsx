@@ -39,8 +39,8 @@ export default function GlassHero() {
             style={{ color: 'var(--bone-dim)', fontSize: 'var(--body-lg)' }}
           >
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-              do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              Hi, I&apos;m currently building different architectural systems
+              and revolutionizing the industry.
             </p>
           </div>
 

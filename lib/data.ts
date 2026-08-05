@@ -79,6 +79,14 @@ type Project = {
 
 const projectList: Project[] = [
   {
+    title: 'Hajski.dk',
+    subtitle: 'Live',
+    desc: 'Ski club site — trips, gallery and merch.',
+    tags: ['Next.js', 'React', 'Tailwind CSS'],
+    link: 'https://hajski.dk',
+    hidden: false,
+  },
+  {
     title: 'Atlas',
     subtitle: 'Coming soon',
     desc: 'A logbook for adventure rides.',
